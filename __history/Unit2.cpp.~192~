@@ -1,0 +1,729 @@
+//---------------------------------------------------------------------------
+#include <algorithm> // For std::random_shuffle (in older C++ compilers)
+#include <stdexcept>
+#include <fmx.h>
+#include <iostream>
+#include <filesystem>  // Required for filesystem checks
+#include <windows.h>
+#include <fstream>
+#include <random>
+#include <vector>
+#include <string>
+#include <cstdlib> // For rand() and srand()
+#include <ctime>   // For time()
+#include <set> // For std::set
+#include <cmath> // For std::floor
+
+#include "Unit2.h"
+#pragma hdrstop
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+
+TForm2 *Form2;
+//---------------------------------------------------------------------------
+// Declare the variables
+int strength_1, weight_1, technique_1, endurance_1, speed_1, MinBid1, CurrentBid1;
+int strengthlimit1, weightlimit1, techniquelimit1, endurancelimit1, speedlimit1;
+int strength_2, weight_2, technique_2, endurance_2, speed_2, MinBid2, CurrentBid2;
+int	player1Skill, Luck1, Spirit1, Age1;
+int player2Skill, Luck2, Spirit2, Age2;
+int SkillDiceNo = 5;
+int ColourDiceNo = 6;
+int DiceNo = 7;
+String player1Tactic, Rank1;
+String player2Tactic, Rank2;
+String boutTactic;
+String player1Owner = "Player";   // Put YOUR name here!
+String player2Owner = "Computer";
+std::vector<std::string> usedNames; // Initialize the vector before use
+std::string player1Name, player2Name;
+
+// Struct to represent a Rikishi
+struct Rikishi {
+	std::string name;
+	int strength;
+	int weight;
+	int technique;
+	int endurance;
+	int speed;
+	int strengthLimit;
+	int weightLimit;
+	int techniqueLimit;
+	int enduranceLimit;
+	int speedLimit;
+	int spirit;
+	int age;
+	String rank;
+	int minBid;
+	int currentBid;
+	String owner = "Computer"; // Defaults to "Computer"
+	bool isInitialized = false; // Defaults to false
+
+	// Constructor to initialize defaults
+    Rikishi()
+		: owner("Computer"), isInitialized(false) {} // Set default values
+};
+
+// Class to represent a Player
+class Player {
+public:
+	std::string name; // Player's name
+	int AP;           // Player's action points
+	int VP;
+	// Method to add 7 AP each year
+	void AddAP() {
+		AP += 7;
+	}
+	std::vector<Rikishi> rikishiList;
+	int numberRikishi;
+	// Constructor that accepts a name
+	Player(const std::string& n = "", int ap = 0) : name(n), AP(ap) {}
+};
+
+// Vector to store all Players
+std::vector<Player> players;  // Global variable
+
+// Vector to store all rikishi
+std::vector<Rikishi> rikishiVector(16);
+
+// Ranks array
+std::string Ranks[] = {
+	"Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+	"Maegashira 1", "Maegashira 2", "Maegashira 3",
+	"Maegashira 4", "Maegashira 5", "Maegashira 6",
+	"Maegashira 7", "Maegashira 8", "Maegashira 9",
+	"Maegashira 10", "Juryo 1", "Juryo 2"
+};
+
+// Comparator for sorting by age (higher age means move up more)
+bool compareByAge(const Rikishi& a, const Rikishi& b) {
+    return a.age > b.age; // older rikishi move up more
+}
+
+// Comparator for sorting by weight (descending order)
+bool compareByWeight(const Rikishi& a, const Rikishi& b) {
+    return a.weight > b.weight;
+}
+
+// Comparator for sorting by name (for tie-breaking)
+bool compareByName(const Rikishi& a, const Rikishi& b) {
+    return a.name < b.name;
+}
+
+void GetRandomName(std::string &playerName, std::vector<std::string> &usedNames) {
+	std::string namesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names.txt";
+	std::ifstream file(namesPath);
+	if (!file.is_open()) {
+		throw std::runtime_error("Failed to open names.txt");
+	}
+
+	std::vector<std::string> allNames;
+	std::string name;
+    while (std::getline(file, name)) {
+        allNames.push_back(name);
+    }
+    file.close();
+
+    if (allNames.empty()) {
+        throw std::runtime_error("No names found in names.txt");
+    }
+
+	// Seed the random number generator (if not already seeded)
+    static bool seeded = false;
+    if (!seeded) {
+        std::srand(static_cast<unsigned>(std::time(0)));
+        seeded = true;
+    }
+
+	// Custom shuffle using std::rand
+	for (size_t i = 0; i < allNames.size(); ++i) {
+		size_t j = i + std::rand() % (allNames.size() - i);
+		std::swap(allNames[i], allNames[j]);
+    }
+
+	for (const auto &potentialName : allNames) {
+		// Check if the name has already been used
+		if (std::find(usedNames.begin(), usedNames.end(), potentialName) == usedNames.end()) {
+			playerName = potentialName;
+			usedNames.push_back(playerName);
+			return;
+		}
+    }
+
+	throw std::runtime_error("No unique names left to assign!");
+}
+
+void DistributeSkillPoints(int SkillPointBank, int strengthLimit, int weightLimit, int techniqueLimit, int enduranceLimit, int speedLimit) {
+    // Skill values and their respective limits
+    int strength = 0, weight = 0, technique = 0, endurance = 0, speed = 0;
+    std::vector<int> skillLimits = {strengthLimit, weightLimit, techniqueLimit, enduranceLimit, speedLimit};
+    std::vector<int> skillPoints = {0, 0, 0, 0, 0};
+
+    std::random_device rd;            // Random number generator
+    std::mt19937 rng(rd());
+    std::uniform_int_distribution<int> dist(0, 4); // Random number between 0 and 4
+
+    for (int x = 0; x < SkillPointBank; x++) {
+        while (true) { // Keep rolling until a valid skill is found
+            int RandomSkill = dist(rng); // Generate a random skill index
+            if (skillPoints[RandomSkill] < skillLimits[RandomSkill]) {
+                skillPoints[RandomSkill]++;
+                break;
+            }
+        }
+    }
+
+    // Assign the values to individual skills for clarity
+    strength = skillPoints[0];
+    weight = skillPoints[1];
+    technique = skillPoints[2];
+	endurance = skillPoints[3];
+    speed = skillPoints[4];
+
+    // Log the results
+//    Form2->MemoLog->Lines->Add("Skill distribution:");
+//    Form2->MemoLog->Lines->Add("Strength: " + IntToStr(strength));
+//    Form2->MemoLog->Lines->Add("Weight: " + IntToStr(weight));
+//    Form2->MemoLog->Lines->Add("Technique: " + IntToStr(technique));
+//    Form2->MemoLog->Lines->Add("Endurance: " + IntToStr(endurance));
+//    Form2->MemoLog->Lines->Add("Speed: " + IntToStr(speed));
+}
+
+//---------------------------------------------------------------------------
+// Function to initialize a Rikishi
+void InitializeRikishi(Rikishi &rikishi, std::vector<std::string> &usedNames) {
+	GetRandomName(rikishi.name, usedNames);
+
+	// Assign basic properties
+	rikishi.minBid = (std::rand() % 7) + 1;
+
+	// Randomly select age
+	if (rikishi.minBid == 7) {
+		rikishi.age = 21 + (std::rand() % 5); // 21 to 25
+	}
+	else if (rikishi.minBid == 6) {
+		rikishi.age = 21 + (std::rand() % 7); // 21 to 27
+	}
+	else if (rikishi.minBid == 3) {
+		rikishi.age = 22 + (std::rand() % 8); // 22 to 29
+	}
+	else if (rikishi.minBid == 2) {
+		rikishi.age = 24 + (std::rand() % 6); // 24 to 29
+	}
+	else if (rikishi.minBid == 1) {
+		rikishi.age = 26 + (std::rand() % 4); // 26 to 29
+	}
+	else {
+		rikishi.age = 21 + (std::rand() % 9); // 21 to 29
+	}
+//	Form2->MemoLog->Lines->Add("The Age is " + IntToStr(rikishi.age) + "!");
+
+    rikishi.currentBid = rikishi.minBid - std::floor((29 - rikishi.age) / 2);
+	rikishi.rank = Ranks[16 - rikishi.minBid];
+	rikishi.owner = "Computer";
+	// Assign spirit
+	rikishi.spirit = 2;
+
+	// Assign default skill limits
+	rikishi.strengthLimit = 4;
+	rikishi.weightLimit = 4;
+	rikishi.techniqueLimit = 4;
+	rikishi.enduranceLimit = 4;
+	rikishi.speedLimit = 4;
+
+	// Distribute skill points
+	int skillPointBank = rikishi.currentBid * 2 + std::rand() % 2;
+	DistributeSkillPoints(skillPointBank, rikishi.strengthLimit, rikishi.weightLimit,
+						  rikishi.techniqueLimit, rikishi.enduranceLimit, rikishi.speedLimit);
+	Form2->MemoLog->Lines->Add("Added a fresh Rikishi!");
+}
+//---------------------------------------------------------------------------
+// Function to initialize values for both sets of variables
+void InitializeValues() {
+
+	usedNames.clear(); // Clear previously used names at initialization
+
+	InitializeRikishi(rikishiVector[0], usedNames);
+
+	// Initialize Player 1 variables
+	strength_1 = std::rand() % SkillDiceNo;
+	weight_1 = std::rand() % SkillDiceNo;
+	technique_1 = std::rand() % SkillDiceNo;
+	endurance_1 = std::rand() % SkillDiceNo;
+	speed_1 = std::rand() % SkillDiceNo;
+	Spirit1 = std::rand() % SkillDiceNo;
+	Age1 = 21 + (std::rand() % (30 - 21));
+	Rank1 = Ranks[13];
+	GetRandomName(player1Name, usedNames); // Assign random unique name to player1Name
+
+	// Initialize Player 2 variables
+	strength_2 = std::rand() % SkillDiceNo;
+	weight_2 = std::rand() % SkillDiceNo;
+	technique_2 = std::rand() % SkillDiceNo;
+	endurance_2 = std::rand() % SkillDiceNo;
+	speed_2 = std::rand() % SkillDiceNo;
+	Spirit2 = std::rand() % SkillDiceNo;
+	Age2 = 21 + (std::rand() % (30 - 21));
+	Rank2 = Ranks[11];
+	GetRandomName(player2Name, usedNames); // Assign random unique name to player2Name
+}
+
+// Function to update the GUI with the current values of the variables
+void UpdateGUI() {
+	// Update Player 1 GUI
+	Form2->ButtonStrength_1->Text = "Strength: " + IntToStr(strength_1);
+	Form2->ButtonWeight_1->Text = "Weight: " + IntToStr(weight_1);
+	Form2->ButtonTechnique_1->Text = "Technique: " + IntToStr(technique_1);
+	Form2->ButtonEndurance_1->Text = "Endurance: " + IntToStr(endurance_1);
+	Form2->ButtonSpeed_1->Text = "Speed: " + IntToStr(speed_1);
+	Form2->EditAge1->Text = "Age: " + IntToStr(Age1);
+	Form2->EditSpirit1->Text = "Spirit: " + IntToStr(Spirit1);
+	Form2->EditRank1->Text = "Rank: " + UnicodeString(Rank1.c_str());
+	Form2->EditName1->Text = "Rikishi: " + UnicodeString(player1Name.c_str());
+	Form2->EditOwner1->Text = "Oyakata: " + UnicodeString(player1Owner.c_str());
+
+	// Update Player 2 GUI
+	Form2->EditStrength_2->Text = "Strength: " + IntToStr(strength_2);
+	Form2->EditWeight_2->Text = "Weight: " + IntToStr(weight_2);
+	Form2->EditTechnique_2->Text = "Technique: " + IntToStr(technique_2);
+	Form2->EditEndurance_2->Text = "Endurance: " + IntToStr(endurance_2);
+	Form2->EditSpeed_2->Text = "Speed: " + IntToStr(speed_2);
+	Form2->EditAge2->Text = "Age: " + IntToStr(Age2);
+	Form2->EditSpirit2->Text = "Spirit: " + IntToStr(Spirit2);
+	Form2->EditRank2->Text = "Rank: " + UnicodeString(Rank2.c_str());
+	Form2->EditName2->Text = "Rikishi: " + UnicodeString(player2Name.c_str());
+	Form2->EditOwner2->Text = "Oyakata: " + UnicodeString(player2Owner.c_str());
+}
+
+void GetBoutTactic() {
+    if (player1Tactic == player2Tactic) {
+		boutTactic = player1Tactic; // Both players chose the same skill
+//		UpdateLogMemo("The bout tactic is " + player1Tactic + "!");
+		Form2->MemoLog->Lines->Add("The bout tactic is " + player1Tactic + "!");
+	}
+	// Check if either player's tactic is "Strength"
+	else if ((player1Tactic == "Strength" && (player2Tactic == "Weight" || player2Tactic == "Technique")) ||
+			 (player2Tactic == "Strength" && (player1Tactic == "Weight" || player1Tactic == "Technique"))) {
+		boutTactic = "Strength";
+		Form2->MemoLog->Lines->Add("The bout tactic is Strength!");
+//		UpdateLogMemo("The bout tactic is Strength!");
+	}
+	// Check if either player's tactic is "Speed"
+	else if ((player1Tactic == "Speed" && (player2Tactic == "Strength" || player2Tactic == "Endurance")) ||
+			 (player2Tactic == "Speed" && (player1Tactic == "Strength" || player1Tactic == "Endurance"))) {
+		boutTactic = "Speed";
+		Form2->MemoLog->Lines->Add("The bout tactic is Speed!");
+	}
+	// Check if either player's tactic is "Technique"
+	else if ((player1Tactic == "Technique" && (player2Tactic == "Weight" || player2Tactic == "Speed")) ||
+			 (player2Tactic == "Technique" && (player1Tactic == "Weight" || player1Tactic == "Speed"))) {
+		boutTactic = "Technique";
+		Form2->MemoLog->Lines->Add("The bout tactic is Technique!");
+	}
+	// Check if either player's tactic is "Endurance"
+	else if ((player1Tactic == "Endurance" && (player2Tactic == "Strength" || player2Tactic == "Technique")) ||
+			 (player2Tactic == "Endurance" && (player1Tactic == "Strength" || player1Tactic == "Technique"))) {
+		boutTactic = "Endurance";
+		Form2->MemoLog->Lines->Add("The bout tactic is Endurance!");
+	}
+	// Check if either player's tactic is "Weight"
+	else if ((player1Tactic == "Weight" && (player2Tactic == "Endurance" || player2Tactic == "Speed")) ||
+			 (player2Tactic == "Weight" && (player1Tactic == "Endurance" || player1Tactic == "Speed"))) {
+		boutTactic = "Weight";
+		Form2->MemoLog->Lines->Add("The bout tactic is Weight!");
+	}
+	else {
+		boutTactic = "Unknown"; // Fallback if no condition is met
+		Form2->MemoLog->Lines->Add("Bout Tactic Error!");
+	}
+}
+
+void GetNewSkill() {
+    if (boutTactic == "Strength") {
+        player1Skill = strength_1;
+        player2Skill = strength_2;
+    } else if (boutTactic == "Weight") {
+        player1Skill = weight_1;
+        player2Skill = weight_2;
+    } else if (boutTactic == "Technique") {
+        player1Skill = technique_1;
+        player2Skill = technique_2;
+    } else if (boutTactic == "Endurance") {
+        player1Skill = endurance_1;
+        player2Skill = endurance_2;
+    } else if (boutTactic == "Speed") {
+		player1Skill = speed_1;
+		player2Skill = speed_2;
+	} else {
+		// Default behavior if boutTactic does not match any skill
+		player1Skill = 0;
+		player2Skill = 0;
+		Form2->MemoLog->Lines->Add("Unknown bout tactic. Defaulting skills to 0.");
+	}}
+
+int RandomSkillForPlayer2() {
+	int randomSkillIndex = std::rand() % SkillDiceNo;
+	switch (randomSkillIndex) {
+		case 0:
+			player2Tactic = "Strength";
+			return strength_2;
+		case 1:
+			player2Tactic = "Weight";
+			return weight_2;
+		case 2:
+			player2Tactic = "Technique";
+			return technique_2;
+		case 3:
+			player2Tactic = "Endurance";
+			return endurance_2;
+		case 4:
+			player2Tactic = "Speed";
+			return speed_2;
+		default:
+			player2Tactic = "Unknown";
+			Form2->MemoLog->Lines->Add("Error Returning 0.");
+			return 0;
+	}
+}
+void __fastcall TForm2::ButtonResetClickClick(TObject *Sender)
+{
+	InitializeValues();
+	UpdateGUI();
+	LabelResult->Text = "";
+    MemoLog->Lines->Clear();
+}
+
+void __fastcall TForm2::ButtonStrength_1Click(TObject *Sender)
+{
+	player1Skill = strength_1;
+	player2Skill = RandomSkillForPlayer2();
+	player1Tactic = "Strength";
+}
+
+void __fastcall TForm2::ButtonSpeed_1Click(TObject *Sender)
+{
+	player1Skill = speed_1;
+	player2Skill = RandomSkillForPlayer2();
+	player1Tactic = "Speed";
+}
+
+void __fastcall TForm2::ButtonWeight_1Click(TObject *Sender)
+{
+	player1Skill = weight_1;
+	player2Skill = RandomSkillForPlayer2();
+	player1Tactic = "Weight";
+}
+
+void __fastcall TForm2::ButtonTechnique_1Click(TObject *Sender)
+{
+	player1Skill = technique_1;
+	player2Skill = RandomSkillForPlayer2();
+	player1Tactic = "Technique";
+}
+
+void __fastcall TForm2::ButtonEndurance_1Click(TObject *Sender)
+{
+	player1Skill = endurance_1;
+	player2Skill = RandomSkillForPlayer2();
+	player1Tactic = "Endurance";
+
+}
+
+void __fastcall TForm2::fight_buttonClick(TObject *Sender)
+{
+
+	// Reset player skills before each fight
+	player1Skill = 0;
+	player2Skill = 0;
+	boutTactic = "Unknown";
+	Luck1 = std::rand() % 7;
+	Luck2 = std::rand() % 7;
+
+	MemoLog->Lines->Add("Rikishi 1 chose: " + player1Tactic);
+	MemoLog->Lines->Add("Rikishi 2 chose: " + player2Tactic);
+
+	GetBoutTactic();
+
+	GetNewSkill();
+
+	MemoLog->Lines->Add("Rikishi 1 has a skill modifier = " + \
+	 IntToStr(player1Skill));
+	MemoLog->Lines->Add("Rikishi 2 has a skill modifier = " + \
+	 IntToStr(player2Skill));
+
+	Luck1 = std::rand() % 7;
+	Luck2 = std::rand() % 7;
+	player1Skill = player1Skill+Luck1;
+	player2Skill = player2Skill+Luck2;
+	MemoLog->Lines->Add("Rikishi 1 rolled a " + IntToStr(Luck1));
+	MemoLog->Lines->Add("Rikishi 2 rolled a " + IntToStr(Luck2));
+
+	if (Spirit1 == 4) {
+		player1Skill = player1Skill+Luck1;
+		MemoLog->Lines->Add("Rikishi 1 has high spirits!");
+	}
+	if (Spirit2 == 4) {
+		player2Skill = player2Skill+Luck2;
+		MemoLog->Lines->Add("Rikishi 2 has high spirits!");
+	}
+	MemoLog->Lines->Add("They Fight!");
+	MemoLog->Lines->Add("...");
+	if (player1Skill > player2Skill) {
+		MemoLog->Lines->Add("Rikishi 1 wins!");
+		LabelResult->Text = "Congratulations! You won!";
+	} else if (player1Skill < player2Skill) {
+		MemoLog->Lines->Add("Rikishi 2 wins!");
+		LabelResult->Text = "You lose this round, try again!";
+	} else {
+		MemoLog->Lines->Add("It was a draw!");
+		LabelResult->Text = "Draw! Try another round!";
+	}
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TForm2::ButtonNoboruClick(TObject *Sender)
+{
+	// Create and show the second form
+	if (!NoboruForm)
+		NoboruForm = new TNoboruForm(this);
+	NoboruForm->Show();
+	this->Hide(); // Hide the main form
+}
+//---------------------------------------------------------------------------
+void InitializeAllRikishi() {
+    if (rikishiVector.size() < 16) {
+        int neededRikishi = 16 - rikishiVector.size();
+        for (int i = 0; i < neededRikishi; ++i) {
+            Rikishi newRikishi;
+            rikishiVector.push_back(newRikishi);
+        }
+    }
+
+    for (auto &rikishi : rikishiVector) {
+        if (!rikishi.isInitialized) { // Only initialize uninitialized Rikishi
+            InitializeRikishi(rikishi, usedNames);
+            rikishi.isInitialized = true; // Mark as initialized
+        }
+    }
+}
+
+//---------------------------------------------------------------------------
+// Function to update the GUI for two rikishi
+void UpdateGUIForRikishi(int rikishiIndex, TButton *buttons[], TEdit *edits[]) {
+    if (rikishiIndex < 0 || rikishiIndex >= rikishiVector.size()) return;
+
+	Rikishi &rikishi = rikishiVector[rikishiIndex];
+    buttons[0]->Text = "Strength: " + IntToStr(rikishi.strength);
+	buttons[1]->Text = "Weight: " + IntToStr(rikishi.weight);
+	buttons[2]->Text = "Technique: " + IntToStr(rikishi.technique);
+	buttons[3]->Text = "Endurance: " + IntToStr(rikishi.endurance);
+	buttons[4]->Text = "Speed: " + IntToStr(rikishi.speed);
+
+	edits[0]->Text = "Age: " + IntToStr(rikishi.age);
+	edits[1]->Text = "Spirit: " + IntToStr(rikishi.spirit);
+	edits[2]->Text = "Rank: " + rikishi.rank;
+	edits[3]->Text = "Rikishi: " + UnicodeString(rikishi.name.c_str());
+	edits[4]->Text = "Owner: " + rikishi.owner;
+}
+
+void PreGameSetup() {
+	int NumberPlayers = 1;  // Set to 1 to match the total number of players
+
+    // Create a list of players
+    std::vector<Player> allPlayers = {
+        Player("Player1"),
+        Player("Player2"),
+        Player("Player3"),
+        Player("Player4"),
+        Player("Player5")
+    };
+
+    // If you want a subset of players based on the number, use this:
+    players = std::vector<Player>(allPlayers.begin(), allPlayers.begin() + NumberPlayers);
+
+    // Set all players' AP and VP to 0
+    for (auto& player : players) {
+		player.AP = 0;
+        player.VP = 0;
+	}
+}
+
+// Function to rank Rikishi
+void RankRikishi() {
+
+//	std::vector<Rikishi>& rikishiList = player.rikishiList;  // Accessing player-specific rikishi list
+
+    // Step 1: Move rikishi up based on their age (Age - 20)
+	for (auto& rikishi : rikishiVector) {
+        rikishi.rank = "Rank"; // Reset rank placeholder (e.g., for future years)
+	}
+
+    // Step 2: Sort by age first (oldest first)
+	std::sort(rikishiVector.begin(), rikishiVector.end(), compareByAge);
+
+    // Step 3: After sorting by age, sort by weight if same rank
+	std::sort(rikishiVector.begin(), rikishiVector.end(), compareByWeight);
+
+    // Step 4: Handle tie-breaking within same rank by name
+	std::stable_sort(rikishiVector.begin(), rikishiVector.end(), compareByName);
+
+    // Step 5: Assign ranks, from highest rank (Yokozuna) to lowest rank (Juryo 2)
+    int currentRank = 0;
+    for (auto& rikishi : rikishiVector) {
+        rikishi.rank = Ranks[currentRank];
+        currentRank++;
+        if (currentRank >= sizeof(Ranks) / sizeof(Ranks[0])) {
+            currentRank = sizeof(Ranks) / sizeof(Ranks[0]) - 1; // Stay at the lowest rank if too many rikishi
+        }
+    }
+}
+
+
+//void BiddingPhase(Player& player, std::vector<Rikishi>& rikishiList) {
+//	// Loop through the 16 Rikishi
+//	for (auto& rikishi : rikishiList) {
+//		if (player.AP <= 0) {
+//			Form2->MemoLog->Lines->Add(player.name + " has run out of AP.");
+//			break; // Exit if player has no more AP
+//		}
+//
+//		// Display the current Rikishi
+//		Form2->MemoLog->Lines->Add("Rikishi: " + rikishi.name);
+//		Form2->MemoLog->Lines->Add("Strength: " + IntToStr(rikishi.strength));
+//		Form2->MemoLog->Lines->Add("Current Minimum Bid: " + IntToStr(rikishi.minBid));
+//		Form2->MemoLog->Lines->Add("Current Bid: " + IntToStr(rikishi.currentBid));
+//
+//		// Prompt player for a decision (bid or skip)
+//		Form2->MemoLog->Lines->Add(player.name + ", it's your turn to bid on " + rikishi.name + "!");
+//		Form2->MemoLog->Lines->Add("1. Increase Bid");
+//		Form2->MemoLog->Lines->Add("2. Confirm Bid");
+//		Form2->MemoLog->Lines->Add("3. Skip");
+//
+//        // Assuming input is captured through some method (e.g., GetInput)
+//        int input = GetInput(); // Get user input (1 for increasing bid, 2 for confirm, 3 for skip)
+//
+//        switch (input) {
+//            case 1: // Increase Bid
+//				if (player.AP >= rikishi.minBid) {
+//                    rikishi.currentBid += 1; // Increment the bid by 1 (or allow custom increment)
+//					Form2->MemoLog->Lines->Add(player.name + " increased the bid to " + IntToStr(rikishi.currentBid));
+//					player.AP -= 1; // Decrease AP for the bid
+//                } else {
+//					Form2->MemoLog->Lines->Add(player.name + " cannot afford to increase the bid!");
+//				}
+//                break;
+//
+//			case 2: // Confirm Bid
+//                if (rikishi.currentBid >= rikishi.minBid) {
+//                    // Player wins the Rikishi
+//					rikishi.owner = player.name;
+//                    player.rikishiList.push_back(rikishi);
+//                    player.numberRikishi++;
+//					player.AP -= rikishi.currentBid; // Spend AP to acquire the Rikishi
+//					Form2->MemoLog->Lines->Add(player.name + " confirmed the bid for " + rikishi.name);
+//					Form2->MemoLog->Lines->Add(player.name + " acquired " + rikishi.name);
+//				} else {
+//					Form2->MemoLog->Lines->Add(player.name + " cannot confirm the bid. It doesn't meet the minimum!");
+//                }
+//				break;
+//
+//            case 3: // Skip
+//				Form2->MemoLog->Lines->Add(player.name + " decided to skip bidding on " + rikishi.name);
+//                break;
+//
+//			default:
+//				Form2->MemoLog->Lines->Add("Invalid choice. Skipping...");
+//                break;
+//		}
+//
+//        // Optionally update game state here (e.g., checking if other players are ready)
+//		Form2->MemoLog->Lines->Add("Remaining AP: " + IntToStr(player.AP));
+//		Form2->MemoLog->Lines->Add("-------------------------------------------------");
+//	}
+//}
+
+
+void NewYearPhase() {
+
+	// Give all current players 7 AP
+	for (auto& player : players) {  // 'players' is the vector you initialized
+		player.AddAP();  // Add 7 AP to each player
+	}
+
+	// NEW PLAYER ENTERING THE GAME (this won't be implemented for a LONG time)
+
+	// Add Rikishi to fill to 16
+	InitializeAllRikishi();
+
+	// Determine Rikishi order
+	RankRikishi();
+
+	// Bidding Phase
+	//	BiddingPhase(player1, rikishiList);
+}
+
+// Constructor for the form
+__fastcall TForm2::TForm2(TComponent* Owner)
+	: TForm(Owner)
+{
+	// Print to console or initialize log
+	MemoLog->Lines->Add("Welcome to Banzuke Shoushin!");
+	std::srand(std::time(0)); // Seed random number generator
+
+	PreGameSetup(); // Pre-game setup logic
+
+	const int maxYears = 5; // Maximum number of years
+	int currentYear = 0;    // Initialize year counter
+
+	// Loop through the years until maxYears is reached
+	while (currentYear < maxYears) {
+		MemoLog->Lines->Add("Year: " + IntToStr(currentYear + 1)); // Log the year
+
+		// Call the phases for the current year
+		NewYearPhase();
+//		TrainingPhase();
+//		BashoPhase();
+//		BanzukePhase();
+//        YearEndPhase();
+
+		// Increment the year counter
+		currentYear++;
+		MemoLog->Lines->Add("The end of the year has come...");
+		MemoLog->Lines->Add("-------------------------------------------------");
+	}
+
+	// Final logic (if any) after the years are completed
+	MemoLog->Lines->Add("The 5-year cycle is complete!");
+}
+
+//--------------------------- TOOLS FOR DEBUGGING //----------------------------
+//
+
+//bool CheckFileExists(const std::string& filename) {
+//	return std::filesystem::exists(filename); // Returns true if the file exists
+//}
+//
+//void __fastcall TForm2::CheckNamesFile() {
+//	std::string namesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names.txt";
+//
+//	if (!std::filesystem::exists(namesPath)) {
+//		MessageBox(NULL, L"names.txt file is missing or not in the correct directory!", L"Error", MB_OK | MB_ICONERROR);
+//		throw std::runtime_error("names.txt file is missing or not in the correct directory.");
+//	} else {
+//		std::cout << "names.txt file exists." << std::endl; // Output to console
+//	}
+//}
+//void CreateConsole() {
+//	// Allocates a new console for the program
+//    AllocConsole();
+//
+//	// Redirects the console output to the standard output
+//    freopen("CONOUT$", "w", stdout);
+//    freopen("CONIN$", "r", stdin);
+//
+//	std::cout << "Console opened successfully" << std::endl;
+//}
+
+//
+//---------------------------------------------------------------------------
+

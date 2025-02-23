@@ -1,0 +1,228 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 351
+  ClientWidth = 665
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object fight_button: TButton
+    Position.X = 424.000000000000000000
+    Position.Y = 311.000000000000000000
+    Size.Width = 233.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'F I G H T ! ! !'
+    TextSettings.Trimming = None
+    OnClick = fight_buttonClick
+  end
+  object ButtonResetClick: TButton
+    Position.X = 315.000000000000000000
+    Position.Y = 311.000000000000000000
+    Size.Width = 101.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Reset'
+    TextSettings.Trimming = None
+    OnClick = ButtonResetClickClick
+  end
+  object EditStrength_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 2
+    TextSettings.HorzAlign = Center
+    Position.X = 178.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 37.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditEndurance_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 6
+    TextSettings.HorzAlign = Center
+    Position.X = 178.000000000000000000
+    Position.Y = 189.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditWeight_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 5
+    TextSettings.HorzAlign = Center
+    Position.X = 178.000000000000000000
+    Position.Y = 232.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditTechnique_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 4
+    TextSettings.HorzAlign = Center
+    Position.X = 178.000000000000000000
+    Position.Y = 272.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditSpeed_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    TextSettings.HorzAlign = Center
+    Position.X = 178.000000000000000000
+    Position.Y = 312.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 31.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonStrength_1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 37.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 11
+    TextSettings.Trimming = None
+    OnClick = ButtonStrength_1Click
+  end
+  object LabelResult: TLabel
+    StyledSettings = [Family, Size, Style]
+    Position.X = 315.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 342.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.FontColor = claCoral
+    TextSettings.HorzAlign = Center
+    TabOrder = 12
+  end
+  object ButtonEndurance_1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 189.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 10
+    TextSettings.Trimming = None
+    OnClick = ButtonEndurance_1Click
+  end
+  object ButtonWeight_1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 232.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    TextSettings.Trimming = None
+    OnClick = ButtonWeight_1Click
+  end
+  object ButtonTechnique_1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 272.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+    TextSettings.Trimming = None
+    OnClick = ButtonTechnique_1Click
+  end
+  object ButtonSpeed_1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 312.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 31.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    TextSettings.Trimming = None
+    OnClick = ButtonSpeed_1Click
+  end
+  object MemoLog: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Position.X = 315.000000000000000000
+    Position.Y = 56.000000000000000000
+    Size.Width = 342.000000000000000000
+    Size.Height = 247.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 13
+    Viewport.Width = 338.000000000000000000
+    Viewport.Height = 243.000000000000000000
+  end
+  object EditSpirit1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 15
+    Position.X = 8.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 36.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditSpirit2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 14
+    Position.X = 178.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 63.000000000000000000
+    Size.Height = 36.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditAge1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 17
+    Position.X = 81.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 56.000000000000000000
+    Size.Height = 36.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditAge2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 16
+    Position.X = 249.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 56.000000000000000000
+    Size.Height = 36.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditName_Owner1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 19
+    Position.X = 8.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 46.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Name_Owner2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 18
+    Position.X = 178.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 46.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditRank1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 21
+    Position.X = 8.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditRank2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 20
+    Position.X = 178.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+end

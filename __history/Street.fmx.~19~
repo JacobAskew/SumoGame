@@ -1,0 +1,58 @@
+object MainStreet: TMainStreet
+  Left = 0
+  Top = 0
+  Caption = 'Sumo Street'
+  ClientHeight = 420
+  ClientWidth = 770
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object LabelResult: TLabel
+    StyledSettings = [Family, Size, Style]
+    Position.X = 368.000000000000000000
+    Position.Y = 263.000000000000000000
+    Size.Width = 299.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.FontColor = claCoral
+    TextSettings.HorzAlign = Center
+    TabOrder = 0
+  end
+  object MemoLog: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    ReadOnly = True
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 410.000000000000000000
+    Size.Height = 406.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Viewport.Width = 410.000000000000000000
+    Viewport.Height = 406.000000000000000000
+  end
+  object ButtonNoboru: TButton
+    Position.X = 426.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 144.000000000000000000
+    Size.Height = 404.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Go to Noboru'
+    TextSettings.Trimming = None
+    OnClick = ButtonNoboruClick
+  end
+  object ButtonBeya: TButton
+    Position.X = 578.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 184.000000000000000000
+    Size.Height = 406.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = 'Go to Beya'
+    TextSettings.Trimming = None
+    OnClick = ButtonBeyaClick
+  end
+end

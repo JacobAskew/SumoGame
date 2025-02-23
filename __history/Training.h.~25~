@@ -1,0 +1,154 @@
+//---------------------------------------------------------------------------
+
+#ifndef TrainingH
+#define TrainingH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.Edit.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+
+#include "Street.h" // Include after Training.h
+//---------------------------------------------------------------------------
+
+class TYourBeya;
+class TMainStreet;
+
+void ReceiveTrainingRikishi(const Rikishi* rikishi);
+
+
+class TTrainingPopup : public TForm
+{
+__published:	// IDE-managed Components
+	TEdit *EditRikishiInfo;
+	TButton *ButtonOption1;
+	TButton *ButtonOption2;
+	TButton *ButtonOption3;
+	TButton *ButtonReturn;
+	void __fastcall ButtonOption1Click(TObject *Sender);
+	void __fastcall ButtonOption2Click(TObject *Sender);
+	void __fastcall ButtonOption3Click(TObject *Sender);
+	void __fastcall ButtonReturnClick(TObject *Sender);
+	// Attribute upgrade images and glow effects
+	TImage *ImageStrength[3];
+	TImage *ImageEndurance[3];
+	TImage *ImageTechnique[3];
+	TImage *ImageSpeed[3];
+	TImage *ImageWeight[3];
+
+	TGlowEffect *GlowEffectStrength[3];
+	TGlowEffect *GlowEffectEndurance[3];
+	TGlowEffect *GlowEffectTechnique[3];
+	TGlowEffect *GlowEffectSpeed[3];
+private:	// User declarations
+public:		// User declarations
+	__fastcall TTrainingPopup(TComponent* Owner);
+	void SetRikishi(Rikishi* rikishi);
+	void UpdateTrainingTable(const Rikishi* rikishi);
+    void ReturnToBeyaPostTraining(int TrainingCost, int UpgradePoints);
+//	void __fastcall CloseTrainingPopup(const String &message);
+//    bool IsTrainingComplete();
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TTrainingPopup *TrainingPopup;
+extern int
+//---------------------------------------------------------------------------
+#endif
+
+
+//
+////---------------------------------------------------------------------------
+//
+//#ifndef BeyaH
+//#define BeyaH
+////---------------------------------------------------------------------------
+//
+//#include <System.Classes.hpp>
+//#include <FMX.Controls.hpp>
+//#include <FMX.Forms.hpp>
+//#include <FMX.Controls.Presentation.hpp>
+//#include <FMX.Objects.hpp>
+//#include <FMX.StdCtrls.hpp>
+//#include <FMX.Types.hpp>
+//#include <FMX.Edit.hpp>
+//#include <FMX.Effects.hpp>
+//
+//class TMainStreet;
+//class TTrainingPopup;
+//
+//void UpdateBanzukeGrid();
+//void EndTraining();
+//bool IsTrainingComplete();
+//
+////---------------------------------------------------------------------------
+//
+//class TYourBeya : public TForm
+//{
+//__published:    // IDE-managed Components
+//    TRectangle *Background1;
+//    TRectangle *Background2;
+//	TRectangle *Background3;
+//	TButton *ReturnStreet;
+//	TButton *TrainRikishi1;
+//	TButton *TrainRikishi2;
+//	TButton *TrainRikishi3;
+//	TImage *ImageRikishi1;
+//	TImage *ImageRikishi2;
+//	TImage *ImageRikishi3;
+//	TEdit *EditRank1;
+//	TEdit *EditName1;
+//	TEdit *EditAge1;
+//	TEdit *EditRank2;
+//	TEdit *EditName2;
+//	TEdit *EditAge2;
+//	TEdit *EditRank3;
+//	TEdit *EditName3;
+//	TEdit *EditAge3;
+//	TButton *ButtonSkipTraining;
+//	TImage *ImageBelt1;
+//	TImage *ImageBelt2;
+//	TImage *ImageBelt3;
+//	TImage *ImageYokozuna1;
+//	TImage *ImageYokozuna2;
+//	TImage *ImageYokozuna3;
+//
+//	// Attribute upgrade images and glow effects
+//	TImage *ImageStrength[3];
+//	TImage *ImageEndurance[3];
+//	TImage *ImageTechnique[3];
+//	TImage *ImageSpeed[3];
+//	TImage *ImageWeight[3];
+//
+//	TGlowEffect *GlowEffectStrength[3];
+//	TGlowEffect *GlowEffectEndurance[3];
+//	TGlowEffect *GlowEffectTechnique[3];
+//	TGlowEffect *GlowEffectSpeed[3];
+//    TGlowEffect *GlowEffectWeight[3];
+//
+//    void __fastcall ReturnStreetClick(TObject *Sender);
+//    void __fastcall ButtonSkipTrainingClick(TObject *Sender);
+//    void __fastcall TrainRikishi1Click(TObject *Sender);
+//	void __fastcall TrainRikishi2Click(TObject *Sender);
+//    void __fastcall TrainRikishi3Click(TObject *Sender);
+//    void __fastcall ImageAttributeClick(TObject *Sender);
+//
+//private:    // User declarations
+//    void InitializeArrays();
+//
+//public:     // User declarations
+//    __fastcall TYourBeya(TComponent* Owner);
+//    void UpdateBeya();
+//    void StartTraining();
+//    void CleanupTrainingPopup();
+//    void CollectUpgradePoints(int UpgradePoints);
+//};
+//
+////---------------------------------------------------------------------------
+//
+//extern PACKAGE TYourBeya *YourBeya;
+//
+//#endif
+

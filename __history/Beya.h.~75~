@@ -1,0 +1,142 @@
+//---------------------------------------------------------------------------
+
+#ifndef BeyaH
+#define BeyaH
+//---------------------------------------------------------------------------
+
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.Objects.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+#include <FMX.Edit.hpp>
+#include <FMX.Effects.hpp>
+#include <FMX.Media.hpp>
+
+class TMainStreet;
+class TTrainingPopup;
+
+// Forward declaration for external functions, ensure these are defined elsewhere
+void UpdateBanzukeGrid();
+void EndTraining();
+bool IsTrainingComplete();
+
+//---------------------------------------------------------------------------
+
+class TYourBeya : public TForm
+{
+__published:    // IDE-managed Components
+    TRectangle *Background1;
+    TRectangle *Background2;
+    TRectangle *Background3;
+    TButton *ReturnStreet;
+    TButton *TrainRikishi1;
+    TButton *TrainRikishi2;
+    TButton *TrainRikishi3;
+    TImage *ImageRikishi1;
+    TImage *ImageRikishi2;
+    TImage *ImageRikishi3;
+    TEdit *EditRank1;
+    TEdit *EditName1;
+    TEdit *EditAge1;
+    TEdit *EditRank2;
+    TEdit *EditName2;
+    TEdit *EditAge2;
+    TEdit *EditRank3;
+    TEdit *EditName3;
+    TEdit *EditAge3;
+    TButton *ButtonSkipTraining;
+    TImage *ImageBelt1;
+	TImage *ImageBelt2;
+    TImage *ImageBelt3;
+    TImage *ImageYokozuna1;
+	TImage *ImageYokozuna2;
+	TImage *ImageYokozuna3;
+	TImage *ImageShelf1;
+	TImage *ImageBed1;
+	TImage *ImagePoster1;
+	TImage *ImageShelf2;
+	TImage *ImageShelf3;
+	TImage *ImagePoster2;
+	TImage *ImagePoster3;
+	TImage *ImageBed2;
+	TImage *ImageBed3;
+
+	// Attribute upgrade images and glow effects (separate declarations)
+
+//	TImage *ImageStrength1, *ImageStrength2, *ImageStrength3;
+//    TGlowEffect *GlowEffectStrength1, *GlowEffectStrength2, *GlowEffectStrength3;
+//
+//    TImage *ImageWeight1, *ImageWeight2, *ImageWeight3;
+//    TGlowEffect *GlowEffectWeight1, *GlowEffectWeight2, *GlowEffectWeight3;
+//
+//	TImage *ImageEndurance1, *ImageEndurance2, *ImageEndurance3;
+//	TGlowEffect *GlowEffectEndurance1, *GlowEffectEndurance2, *GlowEffectEndurance3;
+//
+//	TImage *ImageTechnique1, *ImageTechnique2, *ImageTechnique3;
+//	TGlowEffect *GlowEffectTechnique1, *GlowEffectTechnique2, *GlowEffectTechnique3;
+//
+//	TImage *ImageSpeed1, *ImageSpeed2, *ImageSpeed3;
+//	TGlowEffect *GlowEffectSpeed1, *GlowEffectSpeed2, *GlowEffectSpeed3;
+
+    // Event Handlers
+    void __fastcall ReturnStreetClick(TObject *Sender);
+    void __fastcall ButtonSkipTrainingClick(TObject *Sender);
+    void __fastcall TrainRikishi1Click(TObject *Sender);
+    void __fastcall TrainRikishi2Click(TObject *Sender);
+	void __fastcall TrainRikishi3Click(TObject *Sender);
+//	void __fastcall ImageAttributeClick(TObject *Sender);
+	void __fastcall ImageWeight1Click(TObject *Sender);
+	void __fastcall ImageWeight2Click(TObject *Sender);
+	void __fastcall ImageWeight3Click(TObject *Sender);
+	void __fastcall ImageEndurance1Click(TObject *Sender);
+	void __fastcall ImageEndurance2Click(TObject *Sender);
+	void __fastcall ImageEndurance3Click(TObject *Sender);
+	void __fastcall ImageTechnique1Click(TObject *Sender);
+	void __fastcall ImageTechnique2Click(TObject *Sender);
+	void __fastcall ImageTechnique3Click(TObject *Sender);
+	void __fastcall ImageSpeed1Click(TObject *Sender);
+	void __fastcall ImageSpeed2Click(TObject *Sender);
+	void __fastcall ImageSpeed3Click(TObject *Sender);
+	void __fastcall ImageStrength1Click(TObject *Sender);
+	void __fastcall ImageStrength2Click(TObject *Sender);
+	void __fastcall ImageStrength3Click(TObject *Sender);
+	void __fastcall ImageYokozuna1Click(TObject *Sender);
+	void __fastcall ImageYokozuna2Click(TObject *Sender);
+	void __fastcall ImageYokozuna3Click(TObject *Sender);
+private:    // User declarations
+	void InitializeArrays();
+
+//	std::vector<TImage*> ImageWeight;
+//	std::vector<TGlowEffect*> GlowEffectWeight;
+//
+//	std::vector<TImage*> ImageStrength;
+//	std::vector<TGlowEffect*> GlowEffectStrength;
+//
+//	std::vector<TImage*> ImageTechnique;
+//	std::vector<TGlowEffect*> GlowEffectTechnique;
+//
+//	std::vector<TImage*> ImageSpeed;
+//	std::vector<TGlowEffect*> GlowEffectSpeed;
+//
+//	std::vector<TImage*> ImageEndurance;
+//	std::vector<TGlowEffect*> GlowEffectEndurance;
+
+public:     // User declarations
+    __fastcall TYourBeya(TComponent* Owner);
+    void UpdateBeya();
+    void StartTraining();
+    void CleanupTrainingPopup();
+    void CollectUpgradePoints(int UpgradePoints);
+};
+
+//---------------------------------------------------------------------------
+
+extern PACKAGE TYourBeya *YourBeya;
+extern String SkillPath;
+extern String ImagesPath;
+
+#endif
+

@@ -1,0 +1,79 @@
+object MainStreet: TMainStreet
+  Left = 0
+  Top = 0
+  Caption = 'Sumo Street'
+  ClientHeight = 420
+  ClientWidth = 770
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object MemoLog: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    ReadOnly = True
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 754.000000000000000000
+    Size.Height = 225.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Viewport.Width = 750.000000000000000000
+    Viewport.Height = 221.000000000000000000
+  end
+  object ButtonNoboru: TButton
+    Position.X = 26.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 87.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Go to Noboru'
+    TextSettings.Trimming = None
+    OnClick = ButtonNoboruClick
+  end
+  object ButtonBeya: TButton
+    Position.X = 146.000000000000000000
+    Position.Y = 272.000000000000000000
+    Size.Width = 215.000000000000000000
+    Size.Height = 61.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Go to Beya'
+    TextSettings.Trimming = None
+    OnClick = ButtonBeyaClick
+  end
+  object ButtonBanzuke: TButton
+    Position.X = 641.000000000000000000
+    Position.Y = 256.000000000000000000
+    Size.Width = 88.000000000000000000
+    Size.Height = 77.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = 'Go to Banzuke'
+    TextSettings.Trimming = None
+    OnClick = ButtonBanzukeClick
+  end
+  object ImageRoad: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 26.000000000000000000
+    Position.Y = 341.000000000000000000
+    Size.Width = 736.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonDohyo: TButton
+    Position.X = 449.000000000000000000
+    Position.Y = 241.000000000000000000
+    Size.Width = 112.000000000000000000
+    Size.Height = 92.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Text = 'Go to Dohyo'
+    TextSettings.Trimming = None
+    OnClick = ButtonDohyoClick
+  end
+end

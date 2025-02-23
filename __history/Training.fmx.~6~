@@ -1,0 +1,62 @@
+object TrainingPopup: TTrainingPopup
+  Left = 0
+  Top = 0
+  Caption = 'Training Table'
+  ClientHeight = 88
+  ClientWidth = 430
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object EditRikishiInfo: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 0
+    ReadOnly = True
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 361.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonOption1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 49.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    TextSettings.Trimming = None
+    OnClick = ButtonOption1Click
+  end
+  object ButtonOption2: TButton
+    Position.X = 145.000000000000000000
+    Position.Y = 49.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    TextSettings.Trimming = None
+    OnClick = ButtonOption2Click
+  end
+  object ButtonOption3: TButton
+    Position.X = 296.000000000000000000
+    Position.Y = 49.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    TextSettings.Trimming = None
+    OnClick = ButtonOption3Click
+  end
+  object ButtonReturn: TButton
+    Position.X = 377.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 48.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Return'
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnClick
+  end
+end

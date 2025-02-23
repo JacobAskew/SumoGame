@@ -1,0 +1,612 @@
+object StorageForm: TStorageForm
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 420
+  ClientWidth = 770
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object fight_button: TButton
+    Position.X = 368.000000000000000000
+    Position.Y = 30.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'F I G H T ! ! !'
+    TextSettings.Trimming = None
+  end
+  object ButtonResetClick: TButton
+    Position.X = 543.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 101.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Text = 'Reset'
+    TextSettings.Trimming = None
+  end
+  object EditStrength_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 9
+    TextSettings.HorzAlign = Center
+    Position.X = 178.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 37.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditEndurance_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 25
+    TextSettings.HorzAlign = Center
+    Position.X = 511.000000000000000000
+    Position.Y = 101.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditWeight_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 23
+    TextSettings.HorzAlign = Center
+    Position.X = 511.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditTechnique_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 21
+    TextSettings.HorzAlign = Center
+    Position.X = 511.000000000000000000
+    Position.Y = 184.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditSpeed_2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 20
+    TextSettings.HorzAlign = Center
+    Position.X = 511.000000000000000000
+    Position.Y = 224.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 31.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonEndurance_1: TButton
+    Position.X = 368.000000000000000000
+    Position.Y = 101.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 30
+    TextSettings.Trimming = None
+  end
+  object ButtonWeight_1: TButton
+    Position.X = 368.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 29
+    TextSettings.Trimming = None
+  end
+  object ButtonTechnique_1: TButton
+    Position.X = 374.000000000000000000
+    Position.Y = 184.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 27
+    TextSettings.Trimming = None
+  end
+  object ButtonSpeed_1: TButton
+    Position.X = 368.000000000000000000
+    Position.Y = 224.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 31.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 24
+    TextSettings.Trimming = None
+  end
+  object EditAge2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 36
+    Position.X = 249.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 56.000000000000000000
+    Size.Height = 36.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditName2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 39
+    Position.X = 178.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditRank2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 43
+    Position.X = 178.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditOwner2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 40
+    Position.X = 178.000000000000000000
+    Position.Y = 37.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonStrength_1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 37.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    TextSettings.Trimming = None
+  end
+  object EditSpirit1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 13
+    Position.X = 8.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 36.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditSpirit2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 8
+    Position.X = 178.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 63.000000000000000000
+    Size.Height = 36.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditAge1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 10
+    Position.X = 706.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 56.000000000000000000
+    Size.Height = 36.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditName1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 16
+    Position.X = 8.000000000000000000
+    Position.Y = 67.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditRank1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 19
+    Position.X = 633.000000000000000000
+    Position.Y = 130.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditOwner1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 11
+    Position.X = 633.000000000000000000
+    Position.Y = 97.000000000000000000
+    Size.Width = 129.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Circle1: TCircle
+    Fill.Color = claRed
+    Position.X = 8.000000000000000000
+    Position.Y = 189.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 73.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Color = claWhite
+  end
+  object RadioButtonStr1: TRadioButton
+    Position.X = 25.000000000000000000
+    Position.Y = 205.000000000000000000
+    Size.Width = 16.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 117
+  end
+  object RadioButtonStr2: TRadioButton
+    Position.X = 41.000000000000000000
+    Position.Y = 205.000000000000000000
+    Size.Width = 16.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 112
+  end
+  object RadioButtonStr3: TRadioButton
+    Position.X = 25.000000000000000000
+    Position.Y = 224.000000000000000000
+    Size.Width = 16.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 101
+  end
+  object RadioButtonStr4: TRadioButton
+    Position.X = 41.000000000000000000
+    Position.Y = 224.000000000000000000
+    Size.Width = 16.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 102
+  end
+  object StringGridBouts: TStringGrid
+    CanFocus = True
+    ClipChildren = True
+    Position.X = 8.000000000000000000
+    Position.Y = 336.000000000000000000
+    Size.Width = 625.000000000000000000
+    Size.Height = 393.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.HorzAlign = Center
+    TabOrder = 3
+    RowHeight = 22.000000000000000000
+    RowCount = 16
+    Options = [ColumnResize, ColumnMove, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
+    Viewport.Width = 625.000000000000000000
+    Viewport.Height = 393.000000000000000000
+    object StringColumnRanks: TStringColumn
+      HorzAlign = Center
+      Header = 'Rank'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnY: TStringColumn
+      Header = 'Y'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnO: TStringColumn
+      Header = 'O'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnS: TStringColumn
+      Header = 'S'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnK: TStringColumn
+      Header = 'K'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM1: TStringColumn
+      Header = 'M1'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM2: TStringColumn
+      Header = 'M2'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM3: TStringColumn
+      Header = 'M3'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM4: TStringColumn
+      Header = 'M4'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM5: TStringColumn
+      Header = 'M5'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM6: TStringColumn
+      Header = 'M6'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM7: TStringColumn
+      Header = 'M7'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM8: TStringColumn
+      Header = 'M8'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM9: TStringColumn
+      Header = 'M9'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnM10: TStringColumn
+      Header = 'M10'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+  end
+  object Button1: TButton
+    Position.X = 95.000000000000000000
+    Position.Y = 248.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    TextSettings.Trimming = None
+  end
+  object Edit1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 14
+    Position.X = 188.000000000000000000
+    Position.Y = 200.000000000000000000
+    Size.Width = 53.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Edit2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 17
+    Position.X = 95.000000000000000000
+    Position.Y = 200.000000000000000000
+    Size.Width = 85.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Button2: TButton
+    Position.X = 95.000000000000000000
+    Position.Y = 272.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 38
+    TextSettings.Trimming = None
+  end
+  object Button3: TButton
+    Position.X = 172.000000000000000000
+    Position.Y = 224.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 35
+    TextSettings.Trimming = None
+  end
+  object Button4: TButton
+    Position.X = 172.000000000000000000
+    Position.Y = 248.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 32
+    TextSettings.Trimming = None
+  end
+  object Button5: TButton
+    Position.X = 95.000000000000000000
+    Position.Y = 224.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 28
+    TextSettings.Trimming = None
+  end
+  object Edit3: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 5
+    Position.X = 211.000000000000000000
+    Position.Y = 307.000000000000000000
+    Size.Width = 53.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Edit4: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 6
+    TextSettings.HorzAlign = Center
+    Position.X = 272.000000000000000000
+    Position.Y = 224.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Edit5: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 22
+    TextSettings.HorzAlign = Center
+    Position.X = 272.000000000000000000
+    Position.Y = 200.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Edit6: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 18
+    TextSettings.HorzAlign = Center
+    Position.X = 272.000000000000000000
+    Position.Y = 248.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Edit7: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 15
+    TextSettings.HorzAlign = Center
+    Position.X = 272.000000000000000000
+    Position.Y = 272.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Edit8: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 12
+    TextSettings.HorzAlign = Center
+    Position.X = 272.000000000000000000
+    Position.Y = 296.000000000000000000
+    Size.Width = 69.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Edit9: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 26
+    Position.X = 102.000000000000000000
+    Position.Y = 307.000000000000000000
+    Size.Width = 85.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object LabelResult: TLabel
+    StyledSettings = [Family, Size, Style]
+    Position.X = 368.000000000000000000
+    Position.Y = 263.000000000000000000
+    Size.Width = 299.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.FontColor = claCoral
+    TextSettings.HorzAlign = Center
+    TabOrder = 0
+  end
+  object ImageEndurance1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 667.000000000000000000
+    Position.Y = 238.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 65.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectEndurance1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageTechnique1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 667.000000000000000000
+    Position.Y = 357.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 65.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectTechnique1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageSpeed1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 494.000000000000000000
+    Position.Y = 357.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 65.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectSpeed1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageStrength1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 494.000000000000000000
+    Position.Y = 238.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 65.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectStrength1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageYokozuna1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 518.000000000000000000
+    Position.Y = 198.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 264.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageWeight1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 579.000000000000000000
+    Position.Y = 190.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 65.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectWeight1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+end

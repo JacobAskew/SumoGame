@@ -1,0 +1,115 @@
+// Street.h
+
+#ifndef StreetH
+#define StreetH
+
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.ListView.Adapters.Base.hpp>
+#include <FMX.ListView.Appearances.hpp>
+#include <FMX.ListView.hpp>
+#include <FMX.ListView.Types.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+#include <FMX.Edit.hpp>
+#include <FMX.Memo.hpp>
+#include <FMX.Memo.Types.hpp>
+#include <FMX.ScrollBox.hpp>
+
+// Forward declaration for TNoboruForm to avoid circular dependency
+class TNoboruForm;
+class TYourBeya;
+
+void UpdateBanzukeGrid();
+void BiddingPhaseComplete();
+void TrainingPhaseComplete();
+void BanzukePhaseComplete();
+
+// Define the Rikishi struct here so it can be accessed everywhere in the file
+struct Rikishi {
+	std::string name;
+	int strength;
+	int weight;
+	int technique;
+	int endurance;
+	int speed;
+	int strengthLimit;
+	int weightLimit;
+	int techniqueLimit;
+	int enduranceLimit;
+	int speedLimit;
+	int spirit;
+	int age;
+	std::string rank;
+	int minBid;
+	int currentBid;
+	int score;
+	String colour;
+	std::string owner = "Computer"; // Defaults to "Computer"
+	bool isInitialized = false; // Defaults to false
+	bool isInjuredEndurance = false; // Defaults to false
+	bool isInjuredSpeed = false; // Defaults to false
+	bool isInjuredStrength = false; // Defaults to false
+	std::string preferredSkill;
+
+	// Default constructor
+	Rikishi()
+		: strength(0), weight(0), technique(0), endurance(0), speed(0),
+		  strengthLimit(0), weightLimit(0), techniqueLimit(0), enduranceLimit(0), speedLimit(0),
+		  spirit(0), age(0), minBid(0), currentBid(0), score(0) {}
+};
+
+// Class to represent a Player
+class Player {
+public:
+    std::string name;
+    int AP;
+    int VP;
+
+    // Method to add 7 AP each year
+    void AddAP() {
+        AP += 7;
+    }
+
+    // Method to deduct AP when placing a bid
+    void DeductAP(int amount) {
+        if (AP >= amount) {
+            AP -= amount;
+        } else {
+            AP = 0;  // If AP is less than the bid amount, set it to 0
+        }
+    }
+
+    std::vector<Rikishi> rikishiList;
+    int numberRikishi;
+
+    Player(const std::string& n = "", int ap = 0) : name(n), AP(ap) {}
+};
+
+class TMainStreet : public TForm
+{
+__published:    // IDE-managed Components
+    TLabel *LabelResult;
+    TMemo *MemoLog;
+    TButton *ButtonNoboru;
+	TButton *ButtonBeya;
+	TButton *ButtonBanzuke;
+    void __fastcall ButtonNoboruClick(TObject *Sender);
+	void __fastcall ButtonBeyaClick(TObject *Sender);
+	void __fastcall ButtonBanzukeClick(TObject *Sender);
+
+private:    // User declarations
+    void __fastcall CheckNamesFile();
+
+public:        // User declarations
+    __fastcall TMainStreet(TComponent* Owner);
+};
+
+extern PACKAGE TMainStreet *MainStreet;
+extern std::vector<Rikishi> rikishiVector;  // Declare the vector as extern
+extern std::vector<Player> players;
+
+#endif
+

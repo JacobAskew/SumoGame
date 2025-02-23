@@ -1,0 +1,84 @@
+#ifndef Unit2H
+#define Unit2H
+
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.ListView.Adapters.Base.hpp>
+#include <FMX.ListView.Appearances.hpp>
+#include <FMX.ListView.hpp>
+#include <FMX.ListView.Types.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+#include <FMX.Edit.hpp>
+#include <FMX.Memo.hpp>
+#include <FMX.Memo.Types.hpp>
+#include <FMX.ScrollBox.hpp>
+
+// Declare the Player class
+class Player {
+public:
+    std::string name;
+    int AP;  // Action Points
+    int VP;  // Victory Points
+    // Other player-related attributes
+
+    Player(const std::string& playerName) {
+        name = playerName;
+        AP = 0;
+        VP = 0;
+    }
+
+    void AddAP() {
+        AP += 7;  // Increase AP by 7 each year
+    }
+};
+
+// Class declaration for TForm2
+class TForm2 : public TForm
+{
+__published:    // IDE-managed Components
+    TButton *fight_button;
+    TButton *ButtonResetClick;
+    TEdit *EditStrength_2;
+    TEdit *EditEndurance_2;
+    TEdit *EditWeight_2;
+    TEdit *EditTechnique_2;
+    TEdit *EditSpeed_2;
+    TButton *ButtonStrength_1;
+    TLabel *LabelResult;
+    TButton *ButtonEndurance_1;
+    TButton *ButtonWeight_1;
+    TButton *ButtonTechnique_1;
+    TButton *ButtonSpeed_1;
+    TMemo *MemoLog;
+    TEdit *EditSpirit1;
+    TEdit *EditSpirit2;
+    TEdit *EditAge1;
+    TEdit *EditAge2;
+    TEdit *EditName1;
+    TEdit *EditName2;
+    TEdit *EditRank1;
+    TEdit *EditRank2;
+    TEdit *EditOwner1;
+    TEdit *EditOwner2;
+    void __fastcall ButtonResetClickClick(TObject *Sender);
+    void __fastcall fight_buttonClick(TObject *Sender);
+    void __fastcall ButtonStrength_1Click(TObject *Sender);
+    void __fastcall ButtonWeight_1Click(TObject *Sender);
+    void __fastcall ButtonTechnique_1Click(TObject *Sender);
+    void __fastcall ButtonEndurance_1Click(TObject *Sender);
+    void __fastcall ButtonSpeed_1Click(TObject *Sender);
+private:    // User declarations
+    void __fastcall CheckNamesFile(); // Declare CheckNamesFile here
+    std::vector<Player> players; // Vector to hold players
+public:        // User declarations
+    __fastcall TForm2(TComponent* Owner);
+    void PreGameSetup();  // Pre-game setup method
+    void NewYearPhase();  // Year phase method
+    void InitializeAllRikishi();
+};
+
+#endif
+
