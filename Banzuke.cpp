@@ -916,5 +916,6 @@ void __fastcall TBanzukeForm::StringGridTournamentDrawColumnCell(TObject *Sender
 //	Canvas->FillText(TRectF(startX + rank1Width + vsWidth, Bounds.Top, startX + rank1Width + vsWidth + rank2Width, Bounds.Bottom),
 //					 rank2U, false, 1.0, TFillTextFlags(),
 //                     TTextAlign::Leading, TTextAlign::Center);
-//}
+//}
+
 
