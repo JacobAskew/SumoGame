@@ -44,6 +44,7 @@ public:		// User declarations
 //---------------------------------------------------------------------------
 extern PACKAGE TTrainingPopup *TrainingPopup;
 extern int UpgradePoints;
+extern bool isTrainingComplete;
 //---------------------------------------------------------------------------
 #endif
 

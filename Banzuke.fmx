@@ -3,7 +3,7 @@ object BanzukeForm: TBanzukeForm
   Top = 0
   Caption = 'The Grand Tournament!'
   ClientHeight = 420
-  ClientWidth = 770
+  ClientWidth = 772
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -29,6 +29,7 @@ object BanzukeForm: TBanzukeForm
     TabOrder = 2
     Text = 'Next Bout'
     TextSettings.Trimming = None
+    OnClick = ButtonNextBoutClick
   end
   object ButtonAutomateAll: TButton
     Position.X = 516.000000000000000000
@@ -50,6 +51,7 @@ object BanzukeForm: TBanzukeForm
     TabOrder = 4
     Text = 'Next Human Bout'
     TextSettings.Trimming = None
+    OnClick = ButtonNextHumanBoutClick
   end
   object MemoBoutLog: TMemo
     Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]

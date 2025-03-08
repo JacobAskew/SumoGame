@@ -2,6 +2,7 @@
 #include <fmx.h>
 #include <FMX.Dialogs.hpp>
 #include <System.UITypes.hpp>  // For colors
+#include <FMX.DialogService.hpp> // Required for TDialogService
 #include <map>  // If you still want to use maps
 #include <FMX.Graphics.hpp>   // For TBitmap
 #include <System.SysUtils.hpp>  // Required for UnicodeString conversion
@@ -394,6 +395,7 @@ void RandomSkillForFighter(Rikishi& fighter, std::string& fighterTactic) {
     }
 
 	if (fighterTactic.empty()) {
+		ShowMessage("Something went wrong!");
 		fighterTactic = skills[std::rand() % skills.size()];
 	}
 }
@@ -607,7 +609,17 @@ void EndBanzuke() {
 
 void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 {
-	if (isBanzukeComplete == false && isTrainingComplete == true) {
+	bool AutoTournament = false;
+
+	// Ask the player if they want to see training results
+	TDialogService::MessageDialog("Are you sure you want to automate the tournament?",
+		TMsgDlgType::mtConfirmation, TMsgDlgButtons() << TMsgDlgBtn::mbYes << TMsgDlgBtn::mbNo,
+		TMsgDlgBtn::mbNo, 0,
+		[&AutoTournament](const TModalResult AResult) {
+			AutoTournament = (AResult == mrYes);
+		});
+
+	if (isBanzukeComplete == false && isTrainingComplete == true && AutoTournament == true) {
 
 		PopulateLeaderboardGrid();
 
@@ -705,6 +717,15 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
             Application->ProcessMessages();
 			currentBoutIndex++;
 			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
+			if (currentBoutIndex==49) {
+				PopulateLeaderboardGrid();
+				SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
+				UpdateTournamentGrid();
+				UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+				EndBanzuke();
+                break;
+			}
 //            ShowMessage("Test");
 		}  // <-- Correctly closed loop here
 
@@ -716,8 +737,85 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 		EndBanzuke();
 	}
 	else {
-		ShowMessage("The training phase is not complete. The sumo are not ready.");
-    }
+		if (AutoTournament) {
+			ShowMessage("The training phase is not complete. The sumo are not ready.");
+		}
+	}
+}
+
+void __fastcall TBanzukeForm::ButtonNextBoutClick(TObject *Sender)
+{
+	if (isBanzukeComplete == false && isTrainingComplete == true) {
+
+		PopulateLeaderboardGrid();
+		AssignFightersFromGrid();
+
+		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
+		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
+
+		GetBoutTactic();
+		FighterSkillValue(*globalFighter1, fighter1SkillValue);
+		FighterSkillValue(*globalFighter2, fighter2SkillValue);
+
+		fighter1Total = fighter1SkillValue;
+		HandleInjury(*globalFighter1, fighter1Total);
+
+		fighter2Total = fighter2SkillValue;
+		HandleInjury(*globalFighter2, fighter2Total);
+
+		if (globalFighter1->spirit == 4) {
+			fighter1Total += 1;
+		}
+		if (globalFighter2->spirit == 4) {
+			fighter2Total += 1;
+		}
+
+		if (currentBoutIndex >= 42 && currentBoutIndex < 49) {
+			if (globalFighter1->wins == 3 && globalFighter1->losses == 3) {
+				fighter1Total += 1;
+			}
+			if (globalFighter2->wins == 3 && globalFighter2->losses == 3) {
+				fighter2Total += 1;
+			}
+		}
+
+		if (fighter1Total > fighter2Total) {
+			Victory(0);
+		} else if (fighter1Total < fighter2Total) {
+			Victory(1);
+		} else {
+			if (globalFighter1->weight > globalFighter2->weight) {
+				Victory(0);
+			} else if (globalFighter1->weight < globalFighter2->weight) {
+				Victory(1);
+			} else {
+				if (globalFighter1->technique > globalFighter2->technique) {
+					Victory(0);
+				} else if (globalFighter1->technique < globalFighter2->technique) {
+					Victory(1);
+				} else {
+					int winner = std::rand() % 2;
+					Victory(winner);
+				}
+			}
+		}
+
+		PopulateLeaderboardGrid();
+		SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
+		UpdateTournamentGrid();
+		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+		Application->ProcessMessages();
+		currentBoutIndex++;
+		AssignFightersFromGrid();
+		BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
+		UpdateTournamentGrid();
+
+		}
+
+		if (currentBoutIndex == 49) {
+			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+			EndBanzuke();
+		}
 }
 
 
@@ -736,8 +834,14 @@ void __fastcall TBanzukeForm::ButtonReturnStreetClick(TObject *Sender)
 
 void __fastcall TBanzukeForm::ButtonDohyoClick(TObject *Sender)
 {
-	DohyoForm->Show(); // Show the main form
-	this->Hide();     // Hide the second form
+	if (isTrainingComplete) {
+		DohyoForm->Show(); // Show the main form
+		DohyoForm->DohyoSetup();
+		this->Hide();     // Hide the second form
+	}
+	else {
+		ShowMessage("The Dohyo is not open yet! Come back Later!");
+	}
 }
 //---------------------------------------------------------------------------
 
@@ -834,6 +938,8 @@ void __fastcall TBanzukeForm::StringGridTournamentDrawColumnCell(TObject *Sender
 					 TTextAlign::Leading, TTextAlign::Center);
 }
 
+
+
 //void __fastcall TBanzukeForm::StringGridTournamentDrawColumnCell(TObject *Sender,
 //	TCanvas * const Canvas, TColumn * const Column, const TRectF &Bounds,
 //	const int Row, const TValue &Value, const TGridDrawStates State)
@@ -918,4 +1024,13 @@ void __fastcall TBanzukeForm::StringGridTournamentDrawColumnCell(TObject *Sender
 //                     TTextAlign::Leading, TTextAlign::Center);
 //}
 
+
+
+//---------------------------------------------------------------------------
+
+void __fastcall TBanzukeForm::ButtonNextHumanBoutClick(TObject *Sender)
+{
+    ShowMessage("This button doesn't work just yet lol. Nothing Happens.");
+}
+//---------------------------------------------------------------------------
 

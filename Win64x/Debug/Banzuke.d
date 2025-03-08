@@ -1,5 +1,5 @@
 .\Win64x\Debug\Banzuke.o: \
-  C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Project2PCH1.h \
+  C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\SumoGamePCH1.h \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\fmx\fmx.h \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\System.hpp \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\sysmac.h \
@@ -967,6 +967,7 @@
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\x86_64-w64-mingw32\tchar.h \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\x86_64-w64-mingw32\sec_api\tchar_s.h \
   Banzuke.cpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\fmx\FMX.DialogService.hpp \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\x86_64-w64-mingw32\c++\v1\map \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\x86_64-w64-mingw32\c++\v1\__tree \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\x86_64-w64-mingw32\c++\v1\regex \

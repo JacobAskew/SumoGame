@@ -27,36 +27,50 @@ __published:	// IDE-managed Components
 	TImage *ImageVS;
 	TImage *ImageYokozuna1;
 	TImage *ImageYokozuna2;
-	TEdit *EditStrength_2;
 	TEdit *EditRank2;
 	TEdit *EditOwner2;
-	TButton *ButtonStrength_1;
+	TButton *ButtonStrength1;
 	TEdit *EditSpirit2;
 	TEdit *EditSpirit1;
 	TEdit *EditAge2;
-	TButton *ButtonEndurance_1;
-	TButton *ButtonWeight_1;
-	TButton *ButtonTechnique_1;
-	TButton *ButtonSpeed_1;
-	TEdit *EditSpeed_2;
-	TEdit *EditTechnique_2;
-	TEdit *EditWeight_2;
-	TEdit *EditEndurance_2;
+	TButton *ButtonEndurance1;
+	TButton *ButtonWeight1;
+	TButton *ButtonTechnique1;
+	TButton *ButtonSpeed1;
 	TEdit *EditOwner1;
 	TEdit *EditRank1;
-	TImage *Image1;
+	TImage *ImageArena;
 	TEdit *EditRecord1;
 	TEdit *EditRecord2;
 	TEdit *EditAge1;
 	TButton *ButtonReturnStreet;
 	TButton *ButtonReturnBanzuke;
 	TMemo *MemoFightLog;
-	TButton *Button1;
+	TButton *ButtonFight;
+	TButton *ButtonWeight2;
+	TButton *ButtonEndurance2;
+	TButton *ButtonTechnique2;
+	TButton *ButtonSpeed2;
+	TButton *ButtonStrength2;
 	void __fastcall ButtonReturnBanzukeClick(TObject *Sender);
 	void __fastcall ButtonReturnStreetClick(TObject *Sender);
+	void __fastcall ButtonWeight1Click(TObject *Sender);
+	void __fastcall ButtonEndurance1Click(TObject *Sender);
+	void __fastcall ButtonTechnique1Click(TObject *Sender);
+	void __fastcall ButtonSpeed1Click(TObject *Sender);
+	void __fastcall ButtonStrength1Click(TObject *Sender);
+	void __fastcall ButtonWeight2Click(TObject *Sender);
+	void __fastcall ButtonEndurance2Click(TObject *Sender);
+	void __fastcall ButtonTechnique2Click(TObject *Sender);
+	void __fastcall ButtonSpeed2Click(TObject *Sender);
+	void __fastcall ButtonStrength2Click(TObject *Sender);
+	void __fastcall ButtonFightClick(TObject *Sender);
+
 private:	// User declarations
+
 public:		// User declarations
 	__fastcall TDohyoForm(TComponent* Owner);
+	void DohyoSetup();
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TDohyoForm *DohyoForm;

@@ -234,9 +234,9 @@
             <DependentOn>Training.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
-        <FormResources Include="Training.fmx"/>
         <FormResources Include="Street.fmx"/>
         <FormResources Include="Storage.fmx"/>
+        <FormResources Include="Training.fmx"/>
         <FormResources Include="Dohyo.fmx"/>
         <FormResources Include="Beya.fmx"/>
         <FormResources Include="Banzuke.fmx"/>

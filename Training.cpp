@@ -23,7 +23,7 @@ int TrainingCost;
 int cost1, cost2, cost3;
 String message3;
 // Rikishi* SelectedRikishi = nullptr;
-extern bool isTrainingComplete;
+
 //const Rikishi* selectedRikishiForTraining = nullptr; // Global variable to track the selected rikishi
 
 // Ensure this variable exists in the class definition (Training.h)

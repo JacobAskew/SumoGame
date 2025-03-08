@@ -31,20 +31,20 @@ TMainStreet *MainStreet;
 
 //---------------------------------------------------------------------------
 // Declare the variables
-int strength_1, weight_1, technique_1, endurance_1, speed_1, MinBid1, CurrentBid1;
-int strengthlimit1, weightlimit1, techniquelimit1, endurancelimit1, speedlimit1;
-int strength_2, weight_2, technique_2, endurance_2, speed_2, MinBid2, CurrentBid2;
-int	player1Skill, Luck1, Spirit1, Age1;
-int player2Skill, Luck2, Spirit2, Age2;
-int SkillDiceNo = 5;
-int ColourDiceNo = 6;
-int DiceNo = 7;
+//int strength_1, weight_1, technique_1, endurance_1, speed_1, MinBid1, CurrentBid1;
+//int strengthlimit1, weightlimit1, techniquelimit1, endurancelimit1, speedlimit1;
+//int strength_2, weight_2, technique_2, endurance_2, speed_2, MinBid2, CurrentBid2;
+//int	player1Skill, Luck1, Spirit1, Age1;
+//int player2Skill, Luck2, Spirit2, Age2;
+//int SkillDiceNo = 5;
+//int ColourDiceNo = 6;
+//int DiceNo = 7;
 int move;
 const int maxYears = 10; // Maximum number of years
 int currentYear = 0;    // Initialize year counter
 //int currentPlayerIndex = 0;
-String player1Tactic, Rank1;
-String player2Tactic, Rank2;
+//String player1Tactic, Rank1;
+//String player2Tactic, Rank2;
 //String boutTactic;
 String player1Owner = "P1";   // Put YOUR name here!
 String player2Owner = "CPU";
@@ -1627,8 +1627,14 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 
 void __fastcall TMainStreet::ButtonDohyoClick(TObject *Sender)
 {
-	DohyoForm->Show();
-	this->Hide();
+	if (isTrainingComplete) {
+		DohyoForm->Show(); // Show the main form
+		DohyoForm->DohyoSetup();
+		this->Hide();     // Hide the second form
+	}
+	else {
+		ShowMessage("The Dohyo is not open yet! Come back Later!");
+	}
 }
 //---------------------------------------------------------------------------
 

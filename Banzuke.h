@@ -58,6 +58,8 @@ __published:	// IDE-managed Components
 	void __fastcall StringGridTournamentDrawColumnCell(TObject *Sender, TCanvas * const Canvas,
           TColumn * const Column, const TRectF &Bounds, const int Row,
           const TValue &Value, const TGridDrawStates State);
+	void __fastcall ButtonNextBoutClick(TObject *Sender);
+	void __fastcall ButtonNextHumanBoutClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TBanzukeForm(TComponent* Owner);
@@ -67,6 +69,29 @@ public:		// User declarations
 extern PACKAGE TBanzukeForm *BanzukeForm;
 extern void GetBoutTactic();
 extern bool isBanzukeComplete;
-//extern void UpdateBoutGUI(Rikishi& winner, Rikishi& loser, int boutIndex);
+extern void TintNoTransparent(TBitmap* bitmap, TAlphaColor tintColor);
+extern struct Rikishi* globalFighter1;
+extern struct Rikishi* globalFighter2;
+extern String VSpath;
+extern std::string fighter1Tactic;
+extern int fighter1SkillValue;
+extern std::string fighter2Tactic;
+extern int fighter2SkillValue;
+extern void RandomSkillForFighter(Rikishi& fighter, std::string& fighterTactic);
+extern void PopulateLeaderboardGrid();
+extern void AssignFightersFromGrid();
+extern void FighterSkillValue(Rikishi& fighter, int& fighterSkillValue);
+extern void HandleInjury(Rikishi& fighter, int& fighterTotal);
+extern int fighter1Total;
+extern int fighter2Total;
+extern int currentBoutIndex;
+extern int winnerIdx;
+extern int loserIdx;
+extern void Victory(int winner);
+extern void SetBoutResult(int boutIndex, int winnerIdx, int loserIdx);
+extern void UpdateTournamentGrid();
+extern void UpdateBoutGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form);
+extern void EndBanzuke();
 //---------------------------------------------------------------------------
 #endif
+

@@ -167,7 +167,7 @@ __fastcall TStorageForm::TStorageForm(TComponent* Owner)
 //			MainStreet->MemoLog->Lines->Add("Error Returning 0.");
 //			return 0;
 //	}
-//}
+//}
 
 
 
@@ -272,7 +272,8 @@ __fastcall TStorageForm::TStorageForm(TComponent* Owner)
 //
 //	// Update rikishiVector with the new order
 //    rikishiVector = finalRanking;
-//}
+//}
+
 
 
 

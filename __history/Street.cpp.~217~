@@ -1,0 +1,1634 @@
+//---------------------------------------------------------------------------
+#include <algorithm> // For std::random_shuffle (in older C++ compilers)
+#include <stdexcept>
+#include <fmx.h>
+#include <iostream>
+#include <filesystem>  // Required for filesystem checks
+#include <windows.h>
+#include <fstream>
+#include <random>
+#include <vector>
+#include <string>
+#include <cstdlib> // For rand() and srand()
+#include <ctime>   // For time()
+#include <set> // For std::set
+#include <cmath> // For std::floor
+#include <map>
+#include <functional>
+
+#include "Street.h"
+#include "Noboru.h" // Include after Street.h to avoid issues
+#include "Beya.h" // Include after Street.h to avoid issues
+#include "Training.h"
+#include "Banzuke.h"
+#include "Dohyo.h"
+
+#pragma hdrstop
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+
+TMainStreet *MainStreet;
+
+//---------------------------------------------------------------------------
+// Declare the variables
+int strength_1, weight_1, technique_1, endurance_1, speed_1, MinBid1, CurrentBid1;
+int strengthlimit1, weightlimit1, techniquelimit1, endurancelimit1, speedlimit1;
+int strength_2, weight_2, technique_2, endurance_2, speed_2, MinBid2, CurrentBid2;
+int	player1Skill, Luck1, Spirit1, Age1;
+int player2Skill, Luck2, Spirit2, Age2;
+int SkillDiceNo = 5;
+int ColourDiceNo = 6;
+int DiceNo = 7;
+int move;
+const int maxYears = 10; // Maximum number of years
+int currentYear = 0;    // Initialize year counter
+//int currentPlayerIndex = 0;
+String player1Tactic, Rank1;
+String player2Tactic, Rank2;
+//String boutTactic;
+String player1Owner = "P1";   // Put YOUR name here!
+String player2Owner = "CPU";
+std::vector<std::string> usedNames; // Initialize the vector before use
+std::vector<std::string> retiredNames;
+std::string player1Name, player2Name;
+// Size of the Ranks array
+constexpr int RanksSize = 16; // Number of ranks (Yokozuna to Juryo 2)
+
+// Vector to store all Players
+std::vector<Player> players;  // Global variable
+
+// Vector to store all rikishi
+std::vector<Rikishi> rikishiVector(16);
+
+// List of colors (excluding black, white, and very dark shades, but including brown)
+std::vector<TAlphaColor> availableColors = {
+    (TAlphaColor)0xFFFF0000,  // Bright Red
+    (TAlphaColor)0xFFFF4500,  // OrangeRed
+    (TAlphaColor)0xFFFF6347,  // Tomato
+    (TAlphaColor)0xFFFFD700,  // Gold
+    (TAlphaColor)0xFFFFA500,  // Orange
+    (TAlphaColor)0xFF00FF00,  // Lime
+    (TAlphaColor)0xFF32CD32,  // LimeGreen
+    (TAlphaColor)0xFF00FF7F,  // SpringGreen
+    (TAlphaColor)0xFF00BFFF,  // DeepSkyBlue
+    (TAlphaColor)0xFF1E90FF,  // DodgerBlue
+    (TAlphaColor)0xFF00FFFF,  // Cyan
+    (TAlphaColor)0xFF8A2BE2,  // BlueViolet
+    (TAlphaColor)0xFF7FFF00,  // Chartreuse
+    (TAlphaColor)0xFFFF00FF,  // Magenta
+    (TAlphaColor)0xFFFF1493,  // DeepPink
+    (TAlphaColor)0xFFDC143C,  // Crimson
+    (TAlphaColor)0xFFFF69B4,  // HotPink
+    (TAlphaColor)0xFFADFF2F,  // GreenYellow
+    (TAlphaColor)0xFFB22222,  // FireBrick
+    (TAlphaColor)0xFF8A2BE2,  // BlueViolet
+    (TAlphaColor)0xFF48D1CC,  // MediumTurquoise
+    (TAlphaColor)0xFF00FA9A,  // MediumSpringGreen
+    (TAlphaColor)0xFFDC143C,  // Crimson
+    (TAlphaColor)0xFF00CED1   // DarkTurquoise
+};
+
+// To store used colors across multiple rikishi generations
+std::vector<TAlphaColor> usedColors;
+
+// Ranks array
+std::string Ranks[] = {
+	"Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+	"Maegashira 1", "Maegashira 2", "Maegashira 3",
+	"Maegashira 4", "Maegashira 5", "Maegashira 6",
+	"Maegashira 7", "Maegashira 8", "Maegashira 9",
+	"Maegashira 10", "Juryo 1", "Juryo 2"
+};
+
+// Comparator for sorting by age (higher age means move up more)
+bool compareByAge(const Rikishi& a, const Rikishi& b) {
+    return a.age > b.age; // older rikishi move up more
+}
+
+// Comparator for sorting by weight (descending order)
+bool compareByWeight(const Rikishi& a, const Rikishi& b) {
+	return a.weight > b.weight;
+}
+
+std::string getRandomString() {
+    std::random_device rd;  // Seed for random generator
+    std::mt19937 gen(rd()); // Mersenne Twister RNG
+    std::uniform_real_distribution<> dis(0, 100); // Range 0 to 100
+
+    double randomValue = dis(gen);
+
+    if (randomValue < 95.0) {
+        return "Window";
+    } else if (randomValue < 98.0) { // 95% - 98% (3%)
+        return "Cat";
+    } else if (randomValue < 99.0) { // 98% - 99% (1%)
+        return "Alien";
+    } else { // 99% - 100% (1%)
+        return "Escapee";
+    }
+}
+
+void GetRandomName(std::string &playerName, std::vector<std::string> &usedNames) {
+    std::string namesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names.txt";
+    std::ifstream file(namesPath);
+    if (!file.is_open()) {
+        throw std::runtime_error("Failed to open names.txt");
+    }
+
+    std::vector<std::string> allNames;
+    std::string name;
+    while (std::getline(file, name)) {
+        allNames.push_back(name);
+    }
+    file.close();
+
+    if (allNames.empty()) {
+        throw std::runtime_error("No names found in names.txt");
+    }
+
+    // Seed the random number generator (if not already seeded)
+    static bool seeded = false;
+    if (!seeded) {
+        std::srand(static_cast<unsigned>(std::time(0)));
+        seeded = true;
+    }
+
+    // Custom shuffle using std::rand
+    for (size_t i = 0; i < allNames.size(); ++i) {
+        size_t j = i + std::rand() % (allNames.size() - i);
+        std::swap(allNames[i], allNames[j]);
+    }
+
+    // Try to find a unique name based on the first three letters
+    for (const auto &potentialName : allNames) {
+        // Check if the name has already been used
+        if (std::find(usedNames.begin(), usedNames.end(), potentialName) == usedNames.end()) {
+            // Check if the first three letters are unique
+			std::string prefix = potentialName.substr(0, 3);
+            bool prefixUnique = true;
+            for (const auto &usedName : usedNames) {
+                if (usedName.substr(0, 3) == prefix) {
+                    prefixUnique = false;
+                    break;
+                }
+            }
+
+            if (prefixUnique) {
+                // Assign the name if unique
+                playerName = potentialName;
+                usedNames.push_back(playerName);
+                return;
+            }
+        }
+    }
+
+    // If no valid name was found, retry the process with a new shuffle
+    GetRandomName(playerName, usedNames);
+}
+
+void DistributeSkillPoints(int SkillPointBank, Rikishi &rikishi) {
+    // Skill values and their respective limits
+    std::vector<int> skillLimits = {rikishi.strengthLimit, rikishi.weightLimit, rikishi.techniqueLimit, rikishi.enduranceLimit, rikishi.speedLimit};
+    std::vector<int> skillPoints = {0, 0, 0, 0, 0};
+
+    std::random_device rd;            // Random number generator
+    std::mt19937 rng(rd());
+    std::uniform_int_distribution<int> dist(0, 4); // Random number between 0 and 4
+
+    // Distribute the skill points
+    for (int x = 0; x < SkillPointBank; x++) {
+        while (true) { // Keep rolling until a valid skill is found
+            int RandomSkill = dist(rng); // Generate a random skill index
+            if (skillPoints[RandomSkill] < skillLimits[RandomSkill]) {
+                skillPoints[RandomSkill]++;
+                break;
+            }
+        }
+    }
+
+    // Assign the values to individual skills of the rikishi
+    rikishi.strength = skillPoints[0];
+    rikishi.weight = skillPoints[1];
+    rikishi.technique = skillPoints[2];
+    rikishi.endurance = skillPoints[3];
+    rikishi.speed = skillPoints[4];
+}
+
+// Function to assign a color to a new Rikishi, ensuring no duplication
+void AssignRikishiColor(Rikishi& rikishi)
+{
+    // Create a copy of available colors that will be filtered by used colors
+    std::vector<TAlphaColor> availableForSelection = availableColors;
+
+    // Remove used colors from available colors
+    for (const TAlphaColor& color : usedColors)
+    {
+        availableForSelection.erase(std::remove(availableForSelection.begin(), availableForSelection.end(), color), availableForSelection.end());
+    }
+
+    // If no available colors remain (edge case), reset used colors
+    if (availableForSelection.empty()) {
+        usedColors.clear();
+        availableForSelection = availableColors;
+    }
+
+    // Randomly select a color
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, availableForSelection.size() - 1);
+    TAlphaColor selectedColor = availableForSelection[dis(gen)];
+
+    // Add selected color to used colors
+    usedColors.push_back(selectedColor);
+
+    // Convert TAlphaColor to a string (you may need to format it if necessary for your application)
+	rikishi.colour = String("<Color: ") + System::String(std::to_string(selectedColor).c_str()) + String(">");
+
+
+    std::cout << "Assigned Color to " << rikishi.name << ": " << rikishi.colour.c_str() << std::endl;
+}
+
+//---------------------------------------------------------------------------
+// Function to initialize a Rikishi
+void InitializeRikishi(Rikishi &rikishi, std::vector<std::string> &usedNames) {
+    GetRandomName(rikishi.name, usedNames);
+
+    // Assign basic properties
+    rikishi.minBid = (std::rand() % 7) + 1;
+
+    // Randomly select age based on minBid
+    if (rikishi.minBid == 7) {
+        rikishi.age = 21 + (std::rand() % 5); // 21 to 25
+    }
+    else if (rikishi.minBid == 6) {
+        rikishi.age = 21 + (std::rand() % 7); // 21 to 27
+    }
+    else if (rikishi.minBid == 3) {
+        rikishi.age = 22 + (std::rand() % 8); // 22 to 29
+    }
+    else if (rikishi.minBid == 2) {
+        rikishi.age = 24 + (std::rand() % 6); // 24 to 29
+    }
+    else if (rikishi.minBid == 1) {
+        rikishi.age = 26 + (std::rand() % 4); // 26 to 29
+    }
+    else {
+        rikishi.age = 21 + (std::rand() % 9); // 21 to 29
+    }
+
+    // Set the current bid based on age
+    rikishi.currentBid = rikishi.minBid - std::floor((29 - rikishi.age) / 2);
+    rikishi.rank = Ranks[16 - rikishi.minBid];
+	rikishi.owner = "None";
+    rikishi.spirit = 2;  // Assign spirit value
+
+    // Assign default skill limits (they remain 4 unless modified)
+    rikishi.strengthLimit = 4;
+    rikishi.weightLimit = 4;
+    rikishi.techniqueLimit = 4;
+    rikishi.enduranceLimit = 4;
+	rikishi.speedLimit = 4;
+
+    // List of skills
+	std::vector<std::string> skills = {"Strength", "Weight", "Technique", "Endurance", "Speed"};
+    std::random_device rd;
+    std::mt19937 rng(rd());
+    std::shuffle(skills.begin(), skills.end(), rng); // Shuffle the skills
+
+    // Set the initial skill values to 0
+    int strength = 0, weight = 0, technique = 0, endurance = 0, speed = 0;
+    std::vector<int> skillValues = {strength, weight, technique, endurance, speed};
+
+	// Assign skill limits based on the shuffle order
+	if (skills[1] == "Strength") rikishi.strengthLimit = 1;
+	else if (skills[1] == "Weight") rikishi.weightLimit = 1;
+	else if (skills[1] == "Technique") rikishi.techniqueLimit = 1;
+	else if (skills[1] == "Endurance") rikishi.enduranceLimit = 1;
+	else if (skills[1] == "Speed") rikishi.speedLimit = 1;
+
+	if (skills[2] == "Strength") rikishi.strengthLimit = 2;
+	else if (skills[2] == "Weight") rikishi.weightLimit = 2;
+	else if (skills[2] == "Technique") rikishi.techniqueLimit = 2;
+	else if (skills[2] == "Endurance") rikishi.enduranceLimit = 2;
+	else if (skills[2] == "Speed") rikishi.speedLimit = 2;
+
+	if (skills[3] == "Strength") rikishi.strengthLimit = 3;
+	else if (skills[3] == "Weight") rikishi.weightLimit = 3;
+	else if (skills[3] == "Technique") rikishi.techniqueLimit = 3;
+	else if (skills[3] == "Endurance") rikishi.enduranceLimit = 3;
+	else if (skills[3] == "Speed") rikishi.speedLimit = 3;
+
+    // Distribute skill points randomly
+    int skillPointBank = rikishi.currentBid * 2 + std::rand() % 2;
+    DistributeSkillPoints(skillPointBank, rikishi);
+
+    // Create a vector of skill names and values for easier processing
+    std::vector<std::pair<std::string, int>> skillValuePairs = {
+		{"Strength", rikishi.strength},
+		{"Weight", rikishi.weight},
+		{"Technique", rikishi.technique},
+		{"Endurance", rikishi.endurance},
+		{"Speed", rikishi.speed}
+    };
+
+    // Sort skills by value in descending order
+    std::sort(skillValuePairs.begin(), skillValuePairs.end(), [](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
+        return a.second > b.second;
+    });
+
+    // Check if the highest values are the same and choose one at random if so
+    std::vector<std::string> highestSkills;
+    highestSkills.push_back(skillValuePairs[0].first);  // Add the highest value skill
+
+    // Check if there are multiple skills with the same highest value
+    for (size_t i = 1; i < skillValuePairs.size(); ++i) {
+        if (skillValuePairs[i].second == skillValuePairs[0].second) {
+            highestSkills.push_back(skillValuePairs[i].first);
+        }
+    }
+
+    // Randomly select the preferred skill if there are multiple with the same value
+    std::uniform_int_distribution<int> dist(0, highestSkills.size() - 1);
+    std::string preferredSkill = highestSkills[dist(rng)];
+
+    // Assign the preferred skill to the Rikishi struct
+	rikishi.preferredSkill = preferredSkill;
+
+	AssignRikishiColor(rikishi);
+
+    rikishi.RandomString = getRandomString();
+
+	// Log the results
+//    MainStreet->MemoLog->Lines->Add("Added a fresh Rikishi!");
+//    MainStreet->MemoLog->Lines->Add("Strength =" + IntToStr(rikishi.strength) + "/" + IntToStr(rikishi.strengthLimit));
+//    MainStreet->MemoLog->Lines->Add("Weight =" + IntToStr(rikishi.weight) + "/" + IntToStr(rikishi.weightLimit));
+//    MainStreet->MemoLog->Lines->Add("Technique =" + IntToStr(rikishi.technique) + "/" + IntToStr(rikishi.techniqueLimit));
+//    MainStreet->MemoLog->Lines->Add("Endurance =" + IntToStr(rikishi.endurance) + "/" + IntToStr(rikishi.enduranceLimit));
+//	MainStreet->MemoLog->Lines->Add("Speed =" + IntToStr(rikishi.speed) + "/" + IntToStr(rikishi.speedLimit));
+}
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+void __fastcall TMainStreet::ButtonNoboruClick(TObject *Sender)
+{
+	// Ensure NoboruForm is created
+	if (!NoboruForm)
+	{
+		NoboruForm = new TNoboruForm(this); // Assign the created form to the global pointer
+	}
+	NoboruForm->Show(); // Show the Noboru form
+	this->Hide();       // Hide the current form
+}
+
+void __fastcall TMainStreet::ButtonBeyaClick(TObject *Sender)
+{
+	// Ensure BeyaForm is created
+	if (!YourBeya)
+	{
+		YourBeya = new TYourBeya(this); // Assign the created form to the global pointer
+	}
+	YourBeya->Show(); // Show the Beya form
+	YourBeya->UpdateBeya();
+	this->Hide();       // Hide the current form
+}
+
+
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonBanzukeClick(TObject *Sender)
+{
+	// Ensure BanzukeForm is created
+	if (!BanzukeForm)
+	{
+		BanzukeForm = new TBanzukeForm(this); // Assign the created form to the global pointer
+	}
+	BanzukeForm->Show(); // Show the Banzuke form
+//	BanzukeForm->UpdateBouts();     // ????
+	this->Hide();       // Hide the current form
+
+}
+//---------------------------------------------------------------------------
+void InitializeAllRikishi() {
+	if (rikishiVector.size() < 16) {
+		int neededRikishi = 16 - rikishiVector.size();
+		for (int i = 0; i < neededRikishi; ++i) {
+			Rikishi newRikishi;
+			rikishiVector.push_back(newRikishi);
+		}
+	}
+
+	for (auto &rikishi : rikishiVector) {
+		if (!rikishi.isInitialized) { // Only initialize uninitialized Rikishi
+            InitializeRikishi(rikishi, usedNames);
+			rikishi.isInitialized = true; // Mark as initialized
+        }
+	}
+}
+
+void PreGameSetup() {
+	int NumberPlayers = 1;  // Set to 1 to match the total number of players
+
+    // Create a list of players
+    std::vector<Player> allPlayers = {
+		Player("P1"),
+		Player("P2"),
+		Player("P3"),
+		Player("P4"),
+		Player("P5")
+	};
+
+	// If you want a subset of players based on the number, use this:
+	players = std::vector<Player>(allPlayers.begin(), allPlayers.begin() + NumberPlayers);
+
+	// Set all players' AP and VP to 0
+	for (auto& player : players) {
+		player.AP = 0;
+		player.VP = 0;
+        player.numberRikishi = 0;
+	}
+}
+
+// Function to log Rikishi data to MemoLog
+//void LogRikishi(TMemo* MemoLog, const std::vector<Rikishi>& rikishiVector, const UnicodeString& message) {
+//	MemoLog->Lines->Add("\n=== " + message + " ===");
+//	for (const auto& rikishi : rikishiVector) {
+//		MemoLog->Lines->Add("Age: " + IntToStr(rikishi.age) + ", MinBid: " + IntToStr(rikishi.minBid) + ", Weight: " + IntToStr(rikishi.weight) + ", Score: " + IntToStr(rikishi.score) + ", Rank: " + rikishi.rank.c_str());
+//	}
+//}
+
+
+// Function to calculate scores
+void CalculateScores(std::vector<Rikishi>& rikishiVector) {
+	for (auto& rikishi : rikishiVector) {
+        rikishi.score = rikishi.age + rikishi.minBid;
+    }
+    std::sort(rikishiVector.begin(), rikishiVector.end(), [](const Rikishi& a, const Rikishi& b) {
+        return a.score > b.score;
+    });
+//    LogRikishi(MemoLog, rikishiVector, "After Calculating Scores");
+}
+
+// Function to sort Rikishi within a group by weight and resolve ties randomly
+void SortWithinGroups(std::vector<Rikishi*>& group) {
+    std::random_device rd;
+    std::mt19937 rng(rd());
+    std::sort(group.begin(), group.end(), [&rng](Rikishi* a, Rikishi* b) {
+        if (a->weight == b->weight) {
+            return std::uniform_int_distribution<int>(0, 1)(rng) == 0;
+        }
+        return a->weight > b->weight;
+    });
+}
+
+// Function to rank Rikishi
+//void RankRikishi(std::vector<Rikishi>& rikishiVector) {
+//    // Step 1: Calculate scores
+//	CalculateScores(rikishiVector);
+//
+//    // Step 2: Group Rikishi by score
+//    std::unordered_map<int, std::vector<Rikishi*>> scoreGroups;
+//    std::vector<int> uniqueScores;
+//    for (auto& rikishi : rikishiVector) {
+//        if (scoreGroups.find(rikishi.score) == scoreGroups.end()) {
+//            uniqueScores.push_back(rikishi.score);
+//        }
+//        scoreGroups[rikishi.score].push_back(&rikishi);
+//    }
+//
+////	MemoLog->Lines->Add("\n=== Grouped Rikishi Before Sorting ===");
+////	for (int score : uniqueScores) {
+////		MemoLog->Lines->Add("Group with Score = " + IntToStr(score));
+////    }
+//
+//    // Step 3: Sort each group by weight and resolve ties
+//    for (int score : uniqueScores) {
+//        SortWithinGroups(scoreGroups[score]);
+//    }
+//
+//    std::sort(rikishiVector.begin(), rikishiVector.end(), [](const Rikishi& a, const Rikishi& b) {
+//        return a.score > b.score;
+//    });
+////    LogRikishi(MemoLog, rikishiVector, "After Sorting Within Groups");
+//
+//    // Step 4: Assign ranks
+//    int currentRank = 0;
+//    for (int score : uniqueScores) {
+//        for (Rikishi* rikishi : scoreGroups[score]) {
+//            if (currentRank < 16) {
+//                rikishi->rank = Ranks[currentRank];
+//            } else {
+//                rikishi->rank = "Juryo 2";
+//            }
+//            currentRank++;
+//        }
+//    }
+//
+//    std::sort(rikishiVector.begin(), rikishiVector.end(), [](const Rikishi& a, const Rikishi& b) {
+//        return a.score > b.score;
+//    });
+////	LogRikishi(MemoLog, rikishiVector, "After Assigning Ranks");
+//
+//    // Step 5: Ensure rikishiVector is sorted by rank order
+//    std::unordered_map<std::string, int> rankOrder;
+//    for (size_t i = 0; i < 16; i++) {
+//        rankOrder[Ranks[i]] = i;
+//    }
+//
+//    std::sort(rikishiVector.begin(), rikishiVector.end(), [&rankOrder](const Rikishi& a, const Rikishi& b) {
+//        return rankOrder[a.rank] < rankOrder[b.rank];
+//	});
+//
+////    LogRikishi(MemoLog, rikishiVector, "Final Sorted Rikishi (By Rank)");
+//}
+
+void RankRikishi(std::vector<Rikishi>& rikishiVector) {
+    // Step 1: Calculate scores for unowned Rikishi only
+    CalculateScores(rikishiVector);
+
+    // Step 2: Separate owned and unowned Rikishi
+    std::vector<Rikishi*> unownedRikishi;
+    std::vector<std::pair<int, Rikishi>> ownedRikishi; // Stores (index, Rikishi) to preserve order
+
+    for (size_t i = 0; i < rikishiVector.size(); ++i) {
+        if (rikishiVector[i].owner == "None") {
+            unownedRikishi.push_back(&rikishiVector[i]);
+        } else {
+            ownedRikishi.push_back({static_cast<int>(i), rikishiVector[i]});
+        }
+    }
+
+    // Step 3: Group Unowned Rikishi by score
+    std::map<int, std::vector<Rikishi*>> scoreGroups; // Ordered automatically
+    for (auto* rikishi : unownedRikishi) {
+        scoreGroups[rikishi->score].push_back(rikishi);
+    }
+
+    // Step 4: Sort each score group
+    for (auto& group : scoreGroups) {
+        SortWithinGroups(group.second);
+    }
+
+    // Step 5: Flatten sorted groups
+    unownedRikishi.clear();
+    for (auto it = scoreGroups.rbegin(); it != scoreGroups.rend(); ++it) {
+        for (Rikishi* rikishi : it->second) {
+            unownedRikishi.push_back(rikishi);
+        }
+    }
+
+    // Step 6: Find highest unoccupied rank
+    std::set<std::string> occupiedRanks;
+    for (const auto& rikishi : ownedRikishi) {
+        occupiedRanks.insert(rikishi.second.rank);
+    }
+
+    int currentRank = 0;
+    for (size_t i = 0; i < 16; ++i) {
+        if (occupiedRanks.find(Ranks[i]) == occupiedRanks.end()) {
+            currentRank = i; // First available rank
+            break;
+        }
+    }
+
+    // Step 7: Assign ranks to unowned Rikishi
+    for (Rikishi* rikishi : unownedRikishi) {
+        if (currentRank < 16) {
+            rikishi->rank = Ranks[currentRank];
+        } else {
+            rikishi->rank = "Juryo 2";
+        }
+        currentRank++;
+    }
+
+    // Step 8: Restore owned Rikishi in their original positions
+    std::vector<Rikishi> finalList(rikishiVector.size());
+
+    auto unownedIt = unownedRikishi.begin();
+    auto ownedIt = ownedRikishi.begin();
+
+    for (size_t i = 0; i < rikishiVector.size(); ++i) {
+        if (ownedIt != ownedRikishi.end() && ownedIt->first == static_cast<int>(i)) {
+            finalList[i] = ownedIt->second; // Insert owned Rikishi in original position
+            ++ownedIt;
+        } else {
+            finalList[i] = **unownedIt; // Insert unowned Rikishi
+            ++unownedIt;
+        }
+    }
+
+    rikishiVector = finalList;
+}
+
+void NewYearPhase() {
+
+	// Give all current players 7 AP
+	for (auto& player : players) {  // 'players' is the vector you initialized
+		player.AddAP();  // Add 7 AP to each player
+	}
+
+	// NEW PLAYER ENTERING THE GAME (this won't be implemented for a LONG time)
+
+	// Add Rikishi to fill to 16
+	InitializeAllRikishi();
+
+
+//	for (const Rikishi& r : rikishiVector) {
+//		ShowMessage("Rikishi: " + AnsiString(r.name.c_str()) + " with rank '" + AnsiString(r.rank.c_str()) + "'");
+//	}
+
+	// Determine Rikishi order
+//	LogRikishi(MainStreet->MemoLog, rikishiVector, "Initial Rikishi Data");
+//	RankRikishi(rikishiVector, MainStreet->MemoLog);
+	if (currentYear == 0) {
+		RankRikishi(rikishiVector);
+	}
+
+    int y = 0;
+	for (auto& rikishi : rikishiVector) {
+		rikishi.wins = 0;
+		rikishi.losses = 0;
+		rikishi.rank = Ranks[y];
+		y++;
+	}
+
+	// Bidding Phase
+	NoboruForm->StartBidding();  // Start the bidding process in NoboruForm
+	MainStreet->MemoLog->Lines->Add("Bidding phase started...");
+}
+
+// The function to trigger the next phase (e.g., after bidding is complete)
+void BiddingPhaseComplete() {
+	MainStreet->MemoLog->Lines->Add("Bidding phase complete.");
+	// Trigger the next phase here, like the training phase, etc.
+	YourBeya->StartTraining();
+}
+
+ // The function to trigger the next phase (e.g., after Training is complete)
+void TrainingPhaseComplete() {
+	MainStreet->MemoLog->Lines->Add("Training phase complete.");
+	// Trigger the next phase here, like the BOUT phase, etc.
+	BanzukeForm->StartBanzuke();
+}
+
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+//
+//	// Debug: Print original ranking
+//	MainStreet->MemoLog->Lines->Add("Original Ranking:");
+//	for (const auto& r : rikishiVector) {
+//		MainStreet->MemoLog->Lines->Add(AnsiString(r.name.c_str()) + " (" +
+//										 AnsiString(r.rank.c_str()) + ") - Wins: " +
+//										 IntToStr(r.wins) + ", Losses: " + IntToStr(r.losses));
+//	}
+//
+//	// Create a temporary ordered list
+//	std::vector<Rikishi> orderedRikishi = rikishiVector;  // Copy current list
+//
+//    // Sort based on MemoLog output (already known to be correct)
+//    std::sort(orderedRikishi.begin(), orderedRikishi.end(), [](const Rikishi& a, const Rikishi& b) {
+//        return a.wins > b.wins;  // Sort by wins in descending order
+//    });
+//
+//	// Available ranks in order
+//    std::vector<std::string> ranks = {
+//        "Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+//        "Maegashira 1", "Maegashira 2", "Maegashira 3", "Maegashira 4",
+//        "Maegashira 5", "Maegashira 6", "Maegashira 7", "Maegashira 8",
+//		"Maegashira 9", "Maegashira 10", "Juryo 1", "Juryo 2"
+//	};
+//
+//	// Assign ranks based on order
+//	for (size_t i = 0; i < orderedRikishi.size(); ++i) {
+//		if (i < ranks.size()) {
+//			orderedRikishi[i].rank = ranks[i];  // Assign new rank
+//		} else {
+//			orderedRikishi[i].rank = "Juryo 2";  // Default rank if overflow
+//		}
+//	}
+//
+//
+//	// Debug: Print final ranking before filling gaps
+//	MainStreet->MemoLog->Lines->Add("\nFinal Ranking (Before Gaps Filled):");
+//	for (const auto& r : orderedRikishi) {
+//		MainStreet->MemoLog->Lines->Add(AnsiString(r.name.c_str()) + " (" + AnsiString(r.rank.c_str()) + ")");
+//	}
+//
+//	// Replace original vector with ordered vector
+//	rikishiVector = orderedRikishi;
+//}
+
+
+
+
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+//    // Create a temporary ordered list
+//    std::vector<Rikishi> orderedRikishi = rikishiVector;  // Copy current list
+//
+//    // Sort based on MemoLog output (already known to be correct)
+//    std::sort(orderedRikishi.begin(), orderedRikishi.end(), [](const Rikishi& a, const Rikishi& b) {
+//        return a.wins > b.wins;  // Sort by wins in descending order
+//    });
+//
+//    // Available ranks in order
+//    std::vector<std::string> ranks = {
+//        "Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+//        "Maegashira 1", "Maegashira 2", "Maegashira 3", "Maegashira 4",
+//        "Maegashira 5", "Maegashira 6", "Maegashira 7", "Maegashira 8",
+//        "Maegashira 9", "Maegashira 10", "Juryo 1", "Juryo 2"
+//    };
+//
+//    // Assign ranks based on order
+//	for (size_t i = 0; i < orderedRikishi.size(); ++i) {
+//		if (i < ranks.size()) {
+//            orderedRikishi[i].rank = ranks[i];  // Assign new rank
+//        } else {
+//            orderedRikishi[i].rank = "Juryo 2";  // Default rank if overflow
+//        }
+//    }
+//
+//    // Replace original vector with ordered vector
+//    rikishiVector = orderedRikishi;
+//}
+
+int calculateMovement(const Rikishi& r) {
+    int move = 0;
+
+    if (r.wins == 7) move = 6;
+    else if (r.wins == 6) move = 4;
+    else if (r.wins == 5) move = 2;
+    else if (r.wins == 4) move = 1;
+    else if (r.losses == 7) move = -6;
+    else if (r.losses == 6) move = -4;
+    else if (r.losses == 5) move = -2;
+    else if (r.losses == 4) move = -1;
+
+    if (r.rank == "Yokozuna") move += 1;
+    if (r.rank == "Juryo 2") move += 1;
+
+    return move;
+}
+
+int getRankPoints(const std::string& rank) {
+    // Assign rank points based on the rank list (highest = 15, lowest = 0)
+    std::string Ranks[] = {
+        "Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+        "Maegashira 1", "Maegashira 2", "Maegashira 3",
+        "Maegashira 4", "Maegashira 5", "Maegashira 6",
+        "Maegashira 7", "Maegashira 8", "Maegashira 9",
+        "Maegashira 10", "Juryo 1", "Juryo 2"
+    };
+
+    for (int i = 0; i < 16; ++i) {
+        if (rank == Ranks[i]) {
+            return 15 - i; // Highest rank (Yokozuna) gets 15 points, lowest (Juryo 2) gets 0 points
+        }
+    }
+    return 0; // Default case
+}
+
+void calculateScoresAndSort(std::vector<Rikishi>& rikishiVector) {
+    // Calculate the scores for each rikishi
+	for (auto& r : rikishiVector) {
+		r.score = -100;
+        int movement = calculateMovement(r);
+        int rankPoints = getRankPoints(r.rank);
+        r.score = movement + rankPoints;
+    }
+
+    // Sort the rikishi by score in descending order
+    std::sort(rikishiVector.begin(), rikishiVector.end(), [](const Rikishi& a, const Rikishi& b) {
+        return a.score > b.score;
+    });
+
+    // Log the results using MemoLog
+	MainStreet->MemoLog->Lines->Add("Name\t\tRank\t\tScore");
+	for (const auto& r : rikishiVector) {
+		std::string logEntry = r.name + "\t" + r.rank + "\t" + std::to_string(r.score);
+		MainStreet->MemoLog->Lines->Add(logEntry.c_str());
+	}
+}
+
+void printRikishiVector(std::vector<Rikishi>& rikishiVector) {
+
+	MainStreet->MemoLog->Lines->Add("Name\t\tRank\t\tScore");
+	for (const auto& r : rikishiVector) {
+		std::string logEntry = r.name + "\t" + r.rank + "\t" + std::to_string(r.wins);
+		MainStreet->MemoLog->Lines->Add(logEntry.c_str());
+	}
+	MainStreet->MemoLog->Lines->Add("");
+}
+
+void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+	MainStreet->MemoLog->Lines->Add("Before sorting by score:");
+	printRikishiVector(rikishiVector);
+	MainStreet->MemoLog->Lines->Add("After sorting by score:");
+	calculateScoresAndSort(rikishiVector);
+}
+
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+//	try {
+//		std::vector<std::string> rankOrder = {
+//            "Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+//			"Maegashira 1", "Maegashira 2", "Maegashira 3",
+//            "Maegashira 4", "Maegashira 5", "Maegashira 6",
+//            "Maegashira 7", "Maegashira 8", "Maegashira 9",
+//            "Maegashira 10", "Juryo 1", "Juryo 2"
+//		};
+//
+//        auto rankValue = [&](const std::string& rank) -> int {
+//            auto it = std::find(rankOrder.begin(), rankOrder.end(), rank);
+//			return (it != rankOrder.end()) ? std::distance(rankOrder.begin(), it) : rankOrder.size();
+//        };
+//
+//        std::sort(rikishiVector.begin(), rikishiVector.end(), [&](const Rikishi& a, const Rikishi& b) {
+//			return rankValue(a.rank) < rankValue(b.rank);
+//        });
+//
+//        std::vector<std::pair<Rikishi, int>> rankAdjustments;
+//		bool yokozunaAssigned = false;
+//
+//        for (auto& rikishi : rikishiVector) {
+//            int movement = 0;
+//			if (rikishi.wins == 7) movement = 6;
+//            else if (rikishi.wins == 6) movement = 4;
+//            else if (rikishi.wins == 5) movement = 2;
+//            else if (rikishi.wins == 4) movement = 1;
+//			else if (rikishi.losses == 7) movement = -6;
+//            else if (rikishi.losses == 6) movement = -4;
+//            else if (rikishi.losses == 5) movement = -2;
+//            else if (rikishi.losses == 4) movement = -1;
+//
+//            if (rikishi.rank == "Yokozuna" && !yokozunaAssigned) {
+//                movement += 1;
+//                yokozunaAssigned = true;
+//			}
+//
+//            int currentRankIndex = rankValue(rikishi.rank);
+//            int newRankIndex = std::max(0, std::min((int)rankOrder.size() - 1, currentRankIndex - movement));
+//			rankAdjustments.push_back({ rikishi, newRankIndex });
+//        }
+//
+//        // Log to check before applying final ranks
+//		for (const auto& [rikishi, newRankIndex] : rankAdjustments) {
+//            if (rikishi.rank == "Yokozuna" && yokozunaAssigned) {
+//                MainStreet->MemoLog->Lines->Add("Error: Multiple Yokozuna detected during rank adjustment!");
+//                return;  // Stop further processing
+//			}
+//        }
+//
+//        std::stable_sort(rankAdjustments.begin(), rankAdjustments.end(), [&](const auto& a, const auto& b) {
+//			return a.second < b.second;
+//        });
+//
+//        std::vector<Rikishi> reorderedRikishi;
+//		for (auto& [rikishi, newRankIndex] : rankAdjustments) {
+//            if (newRankIndex >= 0 && newRankIndex < rankOrder.size()) {
+//                rikishi.rank = rankOrder[newRankIndex];
+//                reorderedRikishi.push_back(rikishi);
+//			}
+//        }
+//
+//        // Ensure only one Yokozuna is assigned
+//		if (std::count_if(reorderedRikishi.begin(), reorderedRikishi.end(), [](const Rikishi& r) {
+//            return r.rank == "Yokozuna";
+//        }) > 1) {
+//            MainStreet->MemoLog->Lines->Add("Error: More than one Yokozuna detected after final rank assignment!");
+////            return;
+//        }
+//
+//        // Ensure Juryo 2 -> Juryo 1 rule
+//		for (auto& rikishi : reorderedRikishi) {
+//            if (rikishi.rank == "Juryo 2") {
+//                rikishi.rank = "Juryo 1";
+//                break;
+//			}
+//        }
+//
+//        // Fill gaps from top down
+//		std::vector<Rikishi> finalRanking;
+//        auto rankIterator = rankOrder.begin();
+//
+//        for (auto& rikishi : reorderedRikishi) {
+//			while (rankIterator != rankOrder.end() && rikishi.rank != *rankIterator) {
+//                if (!finalRanking.empty()) {
+//                    finalRanking.back().rank = *rankIterator;
+//                }
+//				++rankIterator;
+//            }
+//            finalRanking.push_back(rikishi);
+//			++rankIterator;
+//        }
+//
+//		// Log final ranking
+//		MainStreet->MemoLog->Lines->Add("Final Ranking (After Gaps Filled):");
+//		for (const auto& r : finalRanking) {
+//			MainStreet->MemoLog->Lines->Add(AnsiString(r.name.c_str()) + " (" + AnsiString(r.rank.c_str()) + ")");
+//		}
+//
+//		// Update rikishiVector with the new order
+//        rikishiVector = finalRanking;
+//
+//    } catch (const std::exception& e) {
+//		MainStreet->MemoLog->Lines->Add("Exception caught: " + AnsiString(e.what()));
+//	} catch (...) {
+//		MainStreet->MemoLog->Lines->Add("Unknown exception caught.");
+//	}
+//}
+
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+//    try {
+//        std::vector<std::string> rankOrder = {
+//            "Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+//            "Maegashira 1", "Maegashira 2", "Maegashira 3",
+//            "Maegashira 4", "Maegashira 5", "Maegashira 6",
+//            "Maegashira 7", "Maegashira 8", "Maegashira 9",
+//            "Maegashira 10", "Juryo 1", "Juryo 2"
+//        };
+//
+//        // Save original ranks for later use (if needed)
+//        std::vector<std::string> originalRanks;
+//        for (const auto& rikishi : rikishiVector) {
+//            originalRanks.push_back(rikishi.rank);
+//        }
+//
+//        // Print original list and their wins
+//        MainStreet->MemoLog->Lines->Add("Original Ranking (with wins):");
+//        for (const auto& rikishi : rikishiVector) {
+//            MainStreet->MemoLog->Lines->Add(AnsiString(rikishi.name.c_str()) + " (" +
+//                                            AnsiString(rikishi.rank.c_str()) + ") - Wins: " +
+//                                            IntToStr(rikishi.wins) + ", Losses: " + IntToStr(rikishi.losses));
+//        }
+//
+//        // Temporarily set ranks to "none" to focus on the order
+//        for (auto& rikishi : rikishiVector) {
+//            rikishi.rank = "none";
+//        }
+//
+//        // Sort the rikishi by the movement logic (going from bottom to top)
+//        std::vector<std::pair<Rikishi, int>> rankAdjustments;
+//
+//        bool yokozunaAssigned = false;
+//        for (auto& rikishi : rikishiVector) {
+//            int movement = 0;
+//
+//            // Apply movement based on wins and losses
+//            if (rikishi.wins == 7) movement = 6;
+//            else if (rikishi.wins == 6) movement = 4;
+//            else if (rikishi.wins == 5) movement = 2;
+//            else if (rikishi.wins == 4) movement = 1;
+//            else if (rikishi.losses == 7) movement = -6;
+//            else if (rikishi.losses == 6) movement = -4;
+//            else if (rikishi.losses == 5) movement = -2;
+//            else if (rikishi.losses == 4) movement = -1;
+//
+//            if (rikishi.rank == "Yokozuna" && !yokozunaAssigned) {
+//                movement += 1;
+//                yokozunaAssigned = true;
+//            }
+//
+//            rankAdjustments.push_back({ rikishi, movement });
+//        }
+//
+//        // Sort the rikishi based on their movement (bottom to top, applying movement)
+//        std::stable_sort(rankAdjustments.begin(), rankAdjustments.end(), [&](const auto& a, const auto& b) {
+//            return a.second < b.second;
+//        });
+//
+//        // Rebuild the rikishiVector with the new movement-based order
+//        std::vector<Rikishi> reorderedRikishi;
+//        for (auto& [rikishi, movement] : rankAdjustments) {
+//            reorderedRikishi.push_back(rikishi);
+//        }
+//
+//        // Ensure only one Yokozuna is assigned
+//        if (std::count_if(reorderedRikishi.begin(), reorderedRikishi.end(), [](const Rikishi& r) {
+//            return r.rank == "Yokozuna";
+//        }) > 1) {
+//            MainStreet->MemoLog->Lines->Add("Error: More than one Yokozuna detected after movement adjustment!");
+//            return;
+//        }
+//
+//        // Ensure Juryo 2 -> Juryo 1 rule
+//        for (auto& rikishi : reorderedRikishi) {
+//            if (rikishi.rank == "Juryo 2") {
+//                rikishi.rank = "Juryo 1";
+//                break;
+//            }
+//        }
+//
+//		// Debug: Print final ranking
+//		MainStreet->MemoLog->Lines->Add("Reordered Ranking:");
+//		for (const auto& r : reorderedRikishi) {
+//            MainStreet->MemoLog->Lines->Add(AnsiString(r.name.c_str()) + " (" + AnsiString(r.rank.c_str()) + ")");
+//		}
+//
+//        // Now, assign ranks based on new order
+//		std::vector<Rikishi> finalRanking;
+//        auto rankIterator = rankOrder.begin();
+//
+//		for (auto& rikishi : reorderedRikishi) {
+//            if (rankIterator != rankOrder.end()) {
+//                rikishi.rank = *rankIterator;
+//                finalRanking.push_back(rikishi);
+//                ++rankIterator;
+//            }
+//        }
+//
+//        // Debug: Print final ranking
+//        MainStreet->MemoLog->Lines->Add("Final Ranking (After Movement and Rank Assignment):");
+//        for (const auto& r : finalRanking) {
+//            MainStreet->MemoLog->Lines->Add(AnsiString(r.name.c_str()) + " (" + AnsiString(r.rank.c_str()) + ")");
+//        }
+//
+//        // Update rikishiVector with the new order
+//        rikishiVector = finalRanking;
+//
+//    } catch (const std::exception& e) {
+//        MainStreet->MemoLog->Lines->Add("Exception caught: " + AnsiString(e.what()));
+//    } catch (...) {
+//        MainStreet->MemoLog->Lines->Add("Unknown exception caught.");
+//    }
+//}
+
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+//    try {
+//        std::vector<std::string> rankOrder = {
+//			"Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+//            "Maegashira 1", "Maegashira 2", "Maegashira 3",
+//            "Maegashira 4", "Maegashira 5", "Maegashira 6",
+//            "Maegashira 7", "Maegashira 8", "Maegashira 9",
+//            "Maegashira 10", "Juryo 1", "Juryo 2"
+//        };
+//
+//        // Save original ranks for later use (if needed)
+//        std::vector<std::string> originalRanks;
+//        for (const auto& rikishi : rikishiVector) {
+//            originalRanks.push_back(rikishi.rank);
+//        }
+//
+//		// Print original list and their wins
+//		MainStreet->MemoLog->Lines->Add("Original Ranking (with wins):");
+//        for (const auto& rikishi : rikishiVector) {
+//            MainStreet->MemoLog->Lines->Add(AnsiString(rikishi.name.c_str()) + " (" +
+//											AnsiString(rikishi.rank.c_str()) + ") - Wins: " +
+//                                            IntToStr(rikishi.wins) + ", Losses: " + IntToStr(rikishi.losses));
+//        }
+//
+//        // Temporarily set ranks to "none" to focus on the order
+//		for (auto& rikishi : rikishiVector) {
+//            rikishi.rank = "none";
+//        }
+//
+//        // Rank adjustment based on wins and losses
+//		std::vector<std::pair<Rikishi, int>> rankAdjustments;
+//        bool yokozunaAssigned = false;
+//        for (auto& rikishi : rikishiVector) {
+//            int movement = 0;
+//
+//			// Apply movement based on wins and losses
+//            if (rikishi.wins == 7) movement = 6;
+//            else if (rikishi.wins == 6) movement = 4;
+//            else if (rikishi.wins == 5) movement = 2;
+//            else if (rikishi.wins == 4) movement = 1;
+//			else if (rikishi.losses == 7) movement = -6;
+//            else if (rikishi.losses == 6) movement = -4;
+//            else if (rikishi.losses == 5) movement = -2;
+//            else if (rikishi.losses == 4) movement = -1;
+//
+//			// Special case for Yokozuna rank
+//            if (rikishi.rank == "Yokozuna" && !yokozunaAssigned) {
+//                movement += 1;
+//                yokozunaAssigned = true;
+//            }
+//
+//            rankAdjustments.push_back({ rikishi, movement });
+//        }
+//
+//        // Apply the movement to the rikishi starting from the bottom of the rankings
+//		std::vector<std::pair<Rikishi, int>> finalOrder;
+//        int currentPosition = 0; // Starting position (bottom of the ranking)
+//
+//        for (auto& [rikishi, movement] : rankAdjustments) {
+//            int newPosition = currentPosition + movement;
+//			finalOrder.push_back({rikishi, newPosition});
+//            currentPosition = newPosition;
+//        }
+//
+//        // Sort rikishi by their final calculated positions (from top to bottom)
+//		std::stable_sort(finalOrder.begin(), finalOrder.end(), [&](const auto& a, const auto& b) {
+//            return a.second < b.second;  // Sort by position, from bottom to top
+//        });
+//
+//        // Ensure only one Yokozuna is assigned
+//		if (std::count_if(finalOrder.begin(), finalOrder.end(), [](const std::pair<Rikishi, int>& r) {
+//            return r.first.rank == "Yokozuna";
+//        }) > 1) {
+//            MainStreet->MemoLog->Lines->Add("Error: More than one Yokozuna detected after movement adjustment!");
+//            return;
+//		}
+//
+//        // Ensure Juryo 2 -> Juryo 1 rule
+//        for (auto& [rikishi, _] : finalOrder) {
+//            if (rikishi.rank == "Juryo 2") {
+//				rikishi.rank = "Juryo 1";
+//                break;
+//            }
+//        }
+//
+//		// Debug: Print final order after movement
+//        MainStreet->MemoLog->Lines->Add("Final Order (After Movement):");
+//        for (const auto& [rikishi, position] : finalOrder) {
+//            MainStreet->MemoLog->Lines->Add(AnsiString(rikishi.name.c_str()) + " (" + AnsiString(rikishi.rank.c_str()) + ")");
+//        }
+//
+//        // Assign ranks based on final sorted order
+//        std::vector<Rikishi> finalRanking;
+//        auto rankIterator = rankOrder.begin();
+//
+//		for (auto& [rikishi, _] : finalOrder) {
+//            if (rankIterator != rankOrder.end()) {
+//                rikishi.rank = *rankIterator;
+//                finalRanking.push_back(rikishi);
+//                ++rankIterator;
+//			}
+//        }
+//
+//        // Debug: Print final ranking after assigning ranks
+//		MainStreet->MemoLog->Lines->Add("Final Ranking (After Movement and Rank Assignment):");
+//		for (const auto& rikishi : finalRanking) {
+//			MainStreet->MemoLog->Lines->Add(AnsiString(rikishi.name.c_str()) + " (" + AnsiString(rikishi.rank.c_str()) + ")");
+//		}
+//
+//		// Update rikishiVector with the new order
+//		rikishiVector = finalRanking;
+//
+//	} catch (const std::exception& e) {
+//		MainStreet->MemoLog->Lines->Add("Exception caught: " + AnsiString(e.what()));
+//	} catch (...) {
+//		MainStreet->MemoLog->Lines->Add("Unknown exception caught.");
+//	}
+//}
+
+// Function to determine movement based on wins and initial rank
+//int calculateMovement(const Rikishi& r) {
+//	if (r.wins == 7) move = 6;
+//	else if (r.wins == 6) move = 4;
+//	else if (r.wins == 5) move = 2;
+//	else if (r.wins == 4) move = 1;
+//	else if (r.losses == 7) move = -6;
+//	else if (r.losses == 6) move = -4;
+//	else if (r.losses == 5) move = -2;
+//	else if (r.losses == 4) move = -1;
+//	if (r.rank == "Yokozuna") move += 1;
+//	if (r.rank == "Juryo 2") move += 1;
+//	return move;
+//}
+//
+//std::vector<std::string> RankOrder = {
+//	"Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+//	"Maegashira 1", "Maegashira 2", "Maegashira 3",
+//	"Maegashira 4", "Maegashira 5", "Maegashira 6",
+//	"Maegashira 7", "Maegashira 8", "Maegashira 9",
+//	"Maegashira 10", "Juryo 1", "Juryo 2"
+//};
+//
+//int getRankIndex(const std::string& rank) {
+//	auto it = std::find(RankOrder.begin(), RankOrder.end(), rank);
+//	return (it != RankOrder.end()) ? std::distance(RankOrder.begin(), it) : RankOrder.size();
+//}
+//
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+//
+//
+//	for (auto& r : rikishiVector) {
+//		r.score = -100;   // set to an initial value (in another part of the code this is a different number)
+//		int movement = calculateMovement(r);
+//		r.score = movement - getRankIndex(r.rank);  // Calculate the new position based on movement
+//	}
+//
+//	std::sort(rikishiVector.begin(), rikishiVector.end(), [](const Rikishi& a, const Rikishi& b) {
+//		if (a.score != b.score) {
+//			return a.score > b.score;  // Higher scores come first
+//		}
+//		return getRankIndex(a.rank) < getRankIndex(b.rank);  // Higher rank (lower index) first
+//	});
+//
+//	// Determine how many ranks to use (avoid Juryo if < 16 rikishi)
+//	int availableRanks = rikishiVector.size();
+//	std::vector<std::string> NewRanks(RankOrder.begin(), RankOrder.begin() + availableRanks);
+//
+//	// Assign new ranks
+//	for (size_t i = 0; i < rikishiVector.size(); ++i) {
+//		rikishiVector[i].rank = NewRanks[i];
+//	}
+//}
+
+
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+//	std::map<int, std::vector<Rikishi>> positionGroups;
+//
+//	int rankIndex = rikishiVector.size() - 1;  // Start from the last rank (Juryo 2)
+//
+//    // Step 1: Calculate positions and group rikishi by their final position
+//	for (auto& r : rikishiVector) {
+//		int position = rankIndex + r.score;  // Calculate the new position based on movement
+//		positionGroups[position].push_back(r);  // Add rikishi to the group by their position
+//		rankIndex--;  // Move to the next rikishi (reverse order)
+//	}
+//
+//    // Step 2: Sort the rikishi within each group by order of entry (first entered stays in front)
+//    std::vector<Rikishi> sortedRikishiList;
+//
+//    // Iterate through the position groups, from lowest to highest position
+//    for (auto& group : positionGroups) {
+//        for (auto& r : group.second) {
+//            sortedRikishiList.push_back(r);  // Add rikishi to the sorted list in group order
+//		}
+//	}
+//
+//	// Step 3: Assign new ranks based on the sorted positions
+//	int newRankIndex = 0;
+//	for (auto& r : sortedRikishiList) {
+//		if (newRankIndex == 0) {
+//            r.rank = "Yokozuna";  // First position gets Yokozuna
+//        } else if (newRankIndex == 1) {
+//			r.rank = "Ozeki";  // Second position gets Ozeki
+//        } else if (newRankIndex == 2) {
+//            r.rank = "Sekiwake";  // Third position gets Sekiwake
+//		} else if (newRankIndex == 3) {
+//            r.rank = "Komusubi";  // Fourth position gets Komusubi
+//        } else {
+//			r.rank = "Maegashira " + std::to_string(newRankIndex - 3);  // Maegashira ranks start from M1
+//        }
+//        newRankIndex++;  // Move to the next rank
+//	}
+//
+//	// Step 4: Replace original rikishiVector with the newly ordered list
+//	rikishiVector = sortedRikishiList;
+//}
+
+
+// Function to reorder and assign ranks
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+//    // Step 1: Calculate movement for each rikishi
+//    std::vector<std::pair<Rikishi, int>> movementList;
+//    for (const auto& r : rikishiVector) {
+//        int movement = calculateMovement(r);
+//        movementList.push_back({r, movement});
+//    }
+//
+//    // Step 2: Sort rikishi based on movement, starting from the lowest rank
+//    std::stable_sort(movementList.begin(), movementList.end(), [](const auto& a, const auto& b) {
+//        return a.second < b.second; // Sort by movement value (ascending order)
+//    });
+//
+//    // Step 3: Assign ranks based on the new order
+//    std::vector<std::string> rankOrder = {
+//        "Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+//        "Maegashira 1", "Maegashira 2", "Maegashira 3", "Maegashira 4", "Maegashira 5",
+//        "Maegashira 6", "Maegashira 7", "Maegashira 8", "Maegashira 9", "Maegashira 10",
+//        "Juryo 1", "Juryo 2"
+//    };
+//
+//    for (size_t i = 0; i < rikishiVector.size(); ++i) {
+//        rikishiVector[i] = movementList[i].first; // Assign reordered rikishi
+//        rikishiVector[i].rank = rankOrder[i]; // Assign new rank
+//    }
+//}
+
+
+
+
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
+//    try {
+//        std::vector<std::string> rankOrder = {
+//            "Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+//            "Maegashira 1", "Maegashira 2", "Maegashira 3",
+//            "Maegashira 4", "Maegashira 5", "Maegashira 6",
+//            "Maegashira 7", "Maegashira 8", "Maegashira 9",
+//            "Maegashira 10", "Juryo 1", "Juryo 2"
+//        };
+//
+//        // Save original ranks for later use (if needed)
+//        std::vector<std::string> originalRanks;
+//        for (const auto& rikishi : rikishiVector) {
+//            originalRanks.push_back(rikishi.rank);
+//        }
+//
+//        // Print original list and their wins
+//        MainStreet->MemoLog->Lines->Add("Original Ranking (with wins):");
+//        for (const auto& rikishi : rikishiVector) {
+//            MainStreet->MemoLog->Lines->Add(AnsiString(rikishi.name.c_str()) + " (" +
+//                                            AnsiString(rikishi.rank.c_str()) + ") - Wins: " +
+//                                            IntToStr(rikishi.wins) + ", Losses: " + IntToStr(rikishi.losses));
+//        }
+//
+//        // Temporarily set ranks to "none" to focus on the order
+//        for (auto& rikishi : rikishiVector) {
+//            rikishi.rank = "none";
+//        }
+//
+//        // Sort the rikishi by the movement logic (going from bottom to top)
+//        std::vector<std::pair<Rikishi, int>> rankAdjustments;
+//
+//        bool yokozunaAssigned = false;
+//        for (auto& rikishi : rikishiVector) {
+//            int movement = 0;
+//
+//            // Apply movement based on wins and losses
+//            if (rikishi.wins == 7) movement = 6;
+//            else if (rikishi.wins == 6) movement = 4;
+//            else if (rikishi.wins == 5) movement = 2;
+//            else if (rikishi.wins == 4) movement = 1;
+//            else if (rikishi.losses == 7) movement = -6;
+//            else if (rikishi.losses == 6) movement = -4;
+//            else if (rikishi.losses == 5) movement = -2;
+//            else if (rikishi.losses == 4) movement = -1;
+//
+//            if (rikishi.rank == "Yokozuna" && !yokozunaAssigned) {
+//                movement += 1;
+//                yokozunaAssigned = true;
+//            }
+//
+//            rankAdjustments.push_back({ rikishi, movement });
+//        }
+//
+//        // Sort the rikishi based on their movement (bottom to top, applying movement)
+//        std::stable_sort(rankAdjustments.begin(), rankAdjustments.end(), [&](const auto& a, const auto& b) {
+//            return a.second < b.second;
+//        });
+//
+//        // Rebuild the rikishiVector with the new movement-based order
+//        std::vector<Rikishi> reorderedRikishi;
+//        for (auto& [rikishi, movement] : rankAdjustments) {
+//            reorderedRikishi.push_back(rikishi);
+//        }
+//
+//        // Ensure only one Yokozuna is assigned
+//        if (std::count_if(reorderedRikishi.begin(), reorderedRikishi.end(), [](const Rikishi& r) {
+//            return r.rank == "Yokozuna";
+//        }) > 1) {
+//            MainStreet->MemoLog->Lines->Add("Error: More than one Yokozuna detected after movement adjustment!");
+//            return;
+//        }
+//
+//        // Ensure Juryo 2 -> Juryo 1 rule
+//        for (auto& rikishi : reorderedRikishi) {
+//            if (rikishi.rank == "Juryo 2") {
+//                rikishi.rank = "Juryo 1";
+//                break;
+//            }
+//        }
+//
+//        // Debug: Print final ranking
+//        MainStreet->MemoLog->Lines->Add("Reordered Ranking:");
+//        for (const auto& r : reorderedRikishi) {
+//            MainStreet->MemoLog->Lines->Add(AnsiString(r.name.c_str()) + " (" + AnsiString(r.rank.c_str()) + ")");
+//        }
+//
+//        // Now, assign ranks based on new order (no rank recalculation)
+//        std::vector<Rikishi> finalRanking;
+//        auto rankIterator = rankOrder.begin();
+//
+//        for (auto& rikishi : reorderedRikishi) {
+//            if (rankIterator != rankOrder.end()) {
+//                rikishi.rank = *rankIterator;
+//                finalRanking.push_back(rikishi);
+//                ++rankIterator;
+//            }
+//        }
+//
+//        // Debug: Print final ranking
+//        MainStreet->MemoLog->Lines->Add("Final Ranking (After Movement and Rank Assignment):");
+//        for (const auto& r : finalRanking) {
+//            MainStreet->MemoLog->Lines->Add(AnsiString(r.name.c_str()) + " (" + AnsiString(r.rank.c_str()) + ")");
+//        }
+//
+//        // Update rikishiVector with the new order
+//        rikishiVector = finalRanking;
+//
+//    } catch (const std::exception& e) {
+//        MainStreet->MemoLog->Lines->Add("Exception caught: " + AnsiString(e.what()));
+//    } catch (...) {
+//        MainStreet->MemoLog->Lines->Add("Unknown exception caught.");
+//    }
+//}
+
+
+
+//void ReorderRikishi(std::vector<Rikishi>& rikishiVector, TMainStreet* MainStreet) {
+//	// Log original order
+//	MainStreet->MemoLog->Lines->Add("Original Order:");
+//	for (const auto& r : rikishiVector) {
+//		MainStreet->MemoLog->Lines->Add(UnicodeString(r.name.c_str()) + " - Wins: " + UnicodeString(r.wins));
+//	}
+//
+//	// Create a temporary ordered list
+//	std::vector<Rikishi> orderedRikishi = rikishiVector;
+//
+//	// Sort based on known correct order
+//	std::sort(orderedRikishi.begin(), orderedRikishi.end(), [](const Rikishi& a, const Rikishi& b) {
+//		return a.wins > b.wins;
+//	});
+//
+//	// Available ranks
+//	std::vector<UnicodeString> ranks = {
+//        "Yokozuna", "Ozeki", "Sekiwake", "Komusubi",
+//        "Maegashira 1", "Maegashira 2", "Maegashira 3", "Maegashira 4",
+//        "Maegashira 5", "Maegashira 6", "Maegashira 7", "Maegashira 8",
+//		"Maegashira 9", "Maegashira 10", "Juryo 1", "Juryo 2"
+//    };
+//
+//    // Assign ranks
+//	for (size_t i = 0; i < orderedRikishi.size(); ++i) {
+//        if (i < ranks.size()) {
+//            orderedRikishi[i].rank = std::string(UTF8String(ranks[i]).c_str());
+//        } else {
+//			orderedRikishi[i].rank = "Juryo 2";
+//        }
+//    }
+//
+//	// Log new order
+//	MainStreet->MemoLog->Lines->Add("Sorted Order:");
+//    for (const auto& r : orderedRikishi) {
+//        MainStreet->MemoLog->Lines->Add(UnicodeString(r.name.c_str()) + " - Wins: " + UnicodeString(r.wins) + " - Rank: " + UnicodeString(r.rank.c_str()));
+//	}
+//
+//	// Replace original list
+//	rikishiVector = orderedRikishi;
+//}
+
+
+void RetireRikishi(std::vector<Rikishi>& rikishiVector) {
+	std::vector<std::string> retiredNames;
+
+	for (auto& rikishi : rikishiVector) {
+		rikishi.age += 1;
+	}
+
+	// Remove rikishi who meet retirement conditions
+	rikishiVector.erase(std::remove_if(rikishiVector.begin(), rikishiVector.end(),
+		[&](const Rikishi& r) {
+			bool shouldRetire = (r.rank == "Yokozuna" && r.wins < r.losses) ||
+								(r.rank == "Ozeki" && r.wins < r.losses && r.age > 31) ||        // I am doing things out of order compared to the rules, could be an issue later
+								(r.rank.find("Maegashira") != std::string::npos && r.age >= 34 && r.spirit < 2) ||
+								(r.rank.find("Maegashira") != std::string::npos && r.age >= 31 && r.spirit == 0);
+
+			if (shouldRetire) {
+				retiredNames.push_back(r.name);
+			}
+			return shouldRetire;
+        }), rikishiVector.end());
+
+    // Log retirements
+    if (!retiredNames.empty()) {
+        AnsiString logMessage = "Retirements: ";
+        for (const auto& name : retiredNames) {
+            logMessage += AnsiString(name.c_str()) + ", ";
+        }
+        logMessage = logMessage.SubString(1, logMessage.Length() - 2);
+        MainStreet->MemoLog->Lines->Add(logMessage);
+    } else {
+        MainStreet->MemoLog->Lines->Add("No retirements this year.");
+    }
+}
+
+void EndYearPhase(std::vector<Player>& players) {
+    int maxWins = 0;
+    std::vector<Rikishi*> tournamentWinners;
+
+    for (auto& rikishi : rikishiVector) {
+        // Award VP for non-CPU rikishi with a winning record
+        if (rikishi.wins > rikishi.losses && rikishi.owner != "CPU") {
+            for (auto& player : players) {
+                if (player.name == rikishi.owner) {
+                    player.VP += 1;
+                    break;
+                }
+            }
+        }
+
+        // Reset injuries
+        rikishi.isShaken = false;
+        rikishi.isInjuredEndurance = false;
+        rikishi.isInjuredSpeed = false;
+        rikishi.isInjuredStrength = false;
+
+        // Determine tournament winners
+        if (rikishi.wins > maxWins) {
+            maxWins = rikishi.wins;
+            tournamentWinners.clear();
+            tournamentWinners.push_back(&rikishi);
+        } else if (rikishi.wins == maxWins) {
+            tournamentWinners.push_back(&rikishi);
+        }
+    }
+
+    // Increase spirit for tournament winners
+    for (auto* winner : tournamentWinners) {
+        if (winner->rank != "Yokozuna" && winner->rank != "Ozeki" && winner->spirit < 4) {
+            winner->spirit += 1;
+        }
+    }
+
+    // Retire rikishi before proceeding
+    RetireRikishi(rikishiVector);
+    MainStreet->MemoLog->Lines->Add("Retirements have gone through ...");
+
+    // Rank adjustments
+    ReorderRikishi(rikishiVector);
+    MainStreet->MemoLog->Lines->Add("Rikishi reordered based on ranks...");
+
+	// Attribute degradation
+	for (auto& rikishi : rikishiVector) {
+
+        int rolls = (rikishi.age >= 34) ? 3 : (rikishi.age >= 31 ? 2 : 0);
+        for (int i = 0; i < rolls; i++) {
+            int roll = rand() % 5;
+            if (roll == 0 && rikishi.strength > 0) rikishi.strength--;
+            else if (roll == 1 && rikishi.speed > 0) rikishi.speed--;
+            else if (roll == 2 && rikishi.endurance > 0) rikishi.endurance--;
+        }
+	}
+
+    // Ensure the game moves forward properly
+    if (isBanzukeComplete) {
+        if (currentYear < maxYears) {
+            currentYear++;
+            MainStreet->MemoLog->Lines->Add("The end of the year has come...");
+            MainStreet->MemoLog->Lines->Add("-------------------------------------------------");
+            UpdateBanzukeGrid();
+            isBiddingComplete = false;
+            isTrainingComplete = false;
+            isBanzukeComplete = false;
+            NewYearPhase();
+        } else {
+            MainStreet->MemoLog->Lines->Add("The current year is " + IntToStr(currentYear));
+            MainStreet->MemoLog->Lines->Add("The " + IntToStr(maxYears) + "-year cycle is complete!");
+            MainStreet->MemoLog->Lines->Add("It is the end of the game!");
+        }
+    } else {
+        ShowMessage("The tournament is not over yet!");
+    }
+}
+
+// The function to trigger the next phase (e.g., after Training is complete)
+void BanzukePhaseComplete() {
+	MainStreet->MemoLog->Lines->Add("Banzuke phase complete. Tournament results are in!");
+	// Trigger the next phase here, like the BOUT phase, etc.
+	EndYearPhase(players);
+}
+
+// Constructor for the form
+__fastcall TMainStreet::TMainStreet(TComponent* Owner)
+	: TForm(Owner)
+{
+//	ShowMessage("Constructor executed for Main Street");  // Check if the constructor is hit
+	// Print to console or initialize log
+	MemoLog->Lines->Add("Welcome to Banzuke Shoushin!");
+	std::srand(std::time(0)); // Seed random number generator
+
+	PreGameSetup(); // Pre-game setup logic
+
+	NewYearPhase();
+
+}
+
+//--------------------------- TOOLS FOR DEBUGGING //----------------------------
+//
+
+//bool CheckFileExists(const std::string& filename) {
+//	return std::filesystem::exists(filename); // Returns true if the file exists
+//}
+//
+//void __fastcall TForm2::CheckNamesFile() {
+//	std::string namesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names.txt";
+//
+//	if (!std::filesystem::exists(namesPath)) {
+//		MessageBox(NULL, L"names.txt file is missing or not in the correct directory!", L"Error", MB_OK | MB_ICONERROR);
+//		throw std::runtime_error("names.txt file is missing or not in the correct directory.");
+//	} else {
+//		std::cout << "names.txt file exists." << std::endl; // Output to console
+//	}
+//}
+//void CreateConsole() {
+//	// Allocates a new console for the program
+//    AllocConsole();
+//
+//	// Redirects the console output to the standard output
+//    freopen("CONOUT$", "w", stdout);
+//    freopen("CONIN$", "r", stdin);
+//
+//	std::cout << "Console opened successfully" << std::endl;
+//}
+
+//
+
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonDohyoClick(TObject *Sender)
+{
+	DohyoForm->Show();
+	this->Hide();
+}
+//---------------------------------------------------------------------------
+

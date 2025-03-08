@@ -3,7 +3,7 @@ object DohyoForm: TDohyoForm
   Top = 0
   Caption = 'Welcome to the Dohyo'
   ClientHeight = 420
-  ClientWidth = 770
+  ClientWidth = 772
   Position = Designed
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -131,21 +131,11 @@ object DohyoForm: TDohyoForm
     Size.Height = 155.000000000000000000
     Size.PlatformDefault = False
   end
-  object EditStrength_2: TEdit
-    Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 9
-    ReadOnly = True
-    TextSettings.HorzAlign = Center
-    Position.X = 602.000000000000000000
-    Position.Y = 383.000000000000000000
-    Size.Width = 160.000000000000000000
-    Size.Height = 35.000000000000000000
-    Size.PlatformDefault = False
-  end
   object EditRank2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 51
+    TabOrder = 59
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 465.000000000000000000
     Position.Y = 85.000000000000000000
     Size.Width = 129.000000000000000000
@@ -154,27 +144,30 @@ object DohyoForm: TDohyoForm
   end
   object EditOwner2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 48
+    TabOrder = 56
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 465.000000000000000000
     Position.Y = 8.000000000000000000
     Size.Width = 129.000000000000000000
     Size.Height = 25.000000000000000000
     Size.PlatformDefault = False
   end
-  object ButtonStrength_1: TButton
+  object ButtonStrength1: TButton
     Position.X = 8.000000000000000000
     Position.Y = 383.000000000000000000
     Size.Width = 160.000000000000000000
     Size.Height = 35.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 2
+    TabOrder = 3
     TextSettings.Trimming = None
+    OnClick = ButtonStrength1Click
   end
   object EditSpirit2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 8
+    TabOrder = 9
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 465.000000000000000000
     Position.Y = 41.000000000000000000
     Size.Width = 63.000000000000000000
@@ -185,6 +178,7 @@ object DohyoForm: TDohyoForm
     Touch.InteractiveGestures = [LongTap, DoubleTap]
     TabOrder = 13
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 176.000000000000000000
     Position.Y = 41.000000000000000000
     Size.Width = 65.000000000000000000
@@ -193,98 +187,60 @@ object DohyoForm: TDohyoForm
   end
   object EditAge2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 43
+    TabOrder = 48
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 538.000000000000000000
     Position.Y = 41.000000000000000000
     Size.Width = 56.000000000000000000
     Size.Height = 36.000000000000000000
     Size.PlatformDefault = False
   end
-  object ButtonEndurance_1: TButton
+  object ButtonEndurance1: TButton
     Position.X = 8.000000000000000000
     Position.Y = 254.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 41
+    TextSettings.Trimming = None
+    OnClick = ButtonEndurance1Click
+  end
+  object ButtonWeight1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 211.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 39
+    TextSettings.Trimming = None
+    OnClick = ButtonWeight1Click
+  end
+  object ButtonTechnique1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 297.000000000000000000
     Size.Width = 160.000000000000000000
     Size.Height = 35.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 36
     TextSettings.Trimming = None
+    OnClick = ButtonTechnique1Click
   end
-  object ButtonWeight_1: TButton
-    Position.X = 8.000000000000000000
-    Position.Y = 211.000000000000000000
-    Size.Width = 160.000000000000000000
-    Size.Height = 35.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 35
-    TextSettings.Trimming = None
-  end
-  object ButtonTechnique_1: TButton
-    Position.X = 8.000000000000000000
-    Position.Y = 297.000000000000000000
-    Size.Width = 160.000000000000000000
-    Size.Height = 35.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 33
-    TextSettings.Trimming = None
-  end
-  object ButtonSpeed_1: TButton
+  object ButtonSpeed1: TButton
     Position.X = 8.000000000000000000
     Position.Y = 340.000000000000000000
     Size.Width = 160.000000000000000000
     Size.Height = 35.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 30
+    TabOrder = 32
     TextSettings.Trimming = None
-  end
-  object EditSpeed_2: TEdit
-    Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 22
-    ReadOnly = True
-    TextSettings.HorzAlign = Center
-    Position.X = 602.000000000000000000
-    Position.Y = 340.000000000000000000
-    Size.Width = 160.000000000000000000
-    Size.Height = 35.000000000000000000
-    Size.PlatformDefault = False
-  end
-  object EditTechnique_2: TEdit
-    Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 23
-    ReadOnly = True
-    TextSettings.HorzAlign = Center
-    Position.X = 602.000000000000000000
-    Position.Y = 297.000000000000000000
-    Size.Width = 160.000000000000000000
-    Size.Height = 35.000000000000000000
-    Size.PlatformDefault = False
-  end
-  object EditWeight_2: TEdit
-    Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 25
-    ReadOnly = True
-    TextSettings.HorzAlign = Center
-    Position.X = 602.000000000000000000
-    Position.Y = 211.000000000000000000
-    Size.Width = 160.000000000000000000
-    Size.Height = 35.000000000000000000
-    Size.PlatformDefault = False
-  end
-  object EditEndurance_2: TEdit
-    Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 27
-    ReadOnly = True
-    TextSettings.HorzAlign = Center
-    Position.X = 602.000000000000000000
-    Position.Y = 254.000000000000000000
-    Size.Width = 160.000000000000000000
-    Size.Height = 35.000000000000000000
-    Size.PlatformDefault = False
+    OnClick = ButtonSpeed1Click
   end
   object EditOwner1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
     TabOrder = 11
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 176.000000000000000000
     Position.Y = 8.000000000000000000
     Size.Width = 129.000000000000000000
@@ -293,28 +249,30 @@ object DohyoForm: TDohyoForm
   end
   object EditRank1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 20
+    TabOrder = 22
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 176.000000000000000000
     Position.Y = 85.000000000000000000
     Size.Width = 129.000000000000000000
     Size.Height = 22.000000000000000000
     Size.PlatformDefault = False
   end
-  object Image1: TImage
+  object ImageArena: TImage
     MultiResBitmap = <
       item
       end>
     Position.X = 176.000000000000000000
-    Position.Y = 171.000000000000000000
+    Position.Y = 214.000000000000000000
     Size.Width = 418.000000000000000000
     Size.Height = 161.000000000000000000
     Size.PlatformDefault = False
   end
   object EditRecord1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 19
+    TabOrder = 20
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 176.000000000000000000
     Position.Y = 115.000000000000000000
     Size.Width = 129.000000000000000000
@@ -325,6 +283,7 @@ object DohyoForm: TDohyoForm
     Touch.InteractiveGestures = [LongTap, DoubleTap]
     TabOrder = 18
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 465.000000000000000000
     Position.Y = 115.000000000000000000
     Size.Width = 129.000000000000000000
@@ -335,6 +294,7 @@ object DohyoForm: TDohyoForm
     Touch.InteractiveGestures = [LongTap, DoubleTap]
     TabOrder = 42
     ReadOnly = True
+    TextSettings.HorzAlign = Center
     Position.X = 249.000000000000000000
     Position.Y = 41.000000000000000000
     Size.Width = 56.000000000000000000
@@ -369,22 +329,75 @@ object DohyoForm: TDohyoForm
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 176.000000000000000000
-    Position.Y = 340.000000000000000000
+    Position.Y = 383.000000000000000000
     Size.Width = 418.000000000000000000
-    Size.Height = 72.000000000000000000
+    Size.Height = 35.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 55
-    Viewport.Width = 414.000000000000000000
-    Viewport.Height = 68.000000000000000000
+    Viewport.Width = 418.000000000000000000
+    Viewport.Height = 35.000000000000000000
   end
-  object Button1: TButton
+  object ButtonFight: TButton
+    StyledSettings = [Family, Style, FontColor]
     Position.X = 176.000000000000000000
     Position.Y = 145.000000000000000000
     Size.Width = 418.000000000000000000
-    Size.Height = 18.000000000000000000
+    Size.Height = 61.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 3
-    Text = 'F I G H T ! ! ! !'
+    TabOrder = 4
+    Text = '! ! !  F I G H T  ! ! !'
+    TextSettings.Font.Size = 40.000000000000000000
     TextSettings.Trimming = None
+    OnClick = ButtonFightClick
+  end
+  object ButtonWeight2: TButton
+    Position.X = 602.000000000000000000
+    Position.Y = 211.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 38
+    TextSettings.Trimming = None
+    OnClick = ButtonWeight2Click
+  end
+  object ButtonEndurance2: TButton
+    Position.X = 602.000000000000000000
+    Position.Y = 254.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 40
+    TextSettings.Trimming = None
+    OnClick = ButtonEndurance2Click
+  end
+  object ButtonTechnique2: TButton
+    Position.X = 602.000000000000000000
+    Position.Y = 297.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 35
+    TextSettings.Trimming = None
+    OnClick = ButtonTechnique2Click
+  end
+  object ButtonSpeed2: TButton
+    Position.X = 602.000000000000000000
+    Position.Y = 340.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 31
+    TextSettings.Trimming = None
+    OnClick = ButtonSpeed2Click
+  end
+  object ButtonStrength2: TButton
+    Position.X = 602.000000000000000000
+    Position.Y = 383.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 35.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    TextSettings.Trimming = None
+    OnClick = ButtonStrength2Click
   end
 end
