@@ -130,7 +130,7 @@ std::string getRandomString() {
 }
 
 void GetRandomName(std::string &playerName, std::vector<std::string> &usedNames) {
-    std::string namesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names.txt";
+	std::string namesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names.txt";
     std::ifstream file(namesPath);
     if (!file.is_open()) {
         throw std::runtime_error("Failed to open names.txt");
@@ -654,19 +654,22 @@ void NewYearPhase() {
 
 	// Bidding Phase
 	NoboruForm->StartBidding();  // Start the bidding process in NoboruForm
-	MainStreet->MemoLog->Lines->Add("Bidding phase started...");
+//	RyogokuForm->MemoLog->Lines->Add("Bidding phase started...");
+//	RyogokuForm->MemoLog->Text += "Bidding phase started...!\n";
 }
 
 // The function to trigger the next phase (e.g., after bidding is complete)
 void BiddingPhaseComplete() {
-	MainStreet->MemoLog->Lines->Add("Bidding phase complete.");
+//	RyogokuForm->MemoLog->Lines->Add("Bidding phase complete.");
+//	RyogokuForm->MemoLog->Text += "Bidding phase complete.\n";
 	// Trigger the next phase here, like the training phase, etc.
 	YourBeya->StartTraining();
 }
 
  // The function to trigger the next phase (e.g., after Training is complete)
 void TrainingPhaseComplete() {
-	MainStreet->MemoLog->Lines->Add("Training phase complete.");
+//	RyogokuForm->MemoLog->Lines->Add("Training phase complete.");
+//	RyogokuForm->MemoLog->Text += "Training phase complete.\n";
 	// Trigger the next phase here, like the BOUT phase, etc.
 	BanzukeForm->StartBanzuke();
 }
@@ -801,27 +804,27 @@ void calculateScoresAndSort(std::vector<Rikishi>& rikishiVector) {
     });
 
     // Log the results using MemoLog
-	MainStreet->MemoLog->Lines->Add("Name\t\tRank\t\tScore");
+//	RyogokuForm->MemoLog->Lines->Add("Name\t\tRank\t\tScore");
 	for (const auto& r : rikishiVector) {
 		std::string logEntry = r.name + "\t" + r.rank + "\t" + std::to_string(r.score);
-		MainStreet->MemoLog->Lines->Add(logEntry.c_str());
+//		RyogokuForm->MemoLog->Lines->Add(logEntry.c_str());
 	}
 }
 
 void printRikishiVector(std::vector<Rikishi>& rikishiVector) {
 
-	MainStreet->MemoLog->Lines->Add("Name\t\tRank\t\tScore");
+//	RyogokuForm->MemoLog->Lines->Add("Name\t\tRank\t\tScore");
 	for (const auto& r : rikishiVector) {
 		std::string logEntry = r.name + "\t" + r.rank + "\t" + std::to_string(r.wins);
-		MainStreet->MemoLog->Lines->Add(logEntry.c_str());
+//		RyogokuForm->MemoLog->Lines->Add(logEntry.c_str());
 	}
-	MainStreet->MemoLog->Lines->Add("");
+//	RyogokuForm->MemoLog->Lines->Add("");
 }
 
 void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
-	MainStreet->MemoLog->Lines->Add("Before sorting by score:");
+//	RyogokuForm->MemoLog->Lines->Add("Before sorting by score:");
 	printRikishiVector(rikishiVector);
-	MainStreet->MemoLog->Lines->Add("After sorting by score:");
+//	RyogokuForm->MemoLog->Lines->Add("After sorting by score:");
 	calculateScoresAndSort(rikishiVector);
 }
 
@@ -1487,10 +1490,12 @@ void RetireRikishi(std::vector<Rikishi>& rikishiVector) {
             logMessage += AnsiString(name.c_str()) + ", ";
         }
         logMessage = logMessage.SubString(1, logMessage.Length() - 2);
-        MainStreet->MemoLog->Lines->Add(logMessage);
-    } else {
-        MainStreet->MemoLog->Lines->Add("No retirements this year.");
-    }
+//		RyogokuForm->MemoLog->Lines->Add(logMessage);
+//		RyogokuForm->MemoLog->Text += logMessage + "\n";
+	} else {
+//		RyogokuForm->MemoLog->Lines->Add("No retirements this year.");
+//		RyogokuForm->MemoLog->Text += "No retirements this year.\n";
+	}
 }
 
 void EndYearPhase(std::vector<Player>& players) {
@@ -1532,12 +1537,14 @@ void EndYearPhase(std::vector<Player>& players) {
     }
 
     // Retire rikishi before proceeding
-    RetireRikishi(rikishiVector);
-    MainStreet->MemoLog->Lines->Add("Retirements have gone through ...");
+	RetireRikishi(rikishiVector);
+//	RyogokuForm->MemoLog->Lines->Add("Retirements have gone through ...");
+//	RyogokuForm->MemoLog->Text += "Retirements have gone through ...\n";
 
     // Rank adjustments
     ReorderRikishi(rikishiVector);
-    MainStreet->MemoLog->Lines->Add("Rikishi reordered based on ranks...");
+//	RyogokuForm->MemoLog->Lines->Add("Rikishi reordered based on ranks...");
+//	RyogokuForm->MemoLog->Text += "Rikishi reordered based on ranks...\n";
 
 	// Attribute degradation
 	for (auto& rikishi : rikishiVector) {
@@ -1555,37 +1562,73 @@ void EndYearPhase(std::vector<Player>& players) {
     if (isBanzukeComplete) {
         if (currentYear < maxYears) {
             currentYear++;
-            MainStreet->MemoLog->Lines->Add("The end of the year has come...");
-            MainStreet->MemoLog->Lines->Add("-------------------------------------------------");
-            UpdateBanzukeGrid();
+//			RyogokuForm->MemoLog->Lines->Add("The end of the year has come...");
+//			RyogokuForm->MemoLog->Text += "The end of the year has come...\n";
+//			RyogokuForm->MemoLog->Lines->Add("-------------------------------------------------");
+//			RyogokuForm->MemoLog->Text += "-------------------------------------------------\n";
+			UpdateBanzukeGrid();
             isBiddingComplete = false;
             isTrainingComplete = false;
             isBanzukeComplete = false;
             NewYearPhase();
-        } else {
-            MainStreet->MemoLog->Lines->Add("The current year is " + IntToStr(currentYear));
-            MainStreet->MemoLog->Lines->Add("The " + IntToStr(maxYears) + "-year cycle is complete!");
-            MainStreet->MemoLog->Lines->Add("It is the end of the game!");
-        }
-    } else {
-        ShowMessage("The tournament is not over yet!");
-    }
+		} else {
+//			RyogokuForm->MemoLog->Lines->Add("The current year is " + IntToStr(currentYear));
+//			RyogokuForm->MemoLog->Text += "The current year is " + IntToStr(currentYear) + "\n";
+//			RyogokuForm->MemoLog->Lines->Add("The " + IntToStr(maxYears) + "-year cycle is complete!");
+//			RyogokuForm->MemoLog->Text += "The " + IntToStr(maxYears) + "-year cycle is complete!\n";
+//			RyogokuForm->MemoLog->Lines->Add("It is the end of the game!");
+//			RyogokuForm->MemoLog->Text += "It is the end of the game!\n";
+		}
+	}
+
+//	else {
+//		ShowMessage("The tournament is not over yet!");
+//	}
 }
 
 // The function to trigger the next phase (e.g., after Training is complete)
 void BanzukePhaseComplete() {
-	MainStreet->MemoLog->Lines->Add("Banzuke phase complete. Tournament results are in!");
+//	RyogokuForm->MemoLog->Lines->Add("Banzuke phase complete. Tournament results are in!");
+//	RyogokuForm->MemoLog->Text += "Banzuke phase complete. Tournament results are in!\n";
 	// Trigger the next phase here, like the BOUT phase, etc.
 	EndYearPhase(players);
 }
 
+
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonDohyoClick(TObject *Sender)
+{
+	if (isTrainingComplete) {
+		DohyoForm->Show(); // Show the main form
+		DohyoForm->DohyoSetup();
+		this->Hide();     // Hide the second form
+	}
+	else {
+		ShowMessage("The Dohyo is not open yet! Come back Later!");
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonRyogokuClick(TObject *Sender)
+{
+	RyogokuForm->Show(); // Show the main form
+//	RyogokuForm->DohyoSetup();
+	this->Hide();     // Hide the second form
+}
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 // Constructor for the form
 __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 	: TForm(Owner)
 {
 //	ShowMessage("Constructor executed for Main Street");  // Check if the constructor is hit
 	// Print to console or initialize log
-	MemoLog->Lines->Add("Welcome to Banzuke Shoushin!");
+	TRyogokuForm *RyogokuForm = new TRyogokuForm(Application);
+//	RyogokuForm->Lines->Add("Welcome to Banzuke Shoushin!");
+//	RyogokuForm->MemoLog->Text += "Welcome to Banzuke Shoushin!\n";
 	std::srand(std::time(0)); // Seed random number generator
 
 	PreGameSetup(); // Pre-game setup logic
@@ -1593,6 +1636,8 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 	NewYearPhase();
 
 }
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 
 //--------------------------- TOOLS FOR DEBUGGING //----------------------------
 //
@@ -1624,26 +1669,5 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 
 //
 
-//---------------------------------------------------------------------------
 
-void __fastcall TMainStreet::ButtonDohyoClick(TObject *Sender)
-{
-	if (isTrainingComplete) {
-		DohyoForm->Show(); // Show the main form
-		DohyoForm->DohyoSetup();
-		this->Hide();     // Hide the second form
-	}
-	else {
-		ShowMessage("The Dohyo is not open yet! Come back Later!");
-	}
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainStreet::ButtonRyogokuClick(TObject *Sender)
-{
-	RyogokuForm->Show(); // Show the main form
-//	RyogokuForm->DohyoSetup();
-	this->Hide();     // Hide the second form
-}
-//---------------------------------------------------------------------------
 

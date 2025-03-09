@@ -9,11 +9,32 @@
 #include <FMX.Controls.Presentation.hpp>
 #include <FMX.StdCtrls.hpp>
 #include <FMX.Types.hpp>
+#include <FMX.Grid.hpp>
+#include <FMX.Grid.Style.hpp>
+#include <FMX.ScrollBox.hpp>
+#include <System.Rtti.hpp>
+#include <FMX.Memo.hpp>
+#include <FMX.Memo.Types.hpp>
 //---------------------------------------------------------------------------
 class TRyogokuForm : public TForm
 {
 __published:	// IDE-managed Components
 	TButton *ButtonReturnStreet;
+	TStringGrid *BanzukeGrid;
+	TStringColumn *RankColumn;
+	TStringColumn *NameColumn;
+	TStringColumn *OyakataColumn;
+	TStringColumn *AgeColumn;
+	TStringColumn *SpiritColumn;
+	TStringColumn *WeightColumn;
+	TStringColumn *EnduranceColumn;
+	TStringColumn *TechniqueColumn;
+	TStringColumn *SpeedColumn;
+	TStringColumn *StrengthColumn;
+	TStringColumn *MinBidColumn;
+	TStringColumn *StringColumn1;
+	TStringColumn *StringColumn2;
+	TMemo *MemoLog;
 	void __fastcall ButtonReturnStreetClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations

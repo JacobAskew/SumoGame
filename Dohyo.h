@@ -52,6 +52,7 @@ __published:	// IDE-managed Components
 	TButton *ButtonTechnique2;
 	TButton *ButtonSpeed2;
 	TButton *ButtonStrength2;
+	TButton *ButtonNextPlayerBout;
 	void __fastcall ButtonReturnBanzukeClick(TObject *Sender);
 	void __fastcall ButtonReturnStreetClick(TObject *Sender);
 	void __fastcall ButtonWeight1Click(TObject *Sender);
@@ -65,6 +66,7 @@ __published:	// IDE-managed Components
 	void __fastcall ButtonSpeed2Click(TObject *Sender);
 	void __fastcall ButtonStrength2Click(TObject *Sender);
 	void __fastcall ButtonFightClick(TObject *Sender);
+	void __fastcall ButtonNextPlayerBoutClick(TObject *Sender);
 
 private:	// User declarations
 

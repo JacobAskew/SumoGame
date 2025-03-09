@@ -1,0 +1,117 @@
+object RyogokuForm: TRyogokuForm
+  Left = 0
+  Top = 0
+  Caption = 'The Ryogoku Kokugikan'
+  ClientHeight = 420
+  ClientWidth = 772
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ButtonReturnStreet: TButton
+    Locked = True
+    Position.X = 344.000000000000000000
+    Position.Y = 280.000000000000000000
+    Size.Width = 89.000000000000000000
+    Size.Height = 132.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Return to the Street'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnStreetClick
+  end
+  object BanzukeGrid: TStringGrid
+    CanFocus = True
+    ClipChildren = True
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 756.000000000000000000
+    Size.Height = 264.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.HorzAlign = Center
+    TabOrder = 7
+    RowHeight = 22.000000000000000000
+    RowCount = 16
+    Viewport.Width = 736.000000000000000000
+    Viewport.Height = 239.000000000000000000
+    object RankColumn: TStringColumn
+      Header = 'Rank'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 33.000000000000000000
+    end
+    object NameColumn: TStringColumn
+      Header = 'Name'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 60.000000000000000000
+    end
+    object OyakataColumn: TStringColumn
+      Header = 'Oyakata'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 50.000000000000000000
+    end
+    object AgeColumn: TStringColumn
+      Header = 'Age'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 29.000000000000000000
+    end
+    object SpiritColumn: TStringColumn
+      Header = 'Spirit'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 35.000000000000000000
+    end
+    object WeightColumn: TStringColumn
+      Header = 'Weight'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 62.000000000000000000
+    end
+    object EnduranceColumn: TStringColumn
+      Header = 'Endurance'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 62.000000000000000000
+    end
+    object TechniqueColumn: TStringColumn
+      Header = 'Technique'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 62.000000000000000000
+    end
+    object SpeedColumn: TStringColumn
+      Header = 'Speed'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 62.000000000000000000
+    end
+    object StrengthColumn: TStringColumn
+      Header = 'Strength'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 62.000000000000000000
+    end
+    object MinBidColumn: TStringColumn
+      Header = 'Min Bid'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 50.000000000000000000
+    end
+  end
+end

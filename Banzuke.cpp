@@ -683,17 +683,17 @@ void __fastcall TBanzukeForm::ButtonNextHumanBoutClick(TObject *Sender)
 			Application->ProcessMessages();
 			currentBoutIndex++;
 			AssignFightersFromGrid();
-			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
+//			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
 			UpdateTournamentGrid();
 			if (currentBoutIndex == 49) {
-				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 				EndBanzuke();
 				break;
 			}
 
 		}
 		else if (currentBoutIndex == 49) {
-			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 			EndBanzuke();
 			break;
 		}
@@ -814,13 +814,13 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
             Application->ProcessMessages();
 			currentBoutIndex++;
-			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
+//			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
 			if (currentBoutIndex==49) {
 				PopulateLeaderboardGrid();
 				SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 				UpdateTournamentGrid();
 				UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
-				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 				EndBanzuke();
                 break;
 			}
@@ -831,7 +831,7 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 		SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 		UpdateTournamentGrid();
 		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
-		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 		EndBanzuke();
 	}
 	else {
@@ -905,13 +905,13 @@ void __fastcall TBanzukeForm::ButtonNextBoutClick(TObject *Sender)
 		Application->ProcessMessages();
 		currentBoutIndex++;
 		AssignFightersFromGrid();
-		BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
+//		BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
 		UpdateTournamentGrid();
 
 		}
 
 		if (currentBoutIndex == 49) {
-			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 			EndBanzuke();
 		}
 }

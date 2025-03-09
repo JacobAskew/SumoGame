@@ -416,7 +416,7 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 //		ShowMessage(IntToStr(currentBoutIndex));
 		currentBoutIndex++;
         AssignFightersFromGrid();
-		BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
+//		BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
 		UpdateTournamentGrid();
 		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
         UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
@@ -428,7 +428,7 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 	}
 
 	if (currentBoutIndex == 49) {
-		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 		EndBanzuke();
 	}
 
@@ -530,6 +530,109 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 //		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 //		EndBanzuke();
 //	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
+{
+//	UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
+	for (int i = 0; i < 49; i++) {
+		UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
+		if (isBanzukeComplete == false && isTrainingComplete == true && currentBoutIndex != 49) {
+
+			PopulateLeaderboardGrid();
+			AssignFightersFromGrid();
+
+			if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
+//				ShowMessage("Both sumo are owned by the same player, automatically resolving the bout!");
+			}
+			else if (globalFighter1->owner == "P1" || globalFighter2->owner == "P1") {
+				ShowMessage("The current bout features one of your sumo! Get ready for battle!");
+				break;
+			}
+			else {
+//				ShowMessage("Neither sumo are owned by the same player, automatically resolving the bout!");
+			}
+
+			RandomSkillForFighter(*globalFighter1, fighter1Tactic);
+			RandomSkillForFighter(*globalFighter2, fighter2Tactic);
+
+			GetBoutTactic();
+			FighterSkillValue(*globalFighter1, fighter1SkillValue);
+			FighterSkillValue(*globalFighter2, fighter2SkillValue);
+
+			fighter1Total = fighter1SkillValue;
+			HandleInjury(*globalFighter1, fighter1Total);
+
+			fighter2Total = fighter2SkillValue;
+			HandleInjury(*globalFighter2, fighter2Total);
+
+			if (globalFighter1->spirit == 4) {
+				fighter1Total += 1;
+			}
+			if (globalFighter2->spirit == 4) {
+				fighter2Total += 1;
+			}
+
+			if (currentBoutIndex >= 42 && currentBoutIndex < 49) {
+				if (globalFighter1->wins == 3 && globalFighter1->losses == 3) {
+					fighter1Total += 1;
+				}
+				if (globalFighter2->wins == 3 && globalFighter2->losses == 3) {
+					fighter2Total += 1;
+				}
+			}
+
+			if (fighter1Total > fighter2Total) {
+				Victory(0);
+			} else if (fighter1Total < fighter2Total) {
+				Victory(1);
+			} else {
+				if (globalFighter1->weight > globalFighter2->weight) {
+					Victory(0);
+				} else if (globalFighter1->weight < globalFighter2->weight) {
+					Victory(1);
+				} else {
+					if (globalFighter1->technique > globalFighter2->technique) {
+						Victory(0);
+					} else if (globalFighter1->technique < globalFighter2->technique) {
+						Victory(1);
+					} else {
+						int winner = std::rand() % 2;
+						Victory(winner);
+					}
+				}
+			}
+
+			PopulateLeaderboardGrid();
+			SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
+			UpdateTournamentGrid();
+			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+			Application->ProcessMessages();
+			currentBoutIndex++;
+			AssignFightersFromGrid();
+//			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
+			UpdateTournamentGrid();
+			PopulateLeaderboardGrid();
+			if (currentBoutIndex == 49) {
+//				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//				PopulateLeaderboardGrid();
+				EndBanzuke();
+				break;
+			}
+
+		}
+		else if (currentBoutIndex == 49) {
+//			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//			PopulateLeaderboardGrid();
+			EndBanzuke();
+			break;
+		}
+		else {
+			ShowMessage("The training phase is not complete. The sumo are not ready.");
+            break;
+		}
+	}
 }
 //---------------------------------------------------------------------------
 

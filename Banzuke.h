@@ -28,7 +28,6 @@ __published:	// IDE-managed Components
 	TButton *ButtonNextBout;
 	TButton *ButtonAutomateAll;
 	TButton *ButtonNextHumanBout;
-	TMemo *MemoBoutLog;
 	TStringGrid *StringGridTournament;
 	TStringColumn *StringColumnMonday;
 	TStringColumn *StringColumnTuesday;

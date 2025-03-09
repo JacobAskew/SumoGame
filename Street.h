@@ -96,7 +96,6 @@ public:
 class TMainStreet : public TForm
 {
 __published:    // IDE-managed Components
-    TMemo *MemoLog;
     TButton *ButtonNoboru;
 	TButton *ButtonBeya;
 	TButton *ButtonBanzuke;

@@ -537,15 +537,20 @@ void EndTraining() {
 	UpdateBanzukeGrid();
     ResetSkillTrackers();
     Application->ProcessMessages();
-    isTrainingComplete = true;
+	isTrainingComplete = true;
 	TrainingPhaseComplete();
     YourBeya->CleanupTrainingPopup(); // Cleanup after the training phase
 }
 
 // When skipping training
 void __fastcall TYourBeya::ButtonSkipTrainingClick(TObject *Sender) {
-	EndTraining();
-    CleanupTrainingPopup();  // Clean up if the user skips
+	if (isTrainingComplete) {
+		ShowMessage("Training is complete, they are waiting in the Dohyo!");
+	}
+	else {
+		EndTraining();
+		CleanupTrainingPopup();  // Clean up if the user skips
+	}
 }
 
 void __fastcall TYourBeya::ImageStrength1Click(TObject *Sender) {
