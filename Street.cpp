@@ -22,6 +22,7 @@
 #include "Training.h"
 #include "Banzuke.h"
 #include "Dohyo.h"
+#include "Ryogoku.h"
 
 #pragma hdrstop
 #pragma package(smart_init)
@@ -1635,6 +1636,14 @@ void __fastcall TMainStreet::ButtonDohyoClick(TObject *Sender)
 	else {
 		ShowMessage("The Dohyo is not open yet! Come back Later!");
 	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonRyogokuClick(TObject *Sender)
+{
+	RyogokuForm->Show(); // Show the main form
+//	RyogokuForm->DohyoSetup();
+	this->Hide();     // Hide the second form
 }
 //---------------------------------------------------------------------------
 

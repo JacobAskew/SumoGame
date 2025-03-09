@@ -1,0 +1,23 @@
+object RyogokuForm: TRyogokuForm
+  Left = 0
+  Top = 0
+  Caption = 'The Ryogoku Kokugikan'
+  ClientHeight = 420
+  ClientWidth = 772
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ButtonReturnStreet: TButton
+    Position.X = 552.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 212.000000000000000000
+    Size.Height = 169.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Return to the Street'
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnStreetClick
+  end
+end

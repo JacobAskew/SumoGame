@@ -102,10 +102,12 @@ __published:    // IDE-managed Components
 	TButton *ButtonBanzuke;
 	TImage *ImageRoad;
 	TButton *ButtonDohyo;
+	TButton *ButtonRyogoku;
     void __fastcall ButtonNoboruClick(TObject *Sender);
 	void __fastcall ButtonBeyaClick(TObject *Sender);
 	void __fastcall ButtonBanzukeClick(TObject *Sender);
 	void __fastcall ButtonDohyoClick(TObject *Sender);
+	void __fastcall ButtonRyogokuClick(TObject *Sender);
 
 private:    // User declarations
     void __fastcall CheckNamesFile();

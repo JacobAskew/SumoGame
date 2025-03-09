@@ -1,0 +1,25 @@
+//---------------------------------------------------------------------------
+
+#ifndef RyogokuH
+#define RyogokuH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+//---------------------------------------------------------------------------
+class TRyogokuForm : public TForm
+{
+__published:	// IDE-managed Components
+	TButton *ButtonReturnStreet;
+	void __fastcall ButtonReturnStreetClick(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TRyogokuForm(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TRyogokuForm *RyogokuForm;
+//---------------------------------------------------------------------------
+#endif

@@ -209,11 +209,17 @@
         </CppCompile>
         <None Include="OldCpp.txt"/>
         <None Include="OldHfile.txt"/>
+        <CppCompile Include="Ryogoku.cpp">
+            <Form>RyogokuForm</Form>
+            <FormType>fmx</FormType>
+            <DependentOn>Ryogoku.h</DependentOn>
+            <BuildOrder>12</BuildOrder>
+        </CppCompile>
         <CppCompile Include="Storage.cpp">
             <Form>StorageForm</Form>
             <FormType>fmx</FormType>
             <DependentOn>Storage.h</DependentOn>
-            <BuildOrder>7</BuildOrder>
+            <BuildOrder>11</BuildOrder>
         </CppCompile>
         <CppCompile Include="Street.cpp">
             <Form>MainStreet</Form>
@@ -235,12 +241,13 @@
             <BuildOrder>9</BuildOrder>
         </CppCompile>
         <FormResources Include="Street.fmx"/>
-        <FormResources Include="Storage.fmx"/>
         <FormResources Include="Training.fmx"/>
         <FormResources Include="Dohyo.fmx"/>
         <FormResources Include="Beya.fmx"/>
         <FormResources Include="Banzuke.fmx"/>
         <FormResources Include="Noboru.fmx"/>
+        <FormResources Include="Storage.fmx"/>
+        <FormResources Include="Ryogoku.fmx"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
