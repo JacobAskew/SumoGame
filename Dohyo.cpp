@@ -388,22 +388,22 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 		}
 
 		if (fighter1Total > fighter2Total) {
-			Victory(0);
+			Victory(0, players);
 		} else if (fighter1Total < fighter2Total) {
-			Victory(1);
+			Victory(1, players);
 		} else {
 			if (globalFighter1->weight > globalFighter2->weight) {
-				Victory(0);
+				Victory(0, players);
 			} else if (globalFighter1->weight < globalFighter2->weight) {
-				Victory(1);
+				Victory(1, players);
 			} else {
 				if (globalFighter1->technique > globalFighter2->technique) {
-					Victory(0);
+					Victory(0, players);
 				} else if (globalFighter1->technique < globalFighter2->technique) {
-					Victory(1);
+					Victory(1, players);
 				} else {
 					int winner = std::rand() % 2;
-					Victory(winner);
+					Victory(winner, players);
 				}
 			}
 		}
@@ -584,22 +584,22 @@ void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
 			}
 
 			if (fighter1Total > fighter2Total) {
-				Victory(0);
+				Victory(0, players);
 			} else if (fighter1Total < fighter2Total) {
-				Victory(1);
+				Victory(1, players);
 			} else {
 				if (globalFighter1->weight > globalFighter2->weight) {
-					Victory(0);
+					Victory(0, players);
 				} else if (globalFighter1->weight < globalFighter2->weight) {
-					Victory(1);
+					Victory(1, players);
 				} else {
 					if (globalFighter1->technique > globalFighter2->technique) {
-						Victory(0);
+						Victory(0, players);
 					} else if (globalFighter1->technique < globalFighter2->technique) {
-						Victory(1);
+						Victory(1, players);
 					} else {
 						int winner = std::rand() % 2;
-						Victory(winner);
+						Victory(winner, players);
 					}
 				}
 			}

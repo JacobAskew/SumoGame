@@ -447,6 +447,7 @@ void PreGameSetup() {
 		player.VP = 0;
         player.numberRikishi = 0;
 	}
+    UpdatePoints();
 }
 
 // Function to log Rikishi data to MemoLog
@@ -620,12 +621,22 @@ void RankRikishi(std::vector<Rikishi>& rikishiVector) {
     rikishiVector = finalList;
 }
 
+void UpdatePoints() {
+	for (auto& player : players) {  // 'players' is the vector you initialized
+		MainStreet->EditVictoryPoints->Text = "Victory Points (P1): " + IntToStr(player.VP);
+		MainStreet->EditAbilityPoints->Text = "Ability Points (P1): " + IntToStr(player.AP);
+	}
+}
+
+
 void NewYearPhase() {
 
 	// Give all current players 7 AP
 	for (auto& player : players) {  // 'players' is the vector you initialized
 		player.AddAP();  // Add 7 AP to each player
 	}
+
+	UpdatePoints();
 
 	// NEW PLAYER ENTERING THE GAME (this won't be implemented for a LONG time)
 

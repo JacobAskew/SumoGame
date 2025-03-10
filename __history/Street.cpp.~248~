@@ -447,6 +447,7 @@ void PreGameSetup() {
 		player.VP = 0;
         player.numberRikishi = 0;
 	}
+    UpdatePoints();
 }
 
 // Function to log Rikishi data to MemoLog
@@ -621,8 +622,10 @@ void RankRikishi(std::vector<Rikishi>& rikishiVector) {
 }
 
 void UpdatePoints() {
-	MainStreet->EditVictoryPoints->Text = "Victory Points (P1): " + IntToStr(Player("P1").VP);
-	MainStreet->EditAbilityPoints->Text = "Ability Points (P1): " + IntToStr(Player("P1").AP);
+	for (auto& player : players) {  // 'players' is the vector you initialized
+		MainStreet->EditVictoryPoints->Text = "Victory Points (P1): " + IntToStr(player.VP);
+		MainStreet->EditAbilityPoints->Text = "Ability Points (P1): " + IntToStr(player.AP);
+	}
 }
 
 
@@ -631,8 +634,6 @@ void NewYearPhase() {
 	// Give all current players 7 AP
 	for (auto& player : players) {  // 'players' is the vector you initialized
 		player.AddAP();  // Add 7 AP to each player
-//		MainStreet->EditVictoryPoints->Text = "Victory Points (P1): " + IntToStr(Player("P1").VP);
-//		MainStreet->EditAbilityPoints->Text = "Ability Points (P1): " + IntToStr(Player("P1").AP);
 	}
 
 	UpdatePoints();
@@ -1471,42 +1472,53 @@ void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
 //	rikishiVector = orderedRikishi;
 //}
 
-
-void RetireRikishi(std::vector<Rikishi>& rikishiVector) {
+void RetireRikishi(std::vector<Rikishi>& rikishiVector, std::vector<Player>& players) {
 	std::vector<std::string> retiredNames;
 
+	// Increase age for all rikishi
 	for (auto& rikishi : rikishiVector) {
 		rikishi.age += 1;
 	}
 
-	// Remove rikishi who meet retirement conditions
+	// Identify rikishi to retire
+	std::vector<std::string> toRetire;
 	rikishiVector.erase(std::remove_if(rikishiVector.begin(), rikishiVector.end(),
 		[&](const Rikishi& r) {
 			bool shouldRetire = (r.rank == "Yokozuna" && r.wins < r.losses) ||
-								(r.rank == "Ozeki" && r.wins < r.losses && r.age > 31) ||        // I am doing things out of order compared to the rules, could be an issue later
+								(r.rank == "Ozeki" && r.wins < r.losses && r.age > 31) ||
 								(r.rank.find("Maegashira") != std::string::npos && r.age >= 34 && r.spirit < 2) ||
 								(r.rank.find("Maegashira") != std::string::npos && r.age >= 31 && r.spirit == 0);
 
 			if (shouldRetire) {
+				toRetire.push_back(r.name);
 				retiredNames.push_back(r.name);
 			}
 			return shouldRetire;
-        }), rikishiVector.end());
+		}), rikishiVector.end());
 
-    // Log retirements
-    if (!retiredNames.empty()) {
-        AnsiString logMessage = "Retirements: ";
-        for (const auto& name : retiredNames) {
-            logMessage += AnsiString(name.c_str()) + ", ";
-        }
-        logMessage = logMessage.SubString(1, logMessage.Length() - 2);
-//		RyogokuForm->MemoLog->Lines->Add(logMessage);
-//		RyogokuForm->MemoLog->Text += logMessage + "\n";
+	// Remove retired rikishi from players' rikishiList
+	for (auto& player : players) {
+		player.rikishiList.erase(std::remove_if(player.rikishiList.begin(), player.rikishiList.end(),
+			[&](const Rikishi& r) {
+				return std::find(toRetire.begin(), toRetire.end(), r.name) != toRetire.end();
+			}), player.rikishiList.end());
+	}
+
+	// Log retirements
+	if (!retiredNames.empty()) {
+		AnsiString logMessage = "Retirements: ";
+		for (const auto& name : retiredNames) {
+			logMessage += AnsiString(name.c_str()) + ", ";
+		}
+		logMessage = logMessage.SubString(1, logMessage.Length() - 2);
+		// RyogokuForm->MemoLog->Lines->Add(logMessage);
+		// RyogokuForm->MemoLog->Text += logMessage + "\n";
 	} else {
-//		RyogokuForm->MemoLog->Lines->Add("No retirements this year.");
-//		RyogokuForm->MemoLog->Text += "No retirements this year.\n";
+		// RyogokuForm->MemoLog->Lines->Add("No retirements this year.");
+		// RyogokuForm->MemoLog->Text += "No retirements this year.\n";
 	}
 }
+
 
 void EndYearPhase(std::vector<Player>& players) {
     int maxWins = 0;
@@ -1547,7 +1559,7 @@ void EndYearPhase(std::vector<Player>& players) {
     }
 
     // Retire rikishi before proceeding
-	RetireRikishi(rikishiVector);
+	RetireRikishi(rikishiVector, players);
 //	RyogokuForm->MemoLog->Lines->Add("Retirements have gone through ...");
 //	RyogokuForm->MemoLog->Text += "Retirements have gone through ...\n";
 

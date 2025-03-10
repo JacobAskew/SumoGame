@@ -152,6 +152,5 @@ extern std::vector<Rikishi> rikishiVector;  // Declare the vector as extern
 extern std::vector<Player> players;
 extern std::string Ranks[];
 extern void UpdatePoints();
-
 #endif
 

@@ -158,7 +158,7 @@ __fastcall TDohyoForm::TDohyoForm(TComponent* Owner)
 
 void __fastcall TDohyoForm::ButtonWeight1Click(TObject *Sender)
 {
-	if (globalFighter1->owner == "P1") {
+	if (globalFighter1->owner == "P1" && globalFighter2->owner != "P1") {
 		fighter1SkillValue = globalFighter1->weight;
 		fighter1Tactic = "Weight";
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
@@ -166,7 +166,7 @@ void __fastcall TDohyoForm::ButtonWeight1Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -176,7 +176,7 @@ void __fastcall TDohyoForm::ButtonWeight1Click(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonEndurance1Click(TObject *Sender)
 {
-	if (globalFighter1->owner == "P1") {
+	if (globalFighter1->owner == "P1" && globalFighter2->owner != "P1") {
 		fighter1SkillValue = globalFighter1->endurance;
 		fighter1Tactic = "Endurance";
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
@@ -184,7 +184,7 @@ void __fastcall TDohyoForm::ButtonEndurance1Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -194,7 +194,7 @@ void __fastcall TDohyoForm::ButtonEndurance1Click(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonTechnique1Click(TObject *Sender)
 {
-	if (globalFighter1->owner == "P1") {
+	if (globalFighter1->owner == "P1" && globalFighter2->owner != "P1") {
 		fighter1SkillValue = globalFighter1->technique;
 		fighter1Tactic = "Technique";
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
@@ -202,7 +202,7 @@ void __fastcall TDohyoForm::ButtonTechnique1Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -212,7 +212,7 @@ void __fastcall TDohyoForm::ButtonTechnique1Click(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonSpeed1Click(TObject *Sender)
 {
-	if (globalFighter1->owner == "P1") {
+	if (globalFighter1->owner == "P1" && globalFighter2->owner != "P1") {
 		fighter1SkillValue = globalFighter1->speed;
 		fighter1Tactic = "Speed";
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
@@ -220,7 +220,7 @@ void __fastcall TDohyoForm::ButtonSpeed1Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -230,7 +230,7 @@ void __fastcall TDohyoForm::ButtonSpeed1Click(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonStrength1Click(TObject *Sender)
 {
-	if (globalFighter1->owner == "P1") {
+	if (globalFighter1->owner == "P1" && globalFighter2->owner != "P1") {
 		fighter1SkillValue = globalFighter1->strength;
 		fighter1Tactic = "Strength";
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
@@ -238,7 +238,7 @@ void __fastcall TDohyoForm::ButtonStrength1Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -248,7 +248,7 @@ void __fastcall TDohyoForm::ButtonStrength1Click(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonWeight2Click(TObject *Sender)
 {
-	if (globalFighter2->owner == "P1") {
+	if (globalFighter2->owner == "P1" && globalFighter1->owner != "P1") {
 		fighter2SkillValue = globalFighter2->weight;
 		fighter2Tactic = "Weight";
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
@@ -256,7 +256,7 @@ void __fastcall TDohyoForm::ButtonWeight2Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -266,7 +266,7 @@ void __fastcall TDohyoForm::ButtonWeight2Click(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonEndurance2Click(TObject *Sender)
 {
-	if (globalFighter2->owner == "P1") {
+	if (globalFighter2->owner == "P1" && globalFighter1->owner != "P1") {
 		fighter2SkillValue = globalFighter2->endurance;
 		fighter2Tactic = "Endurance";
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
@@ -274,7 +274,7 @@ void __fastcall TDohyoForm::ButtonEndurance2Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -284,7 +284,7 @@ void __fastcall TDohyoForm::ButtonEndurance2Click(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonTechnique2Click(TObject *Sender)
 {
-	if (globalFighter2->owner == "P1") {
+	if (globalFighter2->owner == "P1" && globalFighter1->owner != "P1") {
 		fighter2SkillValue = globalFighter2->technique;
 		fighter2Tactic = "Technique";
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
@@ -292,7 +292,7 @@ void __fastcall TDohyoForm::ButtonTechnique2Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -302,7 +302,7 @@ void __fastcall TDohyoForm::ButtonTechnique2Click(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonSpeed2Click(TObject *Sender)
 {
-	if (globalFighter2->owner == "P1") {
+	if (globalFighter2->owner == "P1" && globalFighter1->owner != "P1") {
 		fighter2SkillValue = globalFighter2->speed;
 		fighter2Tactic = "Speed";
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
@@ -310,7 +310,7 @@ void __fastcall TDohyoForm::ButtonSpeed2Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -320,7 +320,7 @@ void __fastcall TDohyoForm::ButtonSpeed2Click(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonStrength2Click(TObject *Sender)
 {
-	if (globalFighter2->owner == "P1") {
+	if (globalFighter2->owner == "P1" && globalFighter1->owner != "P1") {
 		fighter2SkillValue = globalFighter2->strength;
 		fighter2Tactic = "Strength";
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
@@ -328,7 +328,7 @@ void __fastcall TDohyoForm::ButtonStrength2Click(TObject *Sender)
 	else if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
 		RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		RandomSkillForFighter(*globalFighter2, fighter2Tactic);
-		ShowMessage("You do not own either Rikishi!");
+		ShowMessage("You own both Rikishi!");
 	}
 	else {
 		ShowMessage("You do not own this Rikishi!");
@@ -353,11 +353,11 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 		AssignFightersFromGrid();
 
 		if (fighter1Tactic.empty()) {
-			ShowMessage("Random Skill and Tactic Selected! (Rikishi 1)");
+			ShowMessage(AnsiString("Random Skill and Tactic Selected! (" + AnsiString(globalFighter1->name.c_str()) + ")"));
 			RandomSkillForFighter(*globalFighter1, fighter1Tactic);
 		}
 		if (fighter2Tactic.empty()) {
-			ShowMessage("Random Skill and Tactic Selected! (Rikishi 2)");
+			ShowMessage(AnsiString("Random Skill and Tactic Selected! (" + AnsiString(globalFighter2->name.c_str()) + ")"));
 			RandomSkillForFighter(*globalFighter2, fighter2Tactic);
 		}
 
@@ -408,15 +408,19 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 			}
 		}
 
-		UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
-		PopulateLeaderboardGrid();
 		SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
+		UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
 		UpdateTournamentGrid();
 		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
 		Application->ProcessMessages();
+//		ShowMessage(IntToStr(currentBoutIndex));
 		currentBoutIndex++;
-		BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
+        AssignFightersFromGrid();
+//		BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
 		UpdateTournamentGrid();
+		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+        UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
+		Application->ProcessMessages();
 		fighter1SkillValue = 0;
 		fighter2SkillValue = 0;
 		fighter1Tactic = "";
@@ -424,7 +428,7 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 	}
 
 	if (currentBoutIndex == 49) {
-		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 		EndBanzuke();
 	}
 
@@ -526,6 +530,109 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 //		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 //		EndBanzuke();
 //	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
+{
+//	UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
+	for (int i = 0; i < 49; i++) {
+		UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
+		if (isBanzukeComplete == false && isTrainingComplete == true && currentBoutIndex != 49) {
+
+			PopulateLeaderboardGrid();
+			AssignFightersFromGrid();
+
+			if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
+//				ShowMessage("Both sumo are owned by the same player, automatically resolving the bout!");
+			}
+			else if (globalFighter1->owner == "P1" || globalFighter2->owner == "P1") {
+				ShowMessage("The current bout features one of your sumo! Get ready for battle!");
+				break;
+			}
+			else {
+//				ShowMessage("Neither sumo are owned by the same player, automatically resolving the bout!");
+			}
+
+			RandomSkillForFighter(*globalFighter1, fighter1Tactic);
+			RandomSkillForFighter(*globalFighter2, fighter2Tactic);
+
+			GetBoutTactic();
+			FighterSkillValue(*globalFighter1, fighter1SkillValue);
+			FighterSkillValue(*globalFighter2, fighter2SkillValue);
+
+			fighter1Total = fighter1SkillValue;
+			HandleInjury(*globalFighter1, fighter1Total);
+
+			fighter2Total = fighter2SkillValue;
+			HandleInjury(*globalFighter2, fighter2Total);
+
+			if (globalFighter1->spirit == 4) {
+				fighter1Total += 1;
+			}
+			if (globalFighter2->spirit == 4) {
+				fighter2Total += 1;
+			}
+
+			if (currentBoutIndex >= 42 && currentBoutIndex < 49) {
+				if (globalFighter1->wins == 3 && globalFighter1->losses == 3) {
+					fighter1Total += 1;
+				}
+				if (globalFighter2->wins == 3 && globalFighter2->losses == 3) {
+					fighter2Total += 1;
+				}
+			}
+
+			if (fighter1Total > fighter2Total) {
+				Victory(0);
+			} else if (fighter1Total < fighter2Total) {
+				Victory(1);
+			} else {
+				if (globalFighter1->weight > globalFighter2->weight) {
+					Victory(0);
+				} else if (globalFighter1->weight < globalFighter2->weight) {
+					Victory(1);
+				} else {
+					if (globalFighter1->technique > globalFighter2->technique) {
+						Victory(0);
+					} else if (globalFighter1->technique < globalFighter2->technique) {
+						Victory(1);
+					} else {
+						int winner = std::rand() % 2;
+						Victory(winner);
+					}
+				}
+			}
+
+			PopulateLeaderboardGrid();
+			SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
+			UpdateTournamentGrid();
+			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+			Application->ProcessMessages();
+			currentBoutIndex++;
+			AssignFightersFromGrid();
+//			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
+			UpdateTournamentGrid();
+			PopulateLeaderboardGrid();
+			if (currentBoutIndex == 49) {
+//				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//				PopulateLeaderboardGrid();
+				EndBanzuke();
+				break;
+			}
+
+		}
+		else if (currentBoutIndex == 49) {
+//			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//			PopulateLeaderboardGrid();
+			EndBanzuke();
+			break;
+		}
+		else {
+			ShowMessage("The training phase is not complete. The sumo are not ready.");
+            break;
+		}
+	}
 }
 //---------------------------------------------------------------------------
 

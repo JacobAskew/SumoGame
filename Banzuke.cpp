@@ -532,58 +532,79 @@ void HandleInjury(Rikishi& fighter, int& fighterTotal) {
 	}
 }
 
-void Victory(int winner) {
-//	Rikishi& refFighter1 = *fighter1;  // Dereference to a reference
-//	Rikishi& refFighter2 = *fighter2;  // Dereference to a reference
+void Victory(int winner, std::vector<Player>& players) {
     if (winner == 0) {
-//        ShowMessage("Fighter 1 wins!");
-		globalFighter1->wins += 1;
-		globalFighter2->losses += 1;
-		if (globalFighter1->isShaken) {
-			globalFighter1->isShaken = false;
+        globalFighter1->wins += 1;
+        globalFighter2->losses += 1;
+
+        if (globalFighter1->isShaken) {
+            globalFighter1->isShaken = false;
         }
-		if ((globalFighter1->rank.find("Maegashira") != std::string::npos) &&
-			(globalFighter2->rank == "Yokozuna" || globalFighter2->rank == "Ozeki")) {
-			if (globalFighter1->spirit < 4) {
-				globalFighter1->spirit += 1;
-			}
-		}
-		if (globalFighter2->isShaken) {
-			if (globalFighter2->spirit > 0) {
-				globalFighter2->spirit -= 1;
+
+        // Check if fighter1 is M1-M10 and defeated a Yokozuna or Ozeki
+        if ((globalFighter1->rank.find("Maegashira") != std::string::npos) &&
+            (globalFighter2->rank == "Yokozuna" || globalFighter2->rank == "Ozeki")) {
+
+            if (globalFighter1->spirit < 4) {
+                globalFighter1->spirit += 1;
             }
-			globalFighter2->isShaken = false;
-		} else {
-			globalFighter2->isShaken = true;
+
+            // Award VP to the player who owns fighter1
+            for (auto& player : players) {
+                if (player.name == globalFighter1->owner) {
+                    player.VP += 1;
+                    break;
+                }
+            }
+        }
+
+        if (globalFighter2->isShaken) {
+            if (globalFighter2->spirit > 0) {
+                globalFighter2->spirit -= 1;
+            }
+            globalFighter2->isShaken = false;
+        } else {
+            globalFighter2->isShaken = true;
         }
     }
     else if (winner == 1) {
-//		ShowMessage("Fighter 2 wins!");
-		globalFighter2->wins += 1;
-		globalFighter1->losses += 1;
-		if (globalFighter2->isShaken) {
-			globalFighter2->isShaken = false;
+        globalFighter2->wins += 1;
+        globalFighter1->losses += 1;
+
+        if (globalFighter2->isShaken) {
+            globalFighter2->isShaken = false;
         }
-		if ((globalFighter2->rank.find("Maegashira") != std::string::npos) &&
-			(globalFighter1->rank == "Yokozuna" || globalFighter1->rank == "Ozeki")) {
-			if (globalFighter2->spirit < 4) {
-				globalFighter2->spirit += 1;
-			}
-		}
-		if (globalFighter1->isShaken) {
-			if (globalFighter1->spirit > 0) {
-				globalFighter1->spirit -= 1;
+
+        // Check if fighter2 is M1-M10 and defeated a Yokozuna or Ozeki
+        if ((globalFighter2->rank.find("Maegashira") != std::string::npos) &&
+            (globalFighter1->rank == "Yokozuna" || globalFighter1->rank == "Ozeki")) {
+
+            if (globalFighter2->spirit < 4) {
+                globalFighter2->spirit += 1;
             }
-			globalFighter1->isShaken = false;
-		} else {
-			globalFighter1->isShaken = true;
+
+            // Award VP to the player who owns fighter2
+            for (auto& player : players) {
+                if (player.name == globalFighter2->owner) {
+                    player.VP += 1;
+                    break;
+                }
+            }
+        }
+
+        if (globalFighter1->isShaken) {
+            if (globalFighter1->spirit > 0) {
+                globalFighter1->spirit -= 1;
+            }
+            globalFighter1->isShaken = false;
+        } else {
+            globalFighter1->isShaken = true;
         }
     }
     else {
         ShowMessage("Error: Invalid winner input.");
     }
 }
-
 
 void TBanzukeForm::StartBanzuke() {
 	isBanzukeComplete = false;  // Reset the Banzuke status
@@ -593,7 +614,7 @@ void TBanzukeForm::StartBanzuke() {
 	TImage* imagevs = dynamic_cast<TImage*>(BanzukeForm->FindComponent("ImageVS"));
 	AnsiString fullPathVS = VSPath;
 	ImageVS->Bitmap->LoadFromFile(fullPathVS);
-    PopulateLeaderboardGrid();
+	PopulateLeaderboardGrid();
 }
 
 // Function to end the Banzuke phase
@@ -656,22 +677,22 @@ void __fastcall TBanzukeForm::ButtonNextHumanBoutClick(TObject *Sender)
 			}
 
 			if (fighter1Total > fighter2Total) {
-				Victory(0);
+				Victory(0, players);
 			} else if (fighter1Total < fighter2Total) {
-				Victory(1);
+				Victory(1, players);
 			} else {
 				if (globalFighter1->weight > globalFighter2->weight) {
-					Victory(0);
+					Victory(0, players);
 				} else if (globalFighter1->weight < globalFighter2->weight) {
-					Victory(1);
+					Victory(1, players);
 				} else {
 					if (globalFighter1->technique > globalFighter2->technique) {
-						Victory(0);
+						Victory(0, players);
 					} else if (globalFighter1->technique < globalFighter2->technique) {
-						Victory(1);
+						Victory(1, players);
 					} else {
 						int winner = std::rand() % 2;
-						Victory(winner);
+						Victory(winner, players);
 					}
 				}
 			}
@@ -786,25 +807,25 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 			}
 
 			if (fighter1Total > fighter2Total) {
-				Victory(0);
+				Victory(0, players);
 			} else if (fighter1Total < fighter2Total) {
-				Victory(1);
+				Victory(1, players);
 			} else {
 	//            ShowMessage("Weight tiebreaker!");
 				if (globalFighter1->weight > globalFighter2->weight) {
-					Victory(0);
+					Victory(0, players);
 				} else if (globalFighter1->weight < globalFighter2->weight) {
-					Victory(1);
+					Victory(1, players);
 				} else {
 	//				ShowMessage("Technique tiebreaker!");
 					if (globalFighter1->technique > globalFighter2->technique) {
-						Victory(0);
+						Victory(0, players);
 					} else if (globalFighter1->technique < globalFighter2->technique) {
-						Victory(1);
+						Victory(1, players);
 					} else {
 //						ShowMessage("O...M...G... Chance tiebreaker!");
 						int winner = std::rand() % 2;
-						Victory(winner);
+						Victory(winner, players);
 					}
 				}
 			}
@@ -878,22 +899,22 @@ void __fastcall TBanzukeForm::ButtonNextBoutClick(TObject *Sender)
 		}
 
 		if (fighter1Total > fighter2Total) {
-			Victory(0);
+			Victory(0, players);
 		} else if (fighter1Total < fighter2Total) {
-			Victory(1);
+			Victory(1, players);
 		} else {
 			if (globalFighter1->weight > globalFighter2->weight) {
-				Victory(0);
+				Victory(0, players);
 			} else if (globalFighter1->weight < globalFighter2->weight) {
-				Victory(1);
+				Victory(1, players);
 			} else {
 				if (globalFighter1->technique > globalFighter2->technique) {
-					Victory(0);
+					Victory(0, players);
 				} else if (globalFighter1->technique < globalFighter2->technique) {
-					Victory(1);
+					Victory(1, players);
 				} else {
 					int winner = std::rand() % 2;
-					Victory(winner);
+					Victory(winner, players);
 				}
 			}
 		}

@@ -17,8 +17,11 @@
 #include <FMX.Memo.Types.hpp>
 #include <FMX.Edit.hpp>
 #include <FMX.Objects.hpp>
+#include <vector>
+
 //---------------------------------------------------------------------------
 void EndBanzuke();
+class Player;
 //bool IsBanzukeComplete;
 //---------------------------------------------------------------------------
 class TBanzukeForm : public TForm
@@ -86,7 +89,7 @@ extern int fighter2Total;
 extern int currentBoutIndex;
 extern int winnerIdx;
 extern int loserIdx;
-extern void Victory(int winner);
+extern void Victory(int winner, std::vector<Player>& players);
 extern void SetBoutResult(int boutIndex, int winnerIdx, int loserIdx);
 extern void UpdateTournamentGrid();
 extern void UpdateBoutGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form);
