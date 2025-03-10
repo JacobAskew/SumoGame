@@ -221,9 +221,11 @@ void __fastcall TNoboruForm::ButtonMinBidClick(TObject *Sender) {
 	}
 	else if (currentRikishiIndex + 1 < rikishiVector.size()) {
 			PlaceBid(rikishiVector[currentRikishiIndex].minBid);  // Place minimum bid
+			UpdatePoints();
 	}
 	else {
 		PlaceBid(rikishiVector[currentRikishiIndex].minBid);
+		UpdatePoints();
 		EndBidding();
 	}
 }
@@ -319,6 +321,7 @@ void PlaceBid(int bidAmount) {
         if (bidAmount >= rikishi.minBid) {
             // Deduct AP from the player placing the bid
 			DeductAPFromPlayer(currentPlayerIndex, bidAmount);
+//			UpdatePoints();
 
             // Update the owner of the Rikishi
 			rikishi.owner = players[currentPlayerIndex].name;
@@ -329,6 +332,7 @@ void PlaceBid(int bidAmount) {
             players[currentPlayerIndex].numberRikishi++;
 
 			UpdateBidding();  // Check if all players are out of AP or other conditions
+//			UpdatePoints();
 
 			// Move to the next Rikishi
 			if (currentRikishiIndex + 1 < rikishiVector.size()) {
@@ -337,6 +341,7 @@ void PlaceBid(int bidAmount) {
 			UpdateBanzukeGrid();
 			Rikishi &myRikishi = rikishiVector[currentRikishiIndex];
 			UpdateImage(myRikishi, NoboruForm);
+			UpdatePoints();
 		}
     }
 
@@ -374,6 +379,7 @@ void __fastcall TNoboruForm::ButtonSubmitBidClick(TObject *Sender)
 	}
 
 	PlaceBid(StrToIntDef(EditBidInput->Text, -1));
+    UpdatePoints();
 }
 //---------------------------------------------------------------------------
 

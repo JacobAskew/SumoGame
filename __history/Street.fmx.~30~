@@ -86,24 +86,22 @@ object MainStreet: TMainStreet
   end
   object EditAbilityPoints: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 8
+    TabOrder = 9
     ReadOnly = True
-    TextSettings.HorzAlign = Center
-    Position.X = 616.000000000000000000
-    Position.Y = 8.000000000000000000
-    Size.Width = 148.000000000000000000
-    Size.Height = 32.000000000000000000
+    Position.X = 640.000000000000000000
+    Position.Y = 17.000000000000000000
+    Size.Width = 108.000000000000000000
+    Size.Height = 57.000000000000000000
     Size.PlatformDefault = False
   end
   object EditVictoryPoints: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 7
+    TabOrder = 8
     ReadOnly = True
-    TextSettings.HorzAlign = Center
-    Position.X = 616.000000000000000000
-    Position.Y = 48.000000000000000000
-    Size.Width = 148.000000000000000000
-    Size.Height = 31.000000000000000000
+    Position.X = 26.000000000000000000
+    Position.Y = 17.000000000000000000
+    Size.Width = 108.000000000000000000
+    Size.Height = 57.000000000000000000
     Size.PlatformDefault = False
   end
 end

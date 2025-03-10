@@ -85,6 +85,7 @@ void ReceiveTrainingRikishi(Rikishi* rikishi) {
 
 void PayTraining(int playerIndex, int TrainingCost) {
 	players[0].DeductAP(TrainingCost);
+    UpdatePoints();
 }
 
 void DisplayAP(int playerIndex) {

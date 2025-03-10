@@ -9,16 +9,6 @@ object MainStreet: TMainStreet
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   DesignerMasterStyle = 0
-  object TextTitle: TText
-    Position.X = 8.000000000000000000
-    Position.Y = 8.000000000000000000
-    Size.Width = 756.000000000000000000
-    Size.Height = 217.000000000000000000
-    Size.PlatformDefault = False
-    Text = 'Banzuke Shoushin'
-    TextSettings.Font.Size = 55.000000000000000000
-    TextSettings.Font.StyleExt = {00070000000000000004000000}
-  end
   object ButtonNoboru: TButton
     Position.X = 26.000000000000000000
     Position.Y = 288.000000000000000000
@@ -83,27 +73,5 @@ object MainStreet: TMainStreet
     Text = 'Go to Ryogoku Kokugikan'
     TextSettings.Trimming = None
     OnClick = ButtonRyogokuClick
-  end
-  object EditAbilityPoints: TEdit
-    Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 8
-    ReadOnly = True
-    TextSettings.HorzAlign = Center
-    Position.X = 616.000000000000000000
-    Position.Y = 8.000000000000000000
-    Size.Width = 148.000000000000000000
-    Size.Height = 32.000000000000000000
-    Size.PlatformDefault = False
-  end
-  object EditVictoryPoints: TEdit
-    Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 7
-    ReadOnly = True
-    TextSettings.HorzAlign = Center
-    Position.X = 616.000000000000000000
-    Position.Y = 48.000000000000000000
-    Size.Width = 148.000000000000000000
-    Size.Height = 31.000000000000000000
-    Size.PlatformDefault = False
   end
 end

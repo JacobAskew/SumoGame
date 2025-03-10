@@ -3,24 +3,21 @@ object MainStreet: TMainStreet
   Top = 0
   Caption = 'Sumo Street'
   ClientHeight = 420
-  ClientWidth = 770
+  ClientWidth = 772
   Position = Designed
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   DesignerMasterStyle = 0
-  object MemoLog: TMemo
-    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
-    DataDetectorTypes = []
-    ReadOnly = True
+  object TextTitle: TText
     Position.X = 8.000000000000000000
     Position.Y = 8.000000000000000000
-    Size.Width = 754.000000000000000000
-    Size.Height = 225.000000000000000000
+    Size.Width = 756.000000000000000000
+    Size.Height = 217.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 0
-    Viewport.Width = 750.000000000000000000
-    Viewport.Height = 221.000000000000000000
+    Text = 'Banzuke Shoushin'
+    TextSettings.Font.Size = 55.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
   end
   object ButtonNoboru: TButton
     Position.X = 26.000000000000000000
@@ -28,7 +25,7 @@ object MainStreet: TMainStreet
     Size.Width = 87.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 1
+    TabOrder = 0
     Text = 'Go to Noboru'
     TextSettings.Trimming = None
     OnClick = ButtonNoboruClick
@@ -39,23 +36,23 @@ object MainStreet: TMainStreet
     Size.Width = 215.000000000000000000
     Size.Height = 61.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 2
+    TabOrder = 1
     Text = 'Go to Beya'
     TextSettings.Trimming = None
     OnClick = ButtonBeyaClick
   end
   object ButtonBanzuke: TButton
-    Position.X = 641.000000000000000000
+    Position.X = 369.000000000000000000
     Position.Y = 256.000000000000000000
     Size.Width = 88.000000000000000000
     Size.Height = 77.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 3
+    TabOrder = 2
     Text = 'Go to Banzuke'
     TextSettings.Trimming = None
     OnClick = ButtonBanzukeClick
   end
-  object Image1: TImage
+  object ImageRoad: TImage
     MultiResBitmap = <
       item
       end>
@@ -66,13 +63,45 @@ object MainStreet: TMainStreet
     Size.PlatformDefault = False
   end
   object ButtonDohyo: TButton
-    Position.X = 449.000000000000000000
+    Position.X = 496.000000000000000000
     Position.Y = 241.000000000000000000
     Size.Width = 112.000000000000000000
     Size.Height = 92.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 6
+    TabOrder = 4
     Text = 'Go to Dohyo'
     TextSettings.Trimming = None
+    OnClick = ButtonDohyoClick
+  end
+  object ButtonRyogoku: TButton
+    Position.X = 616.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 146.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    Text = 'Go to Ryogoku Kokugikan'
+    TextSettings.Trimming = None
+    OnClick = ButtonRyogokuClick
+  end
+  object EditAbilityPoints: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 8
+    ReadOnly = True
+    Position.X = 600.000000000000000000
+    Position.Y = 17.000000000000000000
+    Size.Width = 148.000000000000000000
+    Size.Height = 57.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditVictoryPoints: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 7
+    ReadOnly = True
+    Position.X = 26.000000000000000000
+    Position.Y = 17.000000000000000000
+    Size.Width = 143.000000000000000000
+    Size.Height = 57.000000000000000000
+    Size.PlatformDefault = False
   end
 end

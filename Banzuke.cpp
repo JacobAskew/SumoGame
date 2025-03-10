@@ -692,11 +692,11 @@ void __fastcall TBanzukeForm::ButtonNextHumanBoutClick(TObject *Sender)
 			}
 
 		}
-		else if (currentBoutIndex == 49) {
-//			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
-			EndBanzuke();
-			break;
-		}
+//		else if (currentBoutIndex == 49) {
+////			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//			EndBanzuke();
+//			break;
+//		}
 		else {
 			ShowMessage("The training phase is not complete. The sumo are not ready.");
             break;
@@ -827,12 +827,12 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 //            ShowMessage("Test");
 		}  // <-- Correctly closed loop here
 
-		PopulateLeaderboardGrid();
-		SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
-		UpdateTournamentGrid();
-		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
-//		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
-		EndBanzuke();
+//		PopulateLeaderboardGrid();
+//		SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
+//		UpdateTournamentGrid();
+//		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+////		BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
+//		EndBanzuke();
 	}
 	else {
 		if (AutoTournament) {

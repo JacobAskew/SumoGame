@@ -167,8 +167,10 @@ void UpdateBanzukeGrid()
 
 // Function to start the bidding
 void TNoboruForm::StartBidding() {
+    NoboruForm = new TNoboruForm(this);
     isBiddingComplete = false;  // Reset the bidding status
 	currentRikishiIndex = 0;    // Start from the first Rikishi
+    UpdateBanzukeGrid();
 }
 
 // Check if bidding is complete
@@ -198,19 +200,17 @@ void __fastcall TNoboruForm::NextBidButtonClick(TObject *Sender) {
 	}
 
 	if (currentRikishiIndex < rikishiVector.size()) {
-		if (currentIndex + 1 < rikishiList.size()) {
+		if (currentRikishiIndex + 1 < rikishiVector.size()) {
 			currentRikishiIndex++;  // Move to the next Rikishi
+			UpdateBanzukeGrid();    // Update the grid
+			Rikishi &myRikishi = rikishiVector[currentRikishiIndex];
+			UpdateImage(myRikishi, NoboruForm);
+			UpdateCurrentBid();
 		}
-		UpdateBanzukeGrid();    // Update the grid
-		Rikishi &myRikishi = rikishiVector[currentRikishiIndex];
-		UpdateImage(myRikishi, NoboruForm);
-		UpdateCurrentBid();
-    }
-
-    // Check if we've gone through all the Rikishi
-    if (currentRikishiIndex >= rikishiVector.size()) {
-        EndBidding();  // End bidding when all Rikishi are done
-    }
+		else {
+			EndBidding();
+		}
+	}
 }
 
 // When the player clicks "Min Bid" to place the minimum bid
@@ -219,13 +219,27 @@ void __fastcall TNoboruForm::ButtonMinBidClick(TObject *Sender) {
 		NoboruForm->MemoLogNoboru->Lines->Add("The bidding is closed.");
 		return;  // This will exit the current function if bidding is complete
 	}
-	else if (currentRikishiIndex < rikishiVector.size()) {
-		PlaceBid(rikishiVector[currentRikishiIndex].minBid);  // Place minimum bid
-    }
+	else if (currentRikishiIndex + 1 < rikishiVector.size()) {
+			PlaceBid(rikishiVector[currentRikishiIndex].minBid);  // Place minimum bid
+	}
+	else {
+		PlaceBid(rikishiVector[currentRikishiIndex].minBid);
+		EndBidding();
+	}
 }
 
 // Function to end the bidding phase
 void EndBidding() {
+	for (auto& rikishi : rikishiVector) {
+		if (rikishi.owner.find("P1") == std::string::npos &&
+			rikishi.owner.find("P2") == std::string::npos &&
+			rikishi.owner.find("P3") == std::string::npos &&
+			rikishi.owner.find("P4") == std::string::npos &&
+			rikishi.owner.find("P5") == std::string::npos) {
+
+			rikishi.owner = "CPU";
+		}
+	}
     UpdateBanzukeGrid();
     isBiddingComplete = true;  // Mark bidding as complete
 	BiddingPhaseComplete();    // Call the function to complete the bidding phase in MainStreet.cpp
@@ -281,10 +295,10 @@ void PlaceBid(int bidAmount) {
         return;  // Exit if the player has 3 or more Rikishi
     }
 
-    if (currentRikishiIndex < rikishiVector.size()) {
-        Rikishi& rikishi = rikishiVector[currentRikishiIndex];
+	if (currentRikishiIndex <= rikishiVector.size()) {
+		Rikishi& rikishi = rikishiVector[currentRikishiIndex];
 
-        // Check if the input is valid
+		// Check if the input is valid
         if (bidAmount == -1) {
             ShowMessage("Invalid bid. Please enter a number.");
             return;
@@ -304,10 +318,10 @@ void PlaceBid(int bidAmount) {
 
         if (bidAmount >= rikishi.minBid) {
             // Deduct AP from the player placing the bid
-            DeductAPFromPlayer(currentPlayerIndex, bidAmount);
+			DeductAPFromPlayer(currentPlayerIndex, bidAmount);
 
             // Update the owner of the Rikishi
-            rikishi.owner = players[currentPlayerIndex].name;
+			rikishi.owner = players[currentPlayerIndex].name;
 
             NoboruForm->MemoLogNoboru->Lines->Add(AnsiString(players[currentPlayerIndex].name.c_str()) + " wins " + AnsiString(rikishi.name.c_str()) + " for " + IntToStr(bidAmount));
 
@@ -316,15 +330,18 @@ void PlaceBid(int bidAmount) {
 
 			UpdateBidding();  // Check if all players are out of AP or other conditions
 
-			currentRikishiIndex++;  // Move to the next Rikishi
+			// Move to the next Rikishi
+			if (currentRikishiIndex + 1 < rikishiVector.size()) {
+				currentRikishiIndex++;  // Place minimum bid
+			}
 			UpdateBanzukeGrid();
 			Rikishi &myRikishi = rikishiVector[currentRikishiIndex];
 			UpdateImage(myRikishi, NoboruForm);
-        }
+		}
     }
 
     // Check if we've gone through all the Rikishi and not all players are out of AP or acquired 3 Rikishi
-    if (currentRikishiIndex >= rikishiVector.size() && !AreAllPlayersOutOfAP() && !PlayerHasThreeRikishi()) {
+	if (currentRikishiIndex >= rikishiVector.size() && !AreAllPlayersOutOfAP() && !PlayerHasThreeRikishi()) {
         EndBidding();  // End bidding when all Rikishi are done and conditions met
     }
 }
@@ -400,22 +417,22 @@ void __fastcall TNoboruForm::BanzukeGridDrawColumnCell(TObject *Sender, TCanvas 
 	bool isPreferred = false, isInjured = false;
 
 	if (Column->Index == 5) { // Weight
-		isPreferred = (rikishi.preferredSkill == "weight");
+		isPreferred = (rikishi.preferredSkill == "Weight");
 //		isInjured = rikishi.isInjuredSpeed;  // Example: Injury related to weight (modify if needed)
 	}
 	else if (Column->Index == 6) { // Endurance
-		isPreferred = (rikishi.preferredSkill == "endurance");
+		isPreferred = (rikishi.preferredSkill == "Endurance");
 		isInjured = rikishi.isInjuredEndurance;
 	}
 	else if (Column->Index == 7) { // Technique
-		isPreferred = (rikishi.preferredSkill == "technique");
+		isPreferred = (rikishi.preferredSkill == "Technique");
 	}
 	else if (Column->Index == 8) { // Speed
-		isPreferred = (rikishi.preferredSkill == "speed");
+		isPreferred = (rikishi.preferredSkill == "Speed");
 		isInjured = rikishi.isInjuredSpeed;
 	}
 	else if (Column->Index == 9) { // Strength
-		isPreferred = (rikishi.preferredSkill == "strength");
+		isPreferred = (rikishi.preferredSkill == "Strength");
 		isInjured = rikishi.isInjuredStrength;
 	}
 

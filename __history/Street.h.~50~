@@ -51,19 +51,20 @@ struct Rikishi {
 	String colour;
 	int wins = 0;
 	int losses = 0;
+    std::string RandomString;
 	std::string owner = "Nobody"; // Defaults to "Computer"
 	bool isInitialized = false; // Defaults to false
 	bool isInjuredEndurance = false; // Defaults to false
 	bool isInjuredSpeed = false; // Defaults to false
 	bool isInjuredStrength = false; // Defaults to false
 	std::string preferredSkill;
+};
 
 	// Default constructor
 //	Rikishi()
 //		: strength(0), weight(0), technique(0), endurance(0), speed(0),
 //		  strengthLimit(0), weightLimit(0), techniqueLimit(0), enduranceLimit(0), speedLimit(0),
 //		  spirit(0), age(0), minBid(0), currentBid(0), score(0) {}
-};
 
 // Class to represent a Player
 class Player {
@@ -95,16 +96,17 @@ public:
 class TMainStreet : public TForm
 {
 __published:    // IDE-managed Components
-    TMemo *MemoLog;
     TButton *ButtonNoboru;
 	TButton *ButtonBeya;
 	TButton *ButtonBanzuke;
 	TImage *ImageRoad;
 	TButton *ButtonDohyo;
+	TButton *ButtonRyogoku;
     void __fastcall ButtonNoboruClick(TObject *Sender);
 	void __fastcall ButtonBeyaClick(TObject *Sender);
 	void __fastcall ButtonBanzukeClick(TObject *Sender);
 	void __fastcall ButtonDohyoClick(TObject *Sender);
+	void __fastcall ButtonRyogokuClick(TObject *Sender);
 
 private:    // User declarations
     void __fastcall CheckNamesFile();

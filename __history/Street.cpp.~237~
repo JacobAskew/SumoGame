@@ -130,7 +130,7 @@ std::string getRandomString() {
 }
 
 void GetRandomName(std::string &playerName, std::vector<std::string> &usedNames) {
-    std::string namesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names.txt";
+	std::string namesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names.txt";
     std::ifstream file(namesPath);
     if (!file.is_open()) {
         throw std::runtime_error("Failed to open names.txt");
@@ -625,7 +625,10 @@ void NewYearPhase() {
 	// Give all current players 7 AP
 	for (auto& player : players) {  // 'players' is the vector you initialized
 		player.AddAP();  // Add 7 AP to each player
+		MainStreet->EditVictoryPoints->Text = "Victory Points (P1): " + IntToStr(player.VP);
+		MainStreet->EditAbilityPoints->Text = "Ability Points (P1): " + IntToStr(player.AP);
 	}
+
 
 	// NEW PLAYER ENTERING THE GAME (this won't be implemented for a LONG time)
 
@@ -655,13 +658,13 @@ void NewYearPhase() {
 	// Bidding Phase
 	NoboruForm->StartBidding();  // Start the bidding process in NoboruForm
 //	RyogokuForm->MemoLog->Lines->Add("Bidding phase started...");
-	RyogokuForm->MemoLog->Text += "Bidding phase started...!\n";
+//	RyogokuForm->MemoLog->Text += "Bidding phase started...!\n";
 }
 
 // The function to trigger the next phase (e.g., after bidding is complete)
 void BiddingPhaseComplete() {
 //	RyogokuForm->MemoLog->Lines->Add("Bidding phase complete.");
-	RyogokuForm->MemoLog->Text += "Bidding phase complete.\n";
+//	RyogokuForm->MemoLog->Text += "Bidding phase complete.\n";
 	// Trigger the next phase here, like the training phase, etc.
 	YourBeya->StartTraining();
 }
@@ -669,7 +672,7 @@ void BiddingPhaseComplete() {
  // The function to trigger the next phase (e.g., after Training is complete)
 void TrainingPhaseComplete() {
 //	RyogokuForm->MemoLog->Lines->Add("Training phase complete.");
-	RyogokuForm->MemoLog->Text += "Training phase complete.\n";
+//	RyogokuForm->MemoLog->Text += "Training phase complete.\n";
 	// Trigger the next phase here, like the BOUT phase, etc.
 	BanzukeForm->StartBanzuke();
 }
@@ -1491,10 +1494,10 @@ void RetireRikishi(std::vector<Rikishi>& rikishiVector) {
         }
         logMessage = logMessage.SubString(1, logMessage.Length() - 2);
 //		RyogokuForm->MemoLog->Lines->Add(logMessage);
-		RyogokuForm->MemoLog->Text += logMessage + "\n";
+//		RyogokuForm->MemoLog->Text += logMessage + "\n";
 	} else {
 //		RyogokuForm->MemoLog->Lines->Add("No retirements this year.");
-		RyogokuForm->MemoLog->Text += "No retirements this year.\n";
+//		RyogokuForm->MemoLog->Text += "No retirements this year.\n";
 	}
 }
 
@@ -1539,12 +1542,12 @@ void EndYearPhase(std::vector<Player>& players) {
     // Retire rikishi before proceeding
 	RetireRikishi(rikishiVector);
 //	RyogokuForm->MemoLog->Lines->Add("Retirements have gone through ...");
-	RyogokuForm->MemoLog->Text += "Retirements have gone through ...\n";
+//	RyogokuForm->MemoLog->Text += "Retirements have gone through ...\n";
 
     // Rank adjustments
     ReorderRikishi(rikishiVector);
 //	RyogokuForm->MemoLog->Lines->Add("Rikishi reordered based on ranks...");
-	RyogokuForm->MemoLog->Text += ("Rikishi reordered based on ranks...\n";
+//	RyogokuForm->MemoLog->Text += "Rikishi reordered based on ranks...\n";
 
 	// Attribute degradation
 	for (auto& rikishi : rikishiVector) {
@@ -1563,21 +1566,21 @@ void EndYearPhase(std::vector<Player>& players) {
         if (currentYear < maxYears) {
             currentYear++;
 //			RyogokuForm->MemoLog->Lines->Add("The end of the year has come...");
-			RyogokuForm->MemoLog->Text += ("The end of the year has come...\n";
+//			RyogokuForm->MemoLog->Text += "The end of the year has come...\n";
 //			RyogokuForm->MemoLog->Lines->Add("-------------------------------------------------");
-			RyogokuForm->MemoLog->Text += ("-------------------------------------------------\n";
-            UpdateBanzukeGrid();
+//			RyogokuForm->MemoLog->Text += "-------------------------------------------------\n";
+			UpdateBanzukeGrid();
             isBiddingComplete = false;
             isTrainingComplete = false;
             isBanzukeComplete = false;
             NewYearPhase();
 		} else {
 //			RyogokuForm->MemoLog->Lines->Add("The current year is " + IntToStr(currentYear));
-			RyogokuForm->MemoLog->Text += ("The current year is " + IntToStr(currentYear) + "\n";
+//			RyogokuForm->MemoLog->Text += "The current year is " + IntToStr(currentYear) + "\n";
 //			RyogokuForm->MemoLog->Lines->Add("The " + IntToStr(maxYears) + "-year cycle is complete!");
-			RyogokuForm->MemoLog->Text += ("The " + IntToStr(maxYears) + "-year cycle is complete!\n";
+//			RyogokuForm->MemoLog->Text += "The " + IntToStr(maxYears) + "-year cycle is complete!\n";
 //			RyogokuForm->MemoLog->Lines->Add("It is the end of the game!");
-			RyogokuForm->MemoLog->Text += ("It is the end of the game!\n";
+//			RyogokuForm->MemoLog->Text += "It is the end of the game!\n";
 		}
 	}
 
@@ -1589,11 +1592,37 @@ void EndYearPhase(std::vector<Player>& players) {
 // The function to trigger the next phase (e.g., after Training is complete)
 void BanzukePhaseComplete() {
 //	RyogokuForm->MemoLog->Lines->Add("Banzuke phase complete. Tournament results are in!");
-	RyogokuForm->MemoLog->Text += ("Banzuke phase complete. Tournament results are in!\n";
+//	RyogokuForm->MemoLog->Text += "Banzuke phase complete. Tournament results are in!\n";
 	// Trigger the next phase here, like the BOUT phase, etc.
 	EndYearPhase(players);
 }
 
+
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonDohyoClick(TObject *Sender)
+{
+	if (isTrainingComplete) {
+		DohyoForm->Show(); // Show the main form
+		DohyoForm->DohyoSetup();
+		this->Hide();     // Hide the second form
+	}
+	else {
+		ShowMessage("The Dohyo is not open yet! Come back Later!");
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonRyogokuClick(TObject *Sender)
+{
+	RyogokuForm->Show(); // Show the main form
+//	RyogokuForm->DohyoSetup();
+	this->Hide();     // Hide the second form
+}
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 // Constructor for the form
 __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 	: TForm(Owner)
@@ -1602,7 +1631,7 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 	// Print to console or initialize log
 	TRyogokuForm *RyogokuForm = new TRyogokuForm(Application);
 //	RyogokuForm->Lines->Add("Welcome to Banzuke Shoushin!");
-	RyogokuForm->MemoLog->Text += "Welcome to Banzuke Shoushin!\n";
+//	RyogokuForm->MemoLog->Text += "Welcome to Banzuke Shoushin!\n";
 	std::srand(std::time(0)); // Seed random number generator
 
 	PreGameSetup(); // Pre-game setup logic
@@ -1610,6 +1639,8 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 	NewYearPhase();
 
 }
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 
 //--------------------------- TOOLS FOR DEBUGGING //----------------------------
 //
@@ -1641,26 +1672,5 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 
 //
 
-//---------------------------------------------------------------------------
 
-void __fastcall TMainStreet::ButtonDohyoClick(TObject *Sender)
-{
-	if (isTrainingComplete) {
-		DohyoForm->Show(); // Show the main form
-		DohyoForm->DohyoSetup();
-		this->Hide();     // Hide the second form
-	}
-	else {
-		ShowMessage("The Dohyo is not open yet! Come back Later!");
-	}
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TMainStreet::ButtonRyogokuClick(TObject *Sender)
-{
-	RyogokuForm->Show(); // Show the main form
-//	RyogokuForm->DohyoSetup();
-	this->Hide();     // Hide the second form
-}
-//---------------------------------------------------------------------------
 

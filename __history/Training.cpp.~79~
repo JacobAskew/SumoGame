@@ -23,7 +23,7 @@ int TrainingCost;
 int cost1, cost2, cost3;
 String message3;
 // Rikishi* SelectedRikishi = nullptr;
-extern bool isTrainingComplete;
+
 //const Rikishi* selectedRikishiForTraining = nullptr; // Global variable to track the selected rikishi
 
 // Ensure this variable exists in the class definition (Training.h)
@@ -37,7 +37,7 @@ extern bool isTrainingComplete;
 //}
 
 // Update the function definition to match the new parameter type:
-void __fastcall TTrainingPopup::UpdateTrainingTable(const Rikishi* rikishi) {
+void __fastcall TTrainingPopup::UpdateTrainingTable(Rikishi* rikishi) {
 	if (isTrainingComplete) {
 		ShowMessage("Training is now closed.");
 		return;
@@ -74,7 +74,7 @@ void __fastcall TTrainingPopup::UpdateTrainingTable(const Rikishi* rikishi) {
     ButtonOption3->Text = "3 Upgrades cost: " + message3;
 }
 
-void ReceiveTrainingRikishi(const Rikishi* rikishi) {
+void ReceiveTrainingRikishi(Rikishi* rikishi) {
 	if (rikishi) {
 		TrainingPopup->Show();
 		TrainingPopup->UpdateTrainingTable(rikishi);
@@ -84,21 +84,44 @@ void ReceiveTrainingRikishi(const Rikishi* rikishi) {
 }
 
 void PayTraining(int playerIndex, int TrainingCost) {
-	if (playerIndex >= 0 && playerIndex < players.size()) {
-		players[playerIndex].DeductAP(TrainingCost);
-	}
+	players[0].DeductAP(TrainingCost);
 }
 
 void DisplayAP(int playerIndex) {
 	ShowMessage("You have " + IntToStr(players[playerIndex].AP) + " remaining AP!");
 }
 
+bool CheckIfEnoughAP(int TrainingCost) {
+
+	if (TrainingCost > players[0].AP) {
+		return false;
+	}
+	else {
+		for (auto& player : players) {
+			if (player.AP > 0) {
+				return true;  // At least one player has AP left
+			}
+			else if (TrainingCost == 0) {
+				return true;
+			}
+		}
+
+		return false;  // All players have no AP left
+	}
+
+}
+
 void TTrainingPopup::ReturnToBeyaPostTraining(int TrainingCost, int UpgradePoints) {
-	DisplayAP(0);
-	PayTraining(0, TrainingCost);
-	YourBeya->CollectUpgradePoints(UpgradePoints);
-	YourBeya->Show(); // Show the main form
-	this->Hide();     // Hide the second form
+	if (CheckIfEnoughAP(TrainingCost)) {
+		PayTraining(0, TrainingCost);
+		DisplayAP(0);
+		YourBeya->CollectUpgradePoints(UpgradePoints);
+		YourBeya->Show(); // Show the main form
+		this->Hide();     // Hide the second form
+	}
+	else {
+		ShowMessage("You do not have enough AP for that option.");
+	}
 }
 
 //---------------------------------------------------------------------------

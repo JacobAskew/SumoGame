@@ -67,11 +67,44 @@ struct Rikishi {
 //		  spirit(0), age(0), minBid(0), currentBid(0), score(0) {}
 
 // Class to represent a Player
+//class Player {
+//public:
+//    std::string name;
+//	int AP;
+//	int VP;
+//
+//    // Method to add 7 AP each year
+//    void AddAP() {
+//        AP += 7;
+//    }
+//
+//    // Method to deduct AP when placing a bid
+//    void DeductAP(int amount) {
+//        if (AP >= amount) {
+//            AP -= amount;
+//        } else {
+//            AP = 0;  // If AP is less than the bid amount, set it to 0
+//        }
+//    }
+//
+//    std::vector<Rikishi> rikishiList;
+//    int numberRikishi;
+//
+//    Player(const std::string& n = "", int ap = 0) : name(n), AP(ap) {}
+//};
+
+// Class to represent a Player
 class Player {
 public:
     std::string name;
     int AP;
     int VP;
+    std::vector<Rikishi> rikishiList;
+    int numberRikishi;
+
+    // Constructor with default AP and VP set to 0
+    Player(const std::string& n = "", int ap = 0, int vp = 0)
+        : name(n), AP(ap), VP(vp), numberRikishi(0) {}
 
     // Method to add 7 AP each year
     void AddAP() {
@@ -86,12 +119,8 @@ public:
             AP = 0;  // If AP is less than the bid amount, set it to 0
         }
     }
-
-    std::vector<Rikishi> rikishiList;
-    int numberRikishi;
-
-    Player(const std::string& n = "", int ap = 0) : name(n), AP(ap) {}
 };
+
 
 class TMainStreet : public TForm
 {
@@ -102,6 +131,9 @@ __published:    // IDE-managed Components
 	TImage *ImageRoad;
 	TButton *ButtonDohyo;
 	TButton *ButtonRyogoku;
+	TEdit *EditAbilityPoints;
+	TEdit *EditVictoryPoints;
+	TText *TextTitle;
     void __fastcall ButtonNoboruClick(TObject *Sender);
 	void __fastcall ButtonBeyaClick(TObject *Sender);
 	void __fastcall ButtonBanzukeClick(TObject *Sender);
@@ -119,6 +151,7 @@ extern PACKAGE TMainStreet *MainStreet;
 extern std::vector<Rikishi> rikishiVector;  // Declare the vector as extern
 extern std::vector<Player> players;
 extern std::string Ranks[];
+extern void UpdatePoints();
 
 #endif
 
