@@ -389,8 +389,9 @@ void __fastcall TMainStreet::ButtonBeyaClick(TObject *Sender)
 	{
 		YourBeya = new TYourBeya(this); // Assign the created form to the global pointer
 	}
-	YourBeya->Show(); // Show the Beya form
 	YourBeya->UpdateBeya();
+	YourBeya->Show(); // Show the Beya form
+//	YourBeya->UpdateBeya();
 	this->Hide();       // Hide the current form
 }
 

@@ -63,6 +63,9 @@ __published:    // IDE-managed Components
 	TImage *ImagePoster3;
 	TImage *ImageBed2;
 	TImage *ImageBed3;
+	TImage *ImageDoor1;
+	TImage *ImageDoor2;
+	TImage *ImageDoor3;
 
 	// Attribute upgrade images and glow effects (separate declarations)
 

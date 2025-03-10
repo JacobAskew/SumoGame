@@ -288,7 +288,7 @@ void UpdateBidding() {
 void PlaceBid(int bidAmount) {
 	if (isBiddingComplete) {
 		NoboruForm->MemoLogNoboru->Lines->Add("The bidding is closed.");
-		return;  // This will exit the current function if bidding is complete
+		return;  // Exit if bidding is complete
 	}
 
 	// Check if the player has already acquired 3 Rikishi
@@ -297,7 +297,7 @@ void PlaceBid(int bidAmount) {
         return;  // Exit if the player has 3 or more Rikishi
     }
 
-	if (currentRikishiIndex <= rikishiVector.size()) {
+	if (currentRikishiIndex < rikishiVector.size()) {  // Fixed: Prevent out-of-bounds
 		Rikishi& rikishi = rikishiVector[currentRikishiIndex];
 
 		// Check if the input is valid
@@ -321,34 +321,38 @@ void PlaceBid(int bidAmount) {
         if (bidAmount >= rikishi.minBid) {
             // Deduct AP from the player placing the bid
 			DeductAPFromPlayer(currentPlayerIndex, bidAmount);
-//			UpdatePoints();
 
-            // Update the owner of the Rikishi
+			// Update the owner of the Rikishi
 			rikishi.owner = players[currentPlayerIndex].name;
 
-            NoboruForm->MemoLogNoboru->Lines->Add(AnsiString(players[currentPlayerIndex].name.c_str()) + " wins " + AnsiString(rikishi.name.c_str()) + " for " + IntToStr(bidAmount));
+            // Log the win
+            NoboruForm->MemoLogNoboru->Lines->Add(
+                AnsiString(players[currentPlayerIndex].name.c_str()) + " wins " +
+                AnsiString(rikishi.name.c_str()) + " for " + IntToStr(bidAmount)
+            );
+
+            // Add Rikishi to Player's rikishiList
+            players[currentPlayerIndex].rikishiList.push_back(rikishi);
 
             // Increment the number of Rikishi owned by the player
             players[currentPlayerIndex].numberRikishi++;
 
-			UpdateBidding();  // Check if all players are out of AP or other conditions
-//			UpdatePoints();
-
-			// Move to the next Rikishi
-			if (currentRikishiIndex + 1 < rikishiVector.size()) {
-				currentRikishiIndex++;  // Place minimum bid
-			}
+			// Update bidding status and UI
+			UpdateBidding();
 			UpdateBanzukeGrid();
-			Rikishi &myRikishi = rikishiVector[currentRikishiIndex];
-			UpdateImage(myRikishi, NoboruForm);
 			UpdatePoints();
+
+			// Move to the next Rikishi if available
+			if (currentRikishiIndex + 1 < rikishiVector.size()) {
+				currentRikishiIndex++;
+				UpdateImage(rikishiVector[currentRikishiIndex], NoboruForm);
+			}
 		}
     }
-
     // Check if we've gone through all the Rikishi and not all players are out of AP or acquired 3 Rikishi
 	if (currentRikishiIndex >= rikishiVector.size() && !AreAllPlayersOutOfAP() && !PlayerHasThreeRikishi()) {
-        EndBidding();  // End bidding when all Rikishi are done and conditions met
-    }
+		EndBidding();  // End bidding when all Rikishi are done and conditions met
+	}
 }
 
 void __fastcall TNoboruForm::ButtonSkipAllBidsClick(TObject *Sender)

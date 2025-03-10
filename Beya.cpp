@@ -25,6 +25,7 @@
 
 TYourBeya *YourBeya;
 
+String DoorPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Door2.png";
 String ImagesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\";
 String SkillPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\SkillToken_";
 //String RikishiPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Sumo";
@@ -140,6 +141,33 @@ void TYourBeya::UpdateBeya() {
 
 	int rikishiIndex = 1; // Start from 1 (matching UI component names)
 
+	int P1_rikishiCount = 0;
+
+	for (const auto& player : players) {
+		if (player.name == "P1") {
+			P1_rikishiCount = player.rikishiList.size();
+			break;  // Stop searching once found
+		}
+	}
+
+//	ShowMessage("P1 Rikishi Count: " + IntToStr(P1_rikishiCount));
+
+	// Update the Doors
+	std::vector<std::string> doorNames = {"ImageDoor3", "ImageDoor2", "ImageDoor1"};
+
+	for (int i = 0; i < 3; i++) {
+		TImage* imageDoor = dynamic_cast<TImage*>(YourBeya->FindComponent(doorNames[i].c_str()));
+
+		if (imageDoor) {
+			if (P1_rikishiCount < (3 - i)) {
+				imageDoor->Bitmap->LoadFromFile(DoorPath);
+				imageDoor->Visible = true;
+			} else {
+				imageDoor->Visible = false;
+			}
+		}
+	}
+
 	for (Rikishi& rikishi : rikishiVector) {
 		if (rikishi.owner == "P1" && rikishiIndex <= 3) { // Ensure we update max 3 rikishi
 			if (!firstPlayerRikishi) {
@@ -161,7 +189,7 @@ void TYourBeya::UpdateBeya() {
 
 			// Load Rikishi image + background
 			TImage* imageRikishi = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageRikishi" + IntToStr(rikishiIndex)));
-            if (imageRikishi) {
+			if (imageRikishi) {
 				AnsiString fullPathRikishi = RikishiPath + IntToStr(rikishi.spirit) + ".png";
 				imageRikishi->Bitmap->LoadFromFile(fullPathRikishi);
 			}
