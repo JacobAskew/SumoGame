@@ -1,0 +1,932 @@
+#include <System.UITypes.hpp> // For TAlphaColor
+#include <FMX.Graphics.hpp>   // For TBitmap
+#include <fmx.h>
+#include <FMX.DialogService.hpp> // Required for TDialogService
+#include <System.SysUtils.hpp>  // Required for UnicodeString conversion
+#include <regex>
+#include <vector>
+#include <random>
+#include <FMX.Forms.hpp>
+#include <FMX.Memo.hpp>
+#include <FMX.Layouts.hpp>
+#include <iostream>
+#include <FMX.ScrollBox.hpp>
+
+#include "Beya.h"
+#include "Street.h" // Include after Beya.h
+#include "Noboru.h" // Include after Beya.h to avoid issues
+#include "Training.h" // Include after Beya.h to avoid issues
+#include "Banzuke.h"
+//---------------------------------------------------------------------------
+
+#pragma hdrstop
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+
+TYourBeya *YourBeya;
+
+String DoorPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Door2.png";
+String ImagesPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\";
+String SkillPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\SkillToken_";
+//String RikishiPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Sumo";
+//String BeltPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\SumoBelt";
+//String YokozunaPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\SumoYokozunaBelt";
+
+bool isTrainingComplete = false;  // Flag to track if training is complete
+bool IsTrainingComplete() {
+	return isTrainingComplete;
+}
+void TrainingPhaseComplete();
+
+int WhichRikishi;
+
+Rikishi* firstPlayerRikishi = nullptr;  // Pointer to the first owned Rikishi
+Rikishi* secondPlayerRikishi = nullptr;  // Pointer to the first owned Rikishi
+Rikishi* thirdPlayerRikishi = nullptr;  // Pointer to the first owned Rikishi
+
+//int UpgradePoints;
+
+int StrengthTracker[3] = {0, 0, 0};
+int WeightTracker[3] = {0, 0, 0};
+int EnduranceTracker[3] = {0, 0, 0};
+int TechniqueTracker[3] = {0, 0, 0};
+int SpeedTracker[3] = {0, 0, 0};
+int SpiritTracker[3] = {0, 0, 0};
+
+__fastcall TYourBeya::TYourBeya(TComponent* Owner) : TForm(Owner)
+{
+}
+
+std::vector<std::reference_wrapper<Rikishi>> GetPlayerOwnedRikishi(std::vector<Rikishi>& rikishiVector, const std::string& owner) {
+	std::vector<std::reference_wrapper<Rikishi>> rikishiOwnedByPlayer;
+	for (Rikishi& rikishi : rikishiVector) {
+		if (rikishi.owner == owner) {
+			rikishiOwnedByPlayer.push_back(rikishi);
+		}
+	}
+	return rikishiOwnedByPlayer;
+}
+
+// Helper function to apply a tint to a pixel
+TAlphaColor ApplyTintToPixel(TAlphaColor originalColor, TAlphaColor tintColor) {
+	// Extract RGB components from the original color
+    uint8_t r = (originalColor >> 16) & 0xFF;
+    uint8_t g = (originalColor >> 8) & 0xFF;
+    uint8_t b = (originalColor >> 0) & 0xFF;
+
+    // Extract RGB components from the tint color
+    uint8_t tr = (tintColor >> 16) & 0xFF;
+    uint8_t tg = (tintColor >> 8) & 0xFF;
+    uint8_t tb = (tintColor >> 0) & 0xFF;
+
+    // Simple blend of the original color with the tint (adjust as needed)
+    r = (r + tr) / 2;
+    g = (g + tg) / 2;
+    b = (b + tb) / 2;
+
+    // Recreate the tinted color and return it
+    return (originalColor & 0xFF000000) | (r << 16) | (g << 8) | b;
+}
+
+// Function to apply tint to non-transparent pixels of the bitmap
+void TintNonTransparent(TBitmap* bitmap, TAlphaColor tintColor) {
+    if (!bitmap || bitmap->IsEmpty()) return;
+
+    // Lock the bitmap data to access pixels
+    TBitmapData bitmapData;
+	if (bitmap->Map(TMapAccess::ReadWrite, bitmapData)) {  // Correct enum value for access
+        // Iterate through each pixel
+		for (int y = 0; y < bitmap->Height; ++y) {
+            for (int x = 0; x < bitmap->Width; ++x) {
+                // Get the color of the current pixel
+                TAlphaColor pixelColor = bitmapData.GetPixel(x, y);
+				uint8_t alpha = (pixelColor >> 24) & 0xFF;  // Extract alpha component
+
+				// If the pixel is not transparent, apply the tint
+                if (alpha > 0) {
+                    TAlphaColor tintedPixel = ApplyTintToPixel(pixelColor, tintColor);
+					bitmapData.SetPixel(x, y, tintedPixel); // Set the tinted pixel
+                }
+			}
+        }
+		// Unlock the bitmap after modifications
+        bitmap->Unmap(bitmapData);
+	}
+}
+
+
+void ResetPlayerRikishi() {
+
+	firstPlayerRikishi = nullptr;  // Pointer to the first owned Rikishi
+	secondPlayerRikishi = nullptr;  // Pointer to the first owned Rikishi
+	thirdPlayerRikishi = nullptr;  // Pointer to the first owned Rikishi
+
+	for (Rikishi& rikishi : rikishiVector) {
+		if (rikishi.owner == "P1") { // Ensure we update max 3 rikishi
+			if (!firstPlayerRikishi) {
+				firstPlayerRikishi = &rikishi;  // Store the first found Rikishi
+			}
+			else if (!secondPlayerRikishi) {
+				secondPlayerRikishi = &rikishi;  // Store the second found Rikishi
+			}
+			else if (!thirdPlayerRikishi) {
+				thirdPlayerRikishi = &rikishi;  // Store the third found Rikishi
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+void TYourBeya::UpdateBeya() {
+
+	int rikishiIndex = 1; // Start from 1 (matching UI component names)
+
+	int P1_rikishiCount = 0;
+
+	for (const auto& player : players) {
+		if (player.name == "P1") {
+			P1_rikishiCount = player.rikishiList.size();
+			break;  // Stop searching once found
+		}
+	}
+
+//	ShowMessage("P1 Rikishi Count: " + IntToStr(P1_rikishiCount));
+
+	// Update the Doors
+	std::vector<std::string> doorNames = {"ImageDoor3", "ImageDoor2", "ImageDoor1"};
+
+	for (int i = 0; i < 3; i++) {
+		TImage* imageDoor = dynamic_cast<TImage*>(YourBeya->FindComponent(doorNames[i].c_str()));
+
+		if (imageDoor) {
+			if (P1_rikishiCount < (3 - i)) {
+				imageDoor->Bitmap->LoadFromFile(DoorPath);
+				imageDoor->Visible = true;
+			} else {
+				imageDoor->Visible = false;
+			}
+		}
+	}
+
+	for (Rikishi& rikishi : rikishiVector) {
+//		if (rikishi.owner == "P1" && rikishiIndex <= 3) { // Ensure we update max 3 rikishi
+// Find the player P1
+		auto it = std::find_if(players.begin(), players.end(), [](const Player& p) {
+			return p.name == "P1";
+		});
+
+		if (it != players.end()) {  // Ensure P1 exists
+			Player& P1 = *it;  // Reference to P1
+
+			// Ensure we update max 3 rikishi
+			if (P1.rikishiList.size() >= 1) firstPlayerRikishi = &P1.rikishiList[0];
+			if (P1.rikishiList.size() >= 2) secondPlayerRikishi = &P1.rikishiList[1];
+			if (P1.rikishiList.size() >= 3) thirdPlayerRikishi = &P1.rikishiList[2];
+
+			// Update rank, name, and age
+            TEdit* editRank = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditRank" + IntToStr(rikishiIndex)));
+			TEdit* editName = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditName" + IntToStr(rikishiIndex)));
+            TEdit* editAge = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditAge" + IntToStr(rikishiIndex)));
+            if (editRank) editRank->Text = "Rank: " + AnsiString(rikishi.rank.c_str());
+            if (editName) editName->Text = AnsiString(rikishi.name.c_str());
+            if (editAge) editAge->Text = "Age: " + AnsiString(std::to_string(rikishi.age).c_str());
+
+			// Load Rikishi image + background
+			TImage* imageRikishi = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageRikishi" + IntToStr(rikishiIndex)));
+			if (imageRikishi) {
+				AnsiString fullPathRikishi = RikishiPath + IntToStr(rikishi.spirit) + ".png";
+				imageRikishi->Bitmap->LoadFromFile(fullPathRikishi);
+			}
+			TImage* imagebed = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageBed" + IntToStr(rikishiIndex)));
+			if (imagebed) {
+				AnsiString fullPathBed = ImagesPath + "Bed.png";
+				imagebed->Bitmap->LoadFromFile(fullPathBed);
+			}
+			TImage* imageshelf = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageShelf" + IntToStr(rikishiIndex)));
+			if (imageshelf) {
+				AnsiString fullPathShelve = ImagesPath + "Shelf.png";
+				imageshelf->Bitmap->LoadFromFile(fullPathShelve);
+			}
+
+			std::string randomstring = rikishi.RandomString;
+
+			TImage* imageposter = dynamic_cast<TImage*>(YourBeya->FindComponent("ImagePoster" + IntToStr(rikishiIndex)));
+			if (imageposter) {
+				AnsiString fullPathPoster = ImagesPath + "Poster" + randomstring.c_str() + ".png";
+				imageposter->Bitmap->LoadFromFile(fullPathPoster);
+			}
+            // Load Belt image and apply color
+            TImage* imageBelt = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageBelt" + IntToStr(rikishiIndex)));
+            if (imageBelt) {
+                AnsiString fullPathBelt = BeltPath + ".png";
+                imageBelt->Bitmap->LoadFromFile(fullPathBelt);
+
+                // Convert UnicodeString to std::string
+                std::string colorStr = AnsiString(rikishi.colour).c_str();
+                std::smatch match;
+                std::regex numRegex(R"(\d+)");
+                if (std::regex_search(colorStr, match, numRegex)) {
+                    UnicodeString extractedNumber = UnicodeString(match.str().c_str());
+                    TAlphaColor color = (TAlphaColor) StrToUInt(extractedNumber);
+                    TintNonTransparent(imageBelt->Bitmap, color);
+				} else {
+                    ShowMessage("Invalid color format: " + rikishi.colour);
+                }
+            }
+
+            // If Yokozuna, load the Yokozuna image
+            if (rikishi.rank == "Yokozuna") {
+                TImage* imageYokozuna = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageYokozuna" + IntToStr(rikishiIndex)));
+                if (imageYokozuna) {
+					AnsiString fullPathYokozuna = YokozunaPath + ".png";
+                    imageYokozuna->Bitmap->LoadFromFile(fullPathYokozuna);
+                }
+            }
+
+            // Load and tint skill images
+            struct Skill {
+                const char* name;
+                int value;
+				int limit;
+                TAlphaColor color;
+            };
+
+            Skill skills[] = {
+                {"Weight", rikishi.weight, rikishi.weightLimit, TAlphaColorRec::Black},
+                {"Endurance", rikishi.endurance, rikishi.enduranceLimit, (TAlphaColor)0xFF00FF00},
+                {"Technique", rikishi.technique, rikishi.techniqueLimit, TAlphaColorRec::Blue},
+                {"Speed", rikishi.speed, rikishi.speedLimit, TAlphaColorRec::Yellow},
+				{"Strength", rikishi.strength, rikishi.strengthLimit, TAlphaColorRec::Red}
+            };
+
+            for (const Skill& skill : skills) {
+                TImage* skillImage = dynamic_cast<TImage*>(YourBeya->FindComponent("Image" + AnsiString(skill.name) + IntToStr(rikishiIndex)));
+                if (skillImage) {
+					AnsiString fullPathSkill = SkillPath + IntToStr(skill.value) + IntToStr(skill.limit) + ".png";
+					skillImage->Bitmap->LoadFromFile(fullPathSkill);
+					TintNonTransparent(skillImage->Bitmap, skill.color);
+				}
+			}
+
+			rikishiIndex++; // Move to next Rikishi UI slot
+			if (rikishiIndex > 3) break; // Stop after 3 Rikishi
+		}
+	}
+//	UpdateUpgradeHighlights();
+}
+
+// Function to generate a random number in a given range
+int RollDice(int min, int max) {
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(min, max);
+	return dist(gen);
+}
+
+// Function to train CPU-controlled Rikishi
+void TrainCPUrikishi(std::vector<Rikishi>& rikishiVector) {
+    bool showResults = false;
+
+    // Ask the player if they want to see training results
+    TDialogService::MessageDialog("Would you like to see the training results from the CPU Rikishi?",
+        TMsgDlgType::mtConfirmation, TMsgDlgButtons() << TMsgDlgBtn::mbYes << TMsgDlgBtn::mbNo,
+        TMsgDlgBtn::mbNo, 0,
+        [&showResults](const TModalResult AResult) {
+            showResults = (AResult == mrYes);
+        });
+
+    AnsiString resultsText = "";
+
+    for (Rikishi& rikishi : rikishiVector) {
+        std::vector<std::string> skillsIncreased;
+        skillsIncreased.clear();
+
+        if (rikishi.owner == "CPU") {
+            int roll = RollDice(1, 6);
+            int spiritIncrease = 0;
+            int skillUpgrades = 0;
+
+            // Adjust training results based on the age of the rikishi
+            if (rikishi.age >= 21 && rikishi.age <= 26) {
+                switch (roll) {
+                    case 2: spiritIncrease = 1; break;
+                    case 3: skillUpgrades = 1; break;
+                    case 4: spiritIncrease = 2; break;
+                    case 5: spiritIncrease = 1; skillUpgrades = 1; break;
+                    case 6: spiritIncrease = 2; skillUpgrades = 2; break;
+                }
+            } else if (rikishi.age >= 27 && rikishi.age <= 30) {
+                switch (roll) {
+                    case 2: spiritIncrease = 1; break;
+                    case 3: skillUpgrades = 1; break;
+                    case 4: spiritIncrease = 1; skillUpgrades = 1; break;
+                    case 5: skillUpgrades = 2; break;
+                    case 6: spiritIncrease = 2; skillUpgrades = 2; break;
+                }
+            } else if (rikishi.age >= 31 && rikishi.age <= 33) {
+                switch (roll) {
+                    case 2: spiritIncrease = 1; break;
+                    case 3: skillUpgrades = 1; break;
+                    case 4: spiritIncrease = 1; break;
+                    case 5: skillUpgrades = 1; break;
+                    case 6: spiritIncrease = 1; skillUpgrades = 2; break;
+                }
+            } else {
+                switch (roll) {
+                    case 4: spiritIncrease = 1; break;
+                    case 5: spiritIncrease = 1; break;
+                    case 6: spiritIncrease = 2; break;
+                }
+            }
+
+			// Apply spirit increase
+			if (rikishi.spirit + spiritIncrease < 4) {
+				 rikishi.spirit += spiritIncrease;
+			}
+			else if (rikishi.spirit + spiritIncrease >= 4) {
+                 rikishi.spirit = 4;
+			}
+
+
+            // List of skill pointers for easy modification
+            std::vector<std::pair<int*, int*>> skills = {
+                {&rikishi.strength, &rikishi.strengthLimit},
+                {&rikishi.weight, &rikishi.weightLimit},
+                {&rikishi.technique, &rikishi.techniqueLimit},
+                {&rikishi.endurance, &rikishi.enduranceLimit},
+                {&rikishi.speed, &rikishi.speedLimit}
+            };
+
+            // Distribute skill upgrades randomly (lost if capped)
+            for (int i = 0; i < skillUpgrades; i++) {
+                int skillIndex = RollDice(0, skills.size() - 1);
+                switch (skillIndex) {
+                    case 0: skillsIncreased.push_back("Strength"); break;
+                    case 1: skillsIncreased.push_back("Weight"); break;
+                    case 2: skillsIncreased.push_back("Technique"); break;
+                    case 3: skillsIncreased.push_back("Endurance"); break;
+                    case 4: skillsIncreased.push_back("Speed"); break;
+                }
+                if (*skills[skillIndex].first < *skills[skillIndex].second) {
+                    (*skills[skillIndex].first)++; // Increase skill if within limit
+                }
+            }
+
+            // Prepare the result text if the user wants to see it
+            if (showResults) {
+				resultsText += "Rikishi: " + AnsiString(rikishi.name.c_str()) + "|";
+				resultsText += "Age: " + IntToStr(rikishi.age) + "|";
+				resultsText += "Rolled: " + IntToStr(roll) + "|";
+				resultsText += "Received: " + IntToStr(spiritIncrease) + " Spirit|";
+				resultsText += IntToStr(skillUpgrades) + " Skill Points|";
+
+				if (!skillsIncreased.empty()) {
+					resultsText += "Skills Increased: ";
+					for (size_t i = 0; i < skillsIncreased.size(); ++i) {
+						resultsText += skillsIncreased[i].c_str();
+						if (i < skillsIncreased.size() - 1) {
+							resultsText += ", ";
+						}
+					}
+					resultsText += "|\n";
+                }
+//                resultsText += "\n";
+            }
+        }
+    }
+
+    // Show the results in a message dialog as a popup with the correct title
+    if (showResults && !resultsText.IsEmpty()) {
+        TDialogService::MessageDialog(
+            "Computer Training Session Results:\n" + resultsText,
+            TMsgDlgType::mtInformation,
+            TMsgDlgButtons() << TMsgDlgBtn::mbOK,
+            TMsgDlgBtn::mbOK, 0,
+            [](const TModalResult AResult) {
+                // Handle response if needed
+            }
+        );
+    }
+}
+
+void UpgradeSkill(int rikishiIndex, const std::string& skillName) {
+    auto rikishiOwnedByP1 = GetPlayerOwnedRikishi(rikishiVector, "P1");
+	if (rikishiIndex >= rikishiOwnedByP1.size()) {
+        ShowMessage("Player 1 does not have enough Rikishi.");
+        return;
+    }
+
+    Rikishi& selectedRikishi = rikishiOwnedByP1[rikishiIndex].get();
+    int* tracker = nullptr;
+    int* stat = nullptr;
+    int limit = 0;
+
+    if (skillName == "Strength") {
+        tracker = &StrengthTracker[rikishiIndex];
+        stat = &selectedRikishi.strength;
+        limit = selectedRikishi.strengthLimit;
+    } else if (skillName == "Weight") {
+        tracker = &WeightTracker[rikishiIndex];
+        stat = &selectedRikishi.weight;
+        limit = selectedRikishi.weightLimit;
+    } else if (skillName == "Endurance") {
+        tracker = &EnduranceTracker[rikishiIndex];
+        stat = &selectedRikishi.endurance;
+        limit = selectedRikishi.enduranceLimit;
+    } else if (skillName == "Technique") {
+        tracker = &TechniqueTracker[rikishiIndex];
+        stat = &selectedRikishi.technique;
+		limit = selectedRikishi.techniqueLimit;
+	} else if (skillName == "Speed") {
+		tracker = &SpeedTracker[rikishiIndex];
+		stat = &selectedRikishi.speed;
+		limit = selectedRikishi.speedLimit;
+	} else if (skillName == "Spirit") {
+		tracker = &SpiritTracker[rikishiIndex];
+		stat = &selectedRikishi.spirit;
+		limit = 4;
+	}
+
+
+    if (!tracker || !stat) {
+        ShowMessage("Invalid skill name.");
+        return;
+    }
+
+    if (UpgradePoints > 0 && *tracker == 0 && *stat < limit) {
+		(*stat)++;
+		if (skillName != "Spirit") {
+			(*tracker)++;
+		}
+		UpgradePoints--;
+        YourBeya->UpdateBeya();
+        UpdateBanzukeGrid();
+    } else {
+        ShowMessage("You cannot improve this skill any more this round of training.");
+    }
+}
+
+// Function to start the training phase
+void TYourBeya::StartTraining() {
+	isTrainingComplete = false;  // Reset the training status
+}
+
+void TYourBeya::CollectUpgradePoints(int UpgradePoints) {
+	 ShowMessage("You have " + IntToStr(UpgradePoints) + " availble upgrades.");
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TYourBeya::ReturnStreetClick(TObject *Sender) {
+	MainStreet->Show(); // Show the main form
+	this->Hide();     // Hide the second form
+}
+
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+
+// Fix for checking and creating TrainingPopup only once
+void __fastcall TYourBeya::TrainRikishi1Click(TObject *Sender) {
+
+	WhichRikishi = 1;
+
+	ResetPlayerRikishi();
+
+    // Ensure we are training the correct Rikishi
+	if (firstPlayerRikishi) {
+//		ReceiveTrainingRikishi(firstPlayerRikishi);
+		TrainingPopup = new TTrainingPopup(this);
+		TrainingPopup->UpdateTrainingTable(firstPlayerRikishi);
+		TrainingPopup->Show(); // Show the Noboru form
+		this->Hide();       // Hide the current form
+	}
+	else {
+		ShowMessage("You have no rikishi to train. Bid to get control over new rikishi.");
+	}
+}
+
+// Repeated training functions adjusted similarly
+void __fastcall TYourBeya::TrainRikishi2Click(TObject *Sender) {
+
+	WhichRikishi = 2;
+
+	ResetPlayerRikishi();
+
+	if (secondPlayerRikishi) {
+//		ReceiveTrainingRikishi(secondPlayerRikishi);
+		TrainingPopup = new TTrainingPopup(this);
+		TrainingPopup->UpdateTrainingTable(secondPlayerRikishi);
+		TrainingPopup->Show();
+		this->Hide();
+	}
+	else {
+		ShowMessage("No Rikishi in second Beya slot. Try another.");
+	}
+}
+
+void __fastcall TYourBeya::TrainRikishi3Click(TObject *Sender) {
+
+	WhichRikishi = 3;
+
+	ResetPlayerRikishi();
+
+	if (thirdPlayerRikishi) {
+//		ReceiveTrainingRikishi(thirdPlayerRikishi);
+        TrainingPopup = new TTrainingPopup(this);
+		TrainingPopup->UpdateTrainingTable(thirdPlayerRikishi);
+		TrainingPopup->Show();
+		this->Hide();
+	}
+	else {
+		ShowMessage("No Rikishi in third Beya slot. Try another.");
+	}
+
+}
+
+// Handle memory cleanup for the training popup when no longer needed (optional but good practice)
+void __fastcall TYourBeya::CleanupTrainingPopup() {
+    if (TrainingPopup) {
+        delete TrainingPopup; // Free memory
+        TrainingPopup = nullptr; // Set the pointer to nullptr to avoid dangling pointer issues
+    }
+}
+
+void ResetSkillTrackers() {
+    for (int i = 0; i < 3; i++) {
+        StrengthTracker[i] = 0;
+        WeightTracker[i] = 0;
+        EnduranceTracker[i] = 0;
+        TechniqueTracker[i] = 0;
+        SpeedTracker[i] = 0;
+        SpiritTracker[i] = 0;
+    }
+}
+
+// Call Cleanup after usage (for example after closing the training phase)
+void EndTraining() {
+    TrainCPUrikishi(rikishiVector);
+	UpdateBanzukeGrid();
+    ResetSkillTrackers();
+    Application->ProcessMessages();
+	isTrainingComplete = true;
+	TrainingPhaseComplete();
+    YourBeya->CleanupTrainingPopup(); // Cleanup after the training phase
+}
+
+// When skipping training
+void __fastcall TYourBeya::ButtonSkipTrainingClick(TObject *Sender) {
+	if (isTrainingComplete) {
+		ShowMessage("Training is complete, they are waiting in the Dohyo!");
+	}
+	else {
+		EndTraining();
+		CleanupTrainingPopup();  // Clean up if the user skips
+	}
+}
+
+void __fastcall TYourBeya::ImageStrength1Click(TObject *Sender) {
+	if (WhichRikishi != 1 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(0, "Strength");
+	}
+}
+
+void __fastcall TYourBeya::ImageStrength2Click(TObject *Sender) {
+	if (WhichRikishi != 2 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(1, "Strength");
+	}
+}
+
+void __fastcall TYourBeya::ImageStrength3Click(TObject *Sender) {
+	if (WhichRikishi != 3 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(2, "Strength");
+	}
+}
+
+void __fastcall TYourBeya::ImageWeight1Click(TObject *Sender) {
+	if (WhichRikishi != 1 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(0, "Weight");
+	}
+}
+
+void __fastcall TYourBeya::ImageWeight2Click(TObject *Sender) {
+	if (WhichRikishi != 2 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(1, "Weight");
+	}
+}
+
+void __fastcall TYourBeya::ImageWeight3Click(TObject *Sender) {
+	if (WhichRikishi != 3 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(2, "Weight");
+	}
+}
+
+void __fastcall TYourBeya::ImageEndurance1Click(TObject *Sender) {
+	if (WhichRikishi != 1 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(0, "Endurance");
+	}
+}
+
+void __fastcall TYourBeya::ImageEndurance2Click(TObject *Sender) {
+	if (WhichRikishi != 2 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(1, "Endurance");
+	}
+}
+
+void __fastcall TYourBeya::ImageEndurance3Click(TObject *Sender) {
+	if (WhichRikishi != 3 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(2, "Endurance");
+	}
+}
+
+void __fastcall TYourBeya::ImageTechnique1Click(TObject *Sender) {
+	if (WhichRikishi != 1 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(0, "Technique");
+	}
+}
+
+void __fastcall TYourBeya::ImageTechnique2Click(TObject *Sender) {
+	if (WhichRikishi != 2 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(1, "Technique");
+	}
+}
+
+void __fastcall TYourBeya::ImageTechnique3Click(TObject *Sender) {
+	if (WhichRikishi != 3 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(2, "Technique");
+	}
+}
+
+void __fastcall TYourBeya::ImageSpeed1Click(TObject *Sender) {
+	if (WhichRikishi != 1 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(0, "Speed");
+	}
+}
+
+void __fastcall TYourBeya::ImageSpeed2Click(TObject *Sender) {
+	if (WhichRikishi != 2 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(1, "Speed");
+	}
+}
+
+void __fastcall TYourBeya::ImageSpeed3Click(TObject *Sender) {
+	if (WhichRikishi != 3 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(2, "Speed");
+	}
+}
+
+void __fastcall TYourBeya::ImageYokozuna1Click(TObject *Sender) {
+	if (WhichRikishi != 1 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(0, "Spirit");
+	}
+}
+
+void __fastcall TYourBeya::ImageYokozuna2Click(TObject *Sender) {
+	if (WhichRikishi != 2 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(1, "Spirit");
+	}
+}
+
+void __fastcall TYourBeya::ImageYokozuna3Click(TObject *Sender) {
+	if (WhichRikishi != 3 && UpgradePoints > 0) {
+		ShowMessage("Wrong rikishi. You have bought upgrades for Rikishi " + IntToStr(WhichRikishi) + " in your beya.");
+	}
+	else if (UpgradePoints == 0) {
+		ShowMessage("You have no upgrades, try buying some.");
+	}
+	else {
+		UpgradeSkill(2, "Spirit");
+	}
+}
+
+//---------------------------------------------------------------------------
+//
+//	if (YourBeya) {
+//		TImage* ImageStrength[3] = {ImageStrength1, ImageStrength2, ImageStrength3};
+//		TGlowEffect* GlowEffectStrength[3] = {GlowEffectStrength1, GlowEffectStrength2, GlowEffectStrength3};
+//
+//		TImage* ImageWeight[3] = {ImageWeight1, ImageWeight2, ImageWeight3};
+//		TGlowEffect* GlowEffectWeight[3] = {GlowEffectWeight1, GlowEffectWeight2, GlowEffectWeight3};
+//
+//		TImage* ImageEndurance[3] = {ImageEndurance1, ImageEndurance2, ImageEndurance3};
+//		TGlowEffect* GlowEffectEndurance[3] = {GlowEffectEndurance1, GlowEffectEndurance2, GlowEffectEndurance3};
+//
+//		TImage* ImageTechnique[3] = {ImageTechnique1, ImageTechnique2, ImageTechnique3};
+//		TGlowEffect* GlowEffectTechnique[3] = {GlowEffectTechnique1, GlowEffectTechnique2, GlowEffectTechnique3};
+//
+//		TImage* ImageSpeed[3] = {ImageSpeed1, ImageSpeed2, ImageSpeed3};
+//		TGlowEffect* GlowEffectSpeed[3] = {GlowEffectSpeed1, GlowEffectSpeed2, GlowEffectSpeed3};
+//	}
+//
+//    ShowMessage("TYourBeya constructor called!");
+//    // Initialize arrays AFTER YourBeya exists
+//    ImageStrength[0] = ImageStrength1;
+//    ImageStrength[1] = ImageStrength2;
+//    ImageStrength[2] = ImageStrength3;
+//
+//    GlowEffectStrength[0] = GlowEffectStrength1;
+//    GlowEffectStrength[1] = GlowEffectStrength2;
+//    GlowEffectStrength[2] = GlowEffectStrength3;
+//
+//    ImageWeight[0] = ImageWeight1;
+//    ImageWeight[1] = ImageWeight2;
+//    ImageWeight[2] = ImageWeight3;
+//
+//    GlowEffectWeight[0] = GlowEffectWeight1;
+//    GlowEffectWeight[1] = GlowEffectWeight2;
+//    GlowEffectWeight[2] = GlowEffectWeight3;
+//
+//    ImageEndurance[0] = ImageEndurance1;
+//    ImageEndurance[1] = ImageEndurance2;
+//    ImageEndurance[2] = ImageEndurance3;
+//
+//    GlowEffectEndurance[0] = GlowEffectEndurance1;
+//    GlowEffectEndurance[1] = GlowEffectEndurance2;
+//    GlowEffectEndurance[2] = GlowEffectEndurance3;
+//
+//    ImageTechnique[0] = ImageTechnique1;
+//    ImageTechnique[1] = ImageTechnique2;
+//    ImageTechnique[2] = ImageTechnique3;
+//
+//    GlowEffectTechnique[0] = GlowEffectTechnique1;
+//    GlowEffectTechnique[1] = GlowEffectTechnique2;
+//    GlowEffectTechnique[2] = GlowEffectTechnique3;
+//
+//    ImageSpeed[0] = ImageSpeed1;
+//    ImageSpeed[1] = ImageSpeed2;
+//    ImageSpeed[2] = ImageSpeed3;
+//
+//    GlowEffectSpeed[0] = GlowEffectSpeed1;
+//    GlowEffectSpeed[1] = GlowEffectSpeed2;
+//    GlowEffectSpeed[2] = GlowEffectSpeed3;
+
+// SOME OF THIS CODE BELOW WILL WORK I JUST CANNOT DO IT YET
+
+
+//void ToggleUpgradeGlow(TImage* image, TGlowEffect* glowEffect, bool canUpgrade) {
+//	if (image && glowEffect) {
+//		glowEffect->Enabled = canUpgrade;
+//	} else {
+//
+//	ShowMessage("Image = null.");
+//		// Handle the case where either image or glowEffect is null
+//	}
+//}
+////
+//void UpdateUpgradeHighlights() {
+//    auto rikishiOwnedByP1 = GetPlayerOwnedRikishi(rikishiVector, "P1");
+//	int rikishiCount = rikishiOwnedByP1.size();
+//
+//	for (int i = 0; i < std::min(3, rikishiCount); i++) {
+//        Rikishi& rikishi = rikishiOwnedByP1[i].get();
+//
+//		bool canUpgrade[] = {
+//			(UpgradePoints > 0 && StrengthTracker[i] == 0 && rikishi.strength < rikishi.strengthLimit),
+//			(UpgradePoints > 0 && WeightTracker[i] == 0 && rikishi.weight < rikishi.weightLimit),
+//			(UpgradePoints > 0 && EnduranceTracker[i] == 0 && rikishi.endurance < rikishi.enduranceLimit),
+//			(UpgradePoints > 0 && TechniqueTracker[i] == 0 && rikishi.technique < rikishi.techniqueLimit),
+//			(UpgradePoints > 0 && SpeedTracker[i] == 0 && rikishi.speed < rikishi.speedLimit)
+//		};
+//
+//		// Check vector size before accessing elements
+//		if (i < ImageStrength.size() && i < GlowEffectStrength.size())
+//			ToggleUpgradeGlow(ImageStrength[i], GlowEffectStrength[i], canUpgrade[0]);
+//
+//		if (i < ImageWeight.size() && i < GlowEffectWeight.size())
+//			ToggleUpgradeGlow(ImageWeight[i], GlowEffectWeight[i], canUpgrade[1]);
+//
+//		if (i < ImageEndurance.size() && i < GlowEffectEndurance.size())
+//			ToggleUpgradeGlow(ImageEndurance[i], GlowEffectEndurance[i], canUpgrade[2]);
+//
+//        if (i < ImageTechnique.size() && i < GlowEffectTechnique.size())
+//            ToggleUpgradeGlow(ImageTechnique[i], GlowEffectTechnique[i], canUpgrade[3]);
+//
+//        if (i < ImageSpeed.size() && i < GlowEffectSpeed.size())
+//			ToggleUpgradeGlow(ImageSpeed[i], GlowEffectSpeed[i], canUpgrade[4]);
+//    }
+//}
+
+
+//String ImageStrength[3] = {ImageStrength1, ImageStrength2, ImageStrength3}
+
+
+
+//void TYourBeya::InitializeArrays() {
+//	ImageWeight = { ImageWeight1, ImageWeight2, ImageWeight3 };
+//	GlowEffectWeight = { GlowEffectWeight1, GlowEffectWeight2, GlowEffectWeight3 };
+//
+//	ImageStrength = { ImageStrength1, ImageStrength2, ImageStrength3 };
+//	GlowEffectStrength = { GlowEffectStrength1, GlowEffectStrength2, GlowEffectStrength3 };
+//
+//	ImageTechnique = { ImageTechnique1, ImageTechnique2, ImageTechnique3 };
+//	GlowEffectTechnique = { GlowEffectTechnique1, GlowEffectTechnique2, GlowEffectTechnique3 };
+//
+//	ImageSpeed = { ImageSpeed1, ImageSpeed2, ImageSpeed3 };
+//	GlowEffectSpeed = { GlowEffectSpeed1, GlowEffectSpeed2, GlowEffectSpeed3 };
+//
+//	ImageEndurance = { ImageEndurance1, ImageEndurance2, ImageEndurance3 };
+//	GlowEffectEndurance = { GlowEffectEndurance1, GlowEffectEndurance2, GlowEffectEndurance3 };
+//}
+

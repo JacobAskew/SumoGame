@@ -170,7 +170,8 @@ void TNoboruForm::StartBidding() {
     NoboruForm = new TNoboruForm(this);
     isBiddingComplete = false;  // Reset the bidding status
 	currentRikishiIndex = 0;    // Start from the first Rikishi
-    UpdateBanzukeGrid();
+	UpdateBanzukeGrid();
+    UpdateBidding();
 }
 
 // Check if bidding is complete
@@ -238,7 +239,6 @@ void EndBidding() {
 			rikishi.owner.find("P3") == std::string::npos &&
 			rikishi.owner.find("P4") == std::string::npos &&
 			rikishi.owner.find("P5") == std::string::npos) {
-
 			rikishi.owner = "CPU";
 		}
 	}
@@ -259,8 +259,20 @@ bool AreAllPlayersOutOfAP() {
 }
 
 bool PlayerHasThreeRikishi() {
+
+    int P1_rikishiCount = 0;
+
+    // Find P1
+    auto it = std::find_if(players.begin(), players.end(), [](const Player& p) {
+        return p.name == "P1";
+    });
+
+
+    Player& P1 = *it;
+	P1_rikishiCount = P1.rikishiList.size();
+
 	for (auto& player : players) {
-		if (player.numberRikishi < 3) {  // Checking for < 3
+		if (P1_rikishiCount < 3) {  // Checking for < 3
 //            ShowMessage("Player with less than 3 Rikishi: " + player.name); // Debug output
 			return false;  // At least one player has less than 3 rikishi
 		}
@@ -275,12 +287,26 @@ void DeductAPFromPlayer(int playerIndex, int bidAmount) {
 	}
 }
 
+bool checkRikishiOwnership(const std::vector<Rikishi>& rikishiVector) {
+    for (const auto& rikishi : rikishiVector) {
+        if (rikishi.owner == "None") {
+            return false; // If any rikishi has owner "Nobody", return false
+        }
+    }
+    return true; // All rikishi have owner other than "Nobody", return true
+}
+
 void UpdateBidding() {
 	// Check if all players are out of AP or have already selected 3 Rikishi
 	if (AreAllPlayersOutOfAP() || PlayerHasThreeRikishi()) {
 		NoboruForm->MemoLogNoboru->Lines->Add("All players are out of AP or have acquired 3 Rikishi! Closing Bidding.");
 		EndBidding();  // End bidding if all players have no AP left or all players have acquired 3 Rikishi
-	} else {
+	}
+	else if (checkRikishiOwnership(rikishiVector)) {
+		NoboruForm->MemoLogNoboru->Lines->Add("There are no available Rikishi! Closing Bidding.");
+		EndBidding();
+	}
+	else {
 		NoboruForm->MemoLogNoboru->Lines->Add("You have this much AP left: " + IntToStr(players[currentPlayerIndex].AP));
 	}
 }

@@ -136,139 +136,149 @@ void ResetPlayerRikishi() {
 	}
 }
 
-//---------------------------------------------------------------------------
+void UpdatePlayerRikishiList(std::vector<Rikishi>& rikishiVector, std::vector<Player>& players) {
+	for (auto& player : players) {
+		for (auto& rikishi : player.rikishiList) {
+            // Find the matching Rikishi in rikishiVector
+			auto it = std::find_if(rikishiVector.begin(), rikishiVector.end(),
+                [&](const Rikishi& r) { return r.name == rikishi.name; });
+
+            // If found, update the Rikishi in rikishiList
+            if (it != rikishiVector.end()) {
+                rikishi = *it;  // Copy updated values
+            }
+        }
+    }
+}
+
 void TYourBeya::UpdateBeya() {
 
-	int rikishiIndex = 1; // Start from 1 (matching UI component names)
+    UpdatePlayerRikishiList(rikishiVector, players);
 
+    int rikishiIndex = 1; // Start from the first UI slot
 	int P1_rikishiCount = 0;
 
-	for (const auto& player : players) {
-		if (player.name == "P1") {
-			P1_rikishiCount = player.rikishiList.size();
-			break;  // Stop searching once found
+    // Find P1
+    auto it = std::find_if(players.begin(), players.end(), [](const Player& p) {
+        return p.name == "P1";
+    });
+
+    if (it == players.end()) return;  // Exit if P1 not found
+    Player& P1 = *it;
+    P1_rikishiCount = P1.rikishiList.size();
+
+    // Update the Doors
+    std::vector<std::string> doorNames = {"ImageDoor3", "ImageDoor2", "ImageDoor1"};
+    for (int i = 0; i < 3; i++) {
+        TImage* imageDoor = dynamic_cast<TImage*>(YourBeya->FindComponent(doorNames[i].c_str()));
+        if (imageDoor) {
+            imageDoor->Visible = (P1_rikishiCount < (3 - i));
+            if (imageDoor->Visible) imageDoor->Bitmap->LoadFromFile(DoorPath);
+        }
+    }
+
+    // Update Rikishi UI (Only from P1's rikishiList)
+    for (Rikishi& rikishi : P1.rikishiList) {
+        if (rikishiIndex > 3) break; // Limit UI to 3 rikishi
+
+        // Update rank, name, and age
+        TEdit* editRank = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditRank" + IntToStr(rikishiIndex)));
+        TEdit* editName = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditName" + IntToStr(rikishiIndex)));
+        TEdit* editAge = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditAge" + IntToStr(rikishiIndex)));
+        if (editRank) editRank->Text = "Rank: " + AnsiString(rikishi.rank.c_str());
+        if (editName) editName->Text = AnsiString(rikishi.name.c_str());
+        if (editAge) editAge->Text = "Age: " + AnsiString(std::to_string(rikishi.age).c_str());
+
+        // Load Rikishi image
+        TImage* imageRikishi = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageRikishi" + IntToStr(rikishiIndex)));
+        if (imageRikishi) {
+            AnsiString fullPathRikishi = RikishiPath + IntToStr(rikishi.spirit) + ".png";
+            imageRikishi->Bitmap->LoadFromFile(fullPathRikishi);
+        }
+		TImage* imagebed = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageBed" + IntToStr(rikishiIndex)));
+		if (imagebed) {
+			AnsiString fullPathBed = ImagesPath + "Bed.png";
+			imagebed->Bitmap->LoadFromFile(fullPathBed);
 		}
-	}
+		TImage* imageshelf = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageShelf" + IntToStr(rikishiIndex)));
+		if (imageshelf) {
+			AnsiString fullPathShelve = ImagesPath + "Shelf.png";
+			imageshelf->Bitmap->LoadFromFile(fullPathShelve);
+		}
 
-//	ShowMessage("P1 Rikishi Count: " + IntToStr(P1_rikishiCount));
+		std::string randomstring = rikishi.RandomString;
 
-	// Update the Doors
-	std::vector<std::string> doorNames = {"ImageDoor3", "ImageDoor2", "ImageDoor1"};
+		TImage* imageposter = dynamic_cast<TImage*>(YourBeya->FindComponent("ImagePoster" + IntToStr(rikishiIndex)));
+		if (imageposter) {
+			AnsiString fullPathPoster = ImagesPath + "Poster" + randomstring.c_str() + ".png";
+			imageposter->Bitmap->LoadFromFile(fullPathPoster);
+		}
+		// Load Belt image and apply color
+		TImage* imageBelt = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageBelt" + IntToStr(rikishiIndex)));
+		if (imageBelt) {
+			AnsiString fullPathBelt = BeltPath + ".png";
+			imageBelt->Bitmap->LoadFromFile(fullPathBelt);
 
-	for (int i = 0; i < 3; i++) {
-		TImage* imageDoor = dynamic_cast<TImage*>(YourBeya->FindComponent(doorNames[i].c_str()));
-
-		if (imageDoor) {
-			if (P1_rikishiCount < (3 - i)) {
-				imageDoor->Bitmap->LoadFromFile(DoorPath);
-				imageDoor->Visible = true;
+			// Convert UnicodeString to std::string
+			std::string colorStr = AnsiString(rikishi.colour).c_str();
+			std::smatch match;
+			std::regex numRegex(R"(\d+)");
+			if (std::regex_search(colorStr, match, numRegex)) {
+				UnicodeString extractedNumber = UnicodeString(match.str().c_str());
+				TAlphaColor color = (TAlphaColor) StrToUInt(extractedNumber);
+				TintNonTransparent(imageBelt->Bitmap, color);
 			} else {
-				imageDoor->Visible = false;
+				ShowMessage("Invalid color format: " + rikishi.colour);
 			}
 		}
-	}
 
-	for (Rikishi& rikishi : rikishiVector) {
-		if (rikishi.owner == "P1" && rikishiIndex <= 3) { // Ensure we update max 3 rikishi
-			if (!firstPlayerRikishi) {
-				firstPlayerRikishi = &rikishi;  // Store the first found Rikishi
+		// If Yokozuna, load the Yokozuna image
+		if (rikishi.rank == "Yokozuna") {
+			TImage* imageYokozuna = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageYokozuna" + IntToStr(rikishiIndex)));
+			if (imageYokozuna) {
+				AnsiString fullPathYokozuna = YokozunaPath + ".png";
+				imageYokozuna->Bitmap->LoadFromFile(fullPathYokozuna);
 			}
-			else if (!secondPlayerRikishi) {
-				secondPlayerRikishi = &rikishi;  // Store the second found Rikishi
-			}
-			else if (!thirdPlayerRikishi) {
-				thirdPlayerRikishi = &rikishi;  // Store the third found Rikishi
-			}
-			// Update rank, name, and age
-            TEdit* editRank = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditRank" + IntToStr(rikishiIndex)));
-			TEdit* editName = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditName" + IntToStr(rikishiIndex)));
-            TEdit* editAge = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditAge" + IntToStr(rikishiIndex)));
-            if (editRank) editRank->Text = "Rank: " + AnsiString(rikishi.rank.c_str());
-            if (editName) editName->Text = AnsiString(rikishi.name.c_str());
-            if (editAge) editAge->Text = "Age: " + AnsiString(std::to_string(rikishi.age).c_str());
-
-			// Load Rikishi image + background
-			TImage* imageRikishi = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageRikishi" + IntToStr(rikishiIndex)));
-			if (imageRikishi) {
-				AnsiString fullPathRikishi = RikishiPath + IntToStr(rikishi.spirit) + ".png";
-				imageRikishi->Bitmap->LoadFromFile(fullPathRikishi);
-			}
-			TImage* imagebed = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageBed" + IntToStr(rikishiIndex)));
-			if (imagebed) {
-				AnsiString fullPathBed = ImagesPath + "Bed.png";
-				imagebed->Bitmap->LoadFromFile(fullPathBed);
-			}
-			TImage* imageshelf = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageShelf" + IntToStr(rikishiIndex)));
-			if (imageshelf) {
-				AnsiString fullPathShelve = ImagesPath + "Shelf.png";
-				imageshelf->Bitmap->LoadFromFile(fullPathShelve);
-			}
-
-			std::string randomstring = rikishi.RandomString;
-
-			TImage* imageposter = dynamic_cast<TImage*>(YourBeya->FindComponent("ImagePoster" + IntToStr(rikishiIndex)));
-			if (imageposter) {
-				AnsiString fullPathPoster = ImagesPath + "Poster" + randomstring.c_str() + ".png";
-				imageposter->Bitmap->LoadFromFile(fullPathPoster);
-			}
-            // Load Belt image and apply color
-            TImage* imageBelt = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageBelt" + IntToStr(rikishiIndex)));
-            if (imageBelt) {
-                AnsiString fullPathBelt = BeltPath + ".png";
-                imageBelt->Bitmap->LoadFromFile(fullPathBelt);
-
-                // Convert UnicodeString to std::string
-                std::string colorStr = AnsiString(rikishi.colour).c_str();
-                std::smatch match;
-                std::regex numRegex(R"(\d+)");
-                if (std::regex_search(colorStr, match, numRegex)) {
-                    UnicodeString extractedNumber = UnicodeString(match.str().c_str());
-                    TAlphaColor color = (TAlphaColor) StrToUInt(extractedNumber);
-                    TintNonTransparent(imageBelt->Bitmap, color);
-				} else {
-                    ShowMessage("Invalid color format: " + rikishi.colour);
-                }
-            }
-
-            // If Yokozuna, load the Yokozuna image
-            if (rikishi.rank == "Yokozuna") {
-                TImage* imageYokozuna = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageYokozuna" + IntToStr(rikishiIndex)));
-                if (imageYokozuna) {
-					AnsiString fullPathYokozuna = YokozunaPath + ".png";
-                    imageYokozuna->Bitmap->LoadFromFile(fullPathYokozuna);
-                }
-            }
-
-            // Load and tint skill images
-            struct Skill {
-                const char* name;
-                int value;
-				int limit;
-                TAlphaColor color;
-            };
-
-            Skill skills[] = {
-                {"Weight", rikishi.weight, rikishi.weightLimit, TAlphaColorRec::Black},
-                {"Endurance", rikishi.endurance, rikishi.enduranceLimit, (TAlphaColor)0xFF00FF00},
-                {"Technique", rikishi.technique, rikishi.techniqueLimit, TAlphaColorRec::Blue},
-                {"Speed", rikishi.speed, rikishi.speedLimit, TAlphaColorRec::Yellow},
-				{"Strength", rikishi.strength, rikishi.strengthLimit, TAlphaColorRec::Red}
-            };
-
-            for (const Skill& skill : skills) {
-                TImage* skillImage = dynamic_cast<TImage*>(YourBeya->FindComponent("Image" + AnsiString(skill.name) + IntToStr(rikishiIndex)));
-                if (skillImage) {
-					AnsiString fullPathSkill = SkillPath + IntToStr(skill.value) + IntToStr(skill.limit) + ".png";
-					skillImage->Bitmap->LoadFromFile(fullPathSkill);
-					TintNonTransparent(skillImage->Bitmap, skill.color);
-				}
-			}
-
-			rikishiIndex++; // Move to next Rikishi UI slot
-			if (rikishiIndex > 3) break; // Stop after 3 Rikishi
 		}
+		// Load and tint skill images
+		struct Skill {
+			const char* name;
+			int value;
+			int limit;
+			TAlphaColor color;
+		};
+
+		Skill skills[] = {
+			{"Weight", rikishi.weight, rikishi.weightLimit, TAlphaColorRec::Black},
+			{"Endurance", rikishi.endurance, rikishi.enduranceLimit, (TAlphaColor)0xFF00FF00},
+			{"Technique", rikishi.technique, rikishi.techniqueLimit, TAlphaColorRec::Blue},
+			{"Speed", rikishi.speed, rikishi.speedLimit, TAlphaColorRec::Yellow},
+			{"Strength", rikishi.strength, rikishi.strengthLimit, TAlphaColorRec::Red}
+		};
+
+		for (const Skill& skill : skills) {
+			TImage* skillImage = dynamic_cast<TImage*>(YourBeya->FindComponent("Image" + AnsiString(skill.name) + IntToStr(rikishiIndex)));
+			if (skillImage) {
+				AnsiString fullPathSkill = SkillPath + IntToStr(skill.value) + IntToStr(skill.limit) + ".png";
+				skillImage->Bitmap->LoadFromFile(fullPathSkill);
+				TintNonTransparent(skillImage->Bitmap, skill.color);
+			}
+		}
+		rikishiIndex++; // Move to next UI slot
 	}
-//	UpdateUpgradeHighlights();
+
+	// Clear remaining UI slots if rikishi retired
+	for (int i = rikishiIndex; i <= 3; i++) {
+		TEdit* editRank = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditRank" + IntToStr(i)));
+		TEdit* editName = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditName" + IntToStr(i)));
+		TEdit* editAge = dynamic_cast<TEdit*>(YourBeya->FindComponent("EditAge" + IntToStr(i)));
+		TImage* imageRikishi = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageRikishi" + IntToStr(i)));
+
+		if (editRank) editRank->Text = "";
+        if (editName) editName->Text = "";
+        if (editAge) editAge->Text = "";
+        if (imageRikishi) imageRikishi->Bitmap->Clear(TAlphaColorRec::Null);
+    }
 }
 
 // Function to generate a random number in a given range

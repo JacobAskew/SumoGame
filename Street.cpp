@@ -1526,24 +1526,17 @@ void RetireWave2(std::vector<Rikishi>& rikishiVector, std::vector<Player>& playe
     std::vector<std::string> toRetire;
 
     // Check for demoted Yokozuna
-    for (const auto& rikishi : rikishiVector) {
-        if (rikishi.rank == "Yokozuna") {
-            bool stillYokozuna = false;
+	for (const auto& prevRank : previousRanks) {
+		if (prevRank.second == "Yokozuna") {  // Rikishi was Yokozuna before
+			auto it = std::find_if(rikishiVector.begin(), rikishiVector.end(),
+				[&](const Rikishi& r) { return r.name == prevRank.first; });
 
-            // Check if another rikishi with the same name is still a Yokozuna
-            for (const auto& checkRikishi : rikishiVector) {
-                if (checkRikishi.name == rikishi.name && checkRikishi.rank == "Yokozuna") {
-                    stillYokozuna = true;
-                    break;
-                }
-            }
-
-            // If the rikishi is no longer a Yokozuna, retire them
-            if (!stillYokozuna) {
-                toRetire.push_back(rikishi.name);
-            }
-        }
-    }
+			// If found but no longer a Yokozuna, retire them
+			if (it != rikishiVector.end() && it->rank != "Yokozuna") {
+				toRetire.push_back(it->name);
+			}
+		}
+	}
 
     // Check for rikishi demoted to Juryo 1 or Juryo 2
     for (auto& rikishi : rikishiVector) {
