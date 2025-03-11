@@ -133,7 +133,7 @@ object DohyoForm: TDohyoForm
   end
   object EditRank2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 64
+    TabOrder = 70
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 465.000000000000000000
@@ -144,7 +144,7 @@ object DohyoForm: TDohyoForm
   end
   object EditOwner2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 61
+    TabOrder = 67
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 465.000000000000000000
@@ -187,7 +187,7 @@ object DohyoForm: TDohyoForm
   end
   object EditAge2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 53
+    TabOrder = 59
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 538.000000000000000000
@@ -202,7 +202,7 @@ object DohyoForm: TDohyoForm
     Size.Width = 160.000000000000000000
     Size.Height = 35.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 46
+    TabOrder = 50
     TextSettings.Trimming = None
     OnClick = ButtonEndurance1Click
   end
@@ -212,7 +212,7 @@ object DohyoForm: TDohyoForm
     Size.Width = 160.000000000000000000
     Size.Height = 35.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 44
+    TabOrder = 48
     TextSettings.Trimming = None
     OnClick = ButtonWeight1Click
   end
@@ -222,7 +222,7 @@ object DohyoForm: TDohyoForm
     Size.Width = 160.000000000000000000
     Size.Height = 35.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 40
+    TabOrder = 44
     TextSettings.Trimming = None
     OnClick = ButtonTechnique1Click
   end
@@ -232,7 +232,7 @@ object DohyoForm: TDohyoForm
     Size.Width = 160.000000000000000000
     Size.Height = 35.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 36
+    TabOrder = 40
     TextSettings.Trimming = None
     OnClick = ButtonSpeed1Click
   end
@@ -249,7 +249,7 @@ object DohyoForm: TDohyoForm
   end
   object EditRank1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 24
+    TabOrder = 28
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 176.000000000000000000
@@ -270,7 +270,7 @@ object DohyoForm: TDohyoForm
   end
   object EditRecord1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 21
+    TabOrder = 23
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 176.000000000000000000

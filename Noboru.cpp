@@ -317,11 +317,15 @@ void PlaceBid(int bidAmount) {
 		return;  // Exit if bidding is complete
 	}
 
-	// Check if the player has already acquired 3 Rikishi
-	if (players[currentPlayerIndex].numberRikishi >= 3) {
+//	// Check if the player has already acquired 3 Rikishi
+//	if (players[currentPlayerIndex].numberRikishi >= 3) {
+//
+//	}
+
+	if (PlayerHasThreeRikishi()) {
 		NoboruForm->MemoLogNoboru->Lines->Add("You have already acquired 3 Rikishi. You cannot place more bids.");
-        return;  // Exit if the player has 3 or more Rikishi
-    }
+		return;  // Exit if the player has 3 or more Rikishi
+	}
 
 	if (currentRikishiIndex < rikishiVector.size()) {  // Fixed: Prevent out-of-bounds
 		Rikishi& rikishi = rikishiVector[currentRikishiIndex];

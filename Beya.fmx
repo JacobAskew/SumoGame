@@ -219,7 +219,7 @@ object YourBeya: TYourBeya
     Size.Width = 103.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 48
+    TabOrder = 51
     Text = 'ReturnStreet'
     TextSettings.Trimming = None
     OnClick = ReturnStreetClick
@@ -230,7 +230,7 @@ object YourBeya: TYourBeya
     Size.Width = 173.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 54
+    TabOrder = 57
     Text = 'Train Rikishi 1'
     TextSettings.Trimming = None
     OnClick = TrainRikishi1Click
@@ -241,7 +241,7 @@ object YourBeya: TYourBeya
     Size.Width = 176.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 52
+    TabOrder = 55
     Text = 'Train Rikishi 2'
     TextSettings.Trimming = None
     OnClick = TrainRikishi2Click
@@ -252,14 +252,14 @@ object YourBeya: TYourBeya
     Size.Width = 178.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 50
+    TabOrder = 53
     Text = 'Train Rikishi 3'
     TextSettings.Trimming = None
     OnClick = TrainRikishi3Click
   end
   object EditName1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 43
+    TabOrder = 46
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 56.000000000000000000
@@ -270,7 +270,7 @@ object YourBeya: TYourBeya
   end
   object EditAge2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 45
+    TabOrder = 48
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 441.000000000000000000
@@ -281,7 +281,7 @@ object YourBeya: TYourBeya
   end
   object EditName2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 40
+    TabOrder = 43
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 312.000000000000000000
@@ -292,7 +292,7 @@ object YourBeya: TYourBeya
   end
   object EditRank2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 17
+    TabOrder = 18
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 272.000000000000000000
@@ -303,7 +303,7 @@ object YourBeya: TYourBeya
   end
   object EditAge3: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 30
+    TabOrder = 32
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 697.000000000000000000
@@ -314,7 +314,7 @@ object YourBeya: TYourBeya
   end
   object EditName3: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 18
+    TabOrder = 19
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 576.000000000000000000

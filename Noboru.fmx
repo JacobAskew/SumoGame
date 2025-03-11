@@ -3,7 +3,7 @@ object NoboruForm: TNoboruForm
   Top = 0
   Caption = 'Noboru'
   ClientHeight = 420
-  ClientWidth = 770
+  ClientWidth = 772
   Position = Designed
   FormFactor.Width = 320
   FormFactor.Height = 480

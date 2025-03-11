@@ -425,28 +425,53 @@ void UpgradeSkill(int rikishiIndex, const std::string& skillName) {
     Rikishi& selectedRikishi = rikishiOwnedByP1[rikishiIndex].get();
     int* tracker = nullptr;
     int* stat = nullptr;
-    int limit = 0;
+	int limit = 0;
 
-    if (skillName == "Strength") {
-        tracker = &StrengthTracker[rikishiIndex];
-        stat = &selectedRikishi.strength;
-        limit = selectedRikishi.strengthLimit;
+	if (skillName == "Strength") {
+		if (selectedRikishi.age > 33) {
+			ShowMessage("The Rikishi is too old to train skills. Try raising their spirit.");
+		}
+		else {
+			tracker = &StrengthTracker[rikishiIndex];
+			stat = &selectedRikishi.strength;
+			limit = selectedRikishi.strengthLimit;
+		}
     } else if (skillName == "Weight") {
-        tracker = &WeightTracker[rikishiIndex];
-        stat = &selectedRikishi.weight;
-        limit = selectedRikishi.weightLimit;
+		if (selectedRikishi.age > 33) {
+			ShowMessage("The Rikishi is too old to train skills. Try raising their spirit.");
+		}
+		else {
+			tracker = &WeightTracker[rikishiIndex];
+			stat = &selectedRikishi.weight;
+			limit = selectedRikishi.weightLimit;
+		}
     } else if (skillName == "Endurance") {
-        tracker = &EnduranceTracker[rikishiIndex];
-        stat = &selectedRikishi.endurance;
-        limit = selectedRikishi.enduranceLimit;
+		if (selectedRikishi.age > 33) {
+			ShowMessage("The Rikishi is too old to train skills. Try raising their spirit.");
+		}
+		else {
+			tracker = &EnduranceTracker[rikishiIndex];
+			stat = &selectedRikishi.endurance;
+			limit = selectedRikishi.enduranceLimit;
+		}
     } else if (skillName == "Technique") {
-        tracker = &TechniqueTracker[rikishiIndex];
-        stat = &selectedRikishi.technique;
-		limit = selectedRikishi.techniqueLimit;
+		if (selectedRikishi.age > 33) {
+			ShowMessage("The Rikishi is too old to train skills. Try raising their spirit.");
+		}
+		else {
+			tracker = &TechniqueTracker[rikishiIndex];
+			stat = &selectedRikishi.technique;
+			limit = selectedRikishi.techniqueLimit;
+		}
 	} else if (skillName == "Speed") {
-		tracker = &SpeedTracker[rikishiIndex];
-		stat = &selectedRikishi.speed;
-		limit = selectedRikishi.speedLimit;
+		if (selectedRikishi.age > 33) {
+			ShowMessage("The Rikishi is too old to train skills. Try raising their spirit.");
+		}
+		else {
+			tracker = &SpeedTracker[rikishiIndex];
+			stat = &selectedRikishi.speed;
+			limit = selectedRikishi.speedLimit;
+        }
 	} else if (skillName == "Spirit") {
 		tracker = &SpiritTracker[rikishiIndex];
 		stat = &selectedRikishi.spirit;
@@ -454,10 +479,10 @@ void UpgradeSkill(int rikishiIndex, const std::string& skillName) {
 	}
 
 
-    if (!tracker || !stat) {
-        ShowMessage("Invalid skill name.");
-        return;
-    }
+//    if (!tracker || !stat) {
+////        ShowMessage("Invalid skill name.");
+//		return;
+//    }
 
     if (UpgradePoints > 0 && *tracker == 0 && *stat < limit) {
 		(*stat)++;

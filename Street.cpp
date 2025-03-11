@@ -666,6 +666,7 @@ void NewYearPhase() {
 	for (auto& rikishi : rikishiVector) {
 		rikishi.wins = 0;
 		rikishi.losses = 0;
+//		ShowMessage("Name: " + rikishi.name + "Rank: " + rikishi.rank);
 		rikishi.rank = Ranks[y];
 		y++;
 	}
