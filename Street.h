@@ -128,12 +128,11 @@ __published:    // IDE-managed Components
     TButton *ButtonNoboru;
 	TButton *ButtonBeya;
 	TButton *ButtonBanzuke;
-	TImage *ImageRoad;
 	TButton *ButtonDohyo;
 	TButton *ButtonRyogoku;
 	TEdit *EditAbilityPoints;
 	TEdit *EditVictoryPoints;
-	TText *TextTitle;
+	TImage *ImageBackground;
     void __fastcall ButtonNoboruClick(TObject *Sender);
 	void __fastcall ButtonBeyaClick(TObject *Sender);
 	void __fastcall ButtonBanzukeClick(TObject *Sender);

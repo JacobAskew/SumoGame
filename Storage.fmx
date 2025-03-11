@@ -3,7 +3,7 @@ object StorageForm: TStorageForm
   Top = 0
   Caption = 'Form2'
   ClientHeight = 420
-  ClientWidth = 770
+  ClientWidth = 772
   Position = Designed
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -268,8 +268,8 @@ object StorageForm: TStorageForm
     RowHeight = 22.000000000000000000
     RowCount = 16
     Options = [ColumnResize, ColumnMove, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
-    Viewport.Width = 621.000000000000000000
-    Viewport.Height = 368.000000000000000000
+    Viewport.Width = 625.000000000000000000
+    Viewport.Height = 393.000000000000000000
     object StringColumnRanks: TStringColumn
       HorzAlign = Center
       Header = 'Rank'
@@ -608,5 +608,25 @@ object StorageForm: TStorageForm
       Opacity = 0.899999976158142100
       Enabled = False
     end
+  end
+  object ImageRoad: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = -604.000000000000000000
+    Position.Y = 263.000000000000000000
+    Size.Width = 1400.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object TextTitle: TText
+    Position.X = 256.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 476.000000000000000000
+    Size.Height = 169.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Banzuke Shoushin'
+    TextSettings.Font.Size = 55.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
   end
 end

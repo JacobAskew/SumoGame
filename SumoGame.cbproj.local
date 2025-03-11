@@ -77,7 +77,6 @@
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="SumoGamePCH1.h"/>
     <File Path="SumoGame.cpp"/>
-    <File Path="OldHfile.txt"/>
     <File Path="Street.cpp"/>
     <File Path="Street.cpp"/>
     <File Path="Street.fmx"/>
@@ -107,6 +106,7 @@
     <File Path="Ryogoku.fmx"/>
     <File Path="Ryogoku.h"/>
     <File Path="OldCpp.txt"/>
+    <File Path="OldHfile.txt"/>
     <File Path="names.txt"/>
     <File Path="Storage.cpp"/>
     <File Path="Storage.cpp"/>

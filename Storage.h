@@ -89,6 +89,8 @@ __published:	// IDE-managed Components
 	TImage *ImageYokozuna1;
 	TImage *ImageWeight1;
 	TGlowEffect *GlowEffectWeight1;
+	TImage *ImageRoad;
+	TText *TextTitle;
 private:	// User declarations
 public:		// User declarations
 	__fastcall TStorageForm(TComponent* Owner);

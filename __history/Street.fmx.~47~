@@ -1,0 +1,114 @@
+object MainStreet: TMainStreet
+  Left = 0
+  Top = 0
+  Caption = 'Sumo Street'
+  ClientHeight = 420
+  ClientWidth = 772
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ImageBackground: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 756.000000000000000000
+    Size.Height = 393.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object TextTitle: TText
+    Position.X = 256.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 476.000000000000000000
+    Size.Height = 169.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Banzuke Shoushin'
+    TextSettings.Font.Size = 55.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+  end
+  object ButtonNoboru: TButton
+    Opacity = 0.250000000000000000
+    Position.X = 80.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Noboru'
+    TextSettings.Trimming = None
+    OnClick = ButtonNoboruClick
+  end
+  object ButtonBeya: TButton
+    Opacity = 0.250000000000000000
+    Position.X = 240.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 57.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Beya'
+    TextSettings.Trimming = None
+    OnClick = ButtonBeyaClick
+  end
+  object ButtonBanzuke: TButton
+    Opacity = 0.250000000000000000
+    Position.X = 377.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 48.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Banzuke'
+    TextSettings.Trimming = None
+    OnClick = ButtonBanzukeClick
+  end
+  object ButtonDohyo: TButton
+    Opacity = 0.250000000000000000
+    Position.X = 168.000000000000000000
+    Position.Y = 120.000000000000000000
+    Size.Width = 49.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Dohyo'
+    TextSettings.Trimming = None
+    OnClick = ButtonDohyoClick
+  end
+  object ButtonRyogoku: TButton
+    Opacity = 0.250000000000000000
+    Position.X = 472.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 116.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Text = 'Ryogoku Kokugikan'
+    TextSettings.Trimming = None
+    OnClick = ButtonRyogokuClick
+  end
+  object EditAbilityPoints: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 7
+    ReadOnly = True
+    TextSettings.HorzAlign = Center
+    Position.X = 584.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 148.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditVictoryPoints: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 6
+    ReadOnly = True
+    TextSettings.HorzAlign = Center
+    Position.X = 584.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 148.000000000000000000
+    Size.Height = 31.000000000000000000
+    Size.PlatformDefault = False
+  end
+end

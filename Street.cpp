@@ -48,6 +48,7 @@ int currentYear = 0;    // Initialize year counter
 //String player2Tactic, Rank2;
 //String boutTactic;
 String PathRoad = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Road2.png";
+String PathBackground = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\BackgroundImage3.png";
 String player1Owner = "P1";   // Put YOUR name here!
 String player2Owner = "CPU";
 std::vector<std::string> usedNames; // Initialize the vector before use
@@ -431,10 +432,14 @@ void InitializeAllRikishi() {
 void PreGameSetup() {
 	int NumberPlayers = 1;  // Set to 1 to match the total number of players
 
-    // Loading in the images of the buildings and decor starting with the road:
-	TImage* imageroad = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageRoad"));
-	AnsiString fullPathRoad = PathRoad;
-	imageroad->Bitmap->LoadFromFile(fullPathRoad);
+	// Loading in the images of the buildings and decor starting with the road:
+//	TImage* imageroad = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageRoad"));
+//	AnsiString fullPathRoad = PathRoad;
+//	imageroad->Bitmap->LoadFromFile(fullPathRoad);
+
+	TImage* imagebackground = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageBackground"));
+	AnsiString fullPathBackground = PathBackground;
+	imagebackground->Bitmap->LoadFromFile(fullPathBackground);
 
     // Create a list of players
     std::vector<Player> allPlayers = {

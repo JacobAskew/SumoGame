@@ -1,7 +1,7 @@
 object NoboruForm: TNoboruForm
   Left = 0
   Top = 0
-  Caption = 'Noboru'
+  Caption = 'Banzuke'
   ClientHeight = 420
   ClientWidth = 772
   Position = Designed
