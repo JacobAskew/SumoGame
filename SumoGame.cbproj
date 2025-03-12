@@ -201,6 +201,7 @@
             <BuildOrder>11</BuildOrder>
         </CppCompile>
         <None Include="names.txt"/>
+        <None Include="names2.txt"/>
         <CppCompile Include="Noboru.cpp">
             <Form>NoboruForm</Form>
             <FormType>fmx</FormType>
@@ -240,9 +241,9 @@
             <DependentOn>Training.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
-        <FormResources Include="Street.fmx"/>
         <FormResources Include="Storage.fmx"/>
         <FormResources Include="Ryogoku.fmx"/>
+        <FormResources Include="Street.fmx"/>
         <FormResources Include="Training.fmx"/>
         <FormResources Include="Dohyo.fmx"/>
         <FormResources Include="Beya.fmx"/>
@@ -347,6 +348,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="New1.txt" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win64x">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="OldCpp.txt" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win64x">
                         <RemoteDir>.\</RemoteDir>
@@ -359,7 +366,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="names.txt" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="names2.txt" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win64x">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

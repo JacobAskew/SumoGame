@@ -163,16 +163,16 @@ void GetRandomName(std::string &playerName, std::vector<std::string> &usedNames)
         std::swap(allNames[i], allNames[j]);
     }
 
-    // Try to find a unique name based on the first three letters
+	// Try to find a unique name based on the first two letters
     for (const auto &potentialName : allNames) {
         // Check if the name has already been used
         if (std::find(usedNames.begin(), usedNames.end(), potentialName) == usedNames.end()) {
-            // Check if the first three letters are unique
-			std::string prefix = potentialName.substr(0, 3);
+			// Check if the first two letters are unique
+			std::string prefix = potentialName.substr(0, 2);
             bool prefixUnique = true;
             for (const auto &usedName : usedNames) {
-                if (usedName.substr(0, 3) == prefix) {
-                    prefixUnique = false;
+                if (usedName.substr(0, 2) == prefix) {
+					prefixUnique = false;
                     break;
                 }
             }
@@ -1936,6 +1936,8 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 //	RyogokuForm->MemoLog->Text += "Welcome to Banzuke Shoushin!\n";
 	std::srand(std::time(0)); // Seed random number generator
 
+//    MainStreet->ReadAndProcessNames();
+
 	PreGameSetup(); // Pre-game setup logic
 
 	NewYearPhase();
@@ -1975,4 +1977,51 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 //
 
 
+
+
+//#include <fmx.h>
+//#include <System.IOUtils.hpp>
+//#include <set>
+//#include <fstream>
+//#include <iostream>
+//#include <sstream>
+//#include <vector>
+//
+//void TMainStreet::ReadAndProcessNames()
+//{
+//	std::ifstream inputFile("C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names.txt");
+//	std::ofstream outputFile("C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\names3.txt");
+//
+//    if (!inputFile.is_open())
+//	{
+//        ShowMessage("Error opening names.txt");
+//        return;
+//    }
+//
+//    std::set<std::string> uniqueNames;  // Set to hold unique names
+//    std::string line;
+//
+//    // Read each line and insert it into the set
+//    while (std::getline(inputFile, line))
+//    {
+//        // Clean the line and remove unnecessary spaces
+//        std::stringstream ss(line);
+//        std::string name;
+//        while (ss >> name) {
+//            uniqueNames.insert(name);  // Insert each name in the set
+//        }
+//    }
+//
+//    // Write the unique names to names3.txt
+//    for (const auto& name : uniqueNames)
+//    {
+//        outputFile << name << std::endl;
+//    }
+//
+//    inputFile.close();
+//    outputFile.close();
+//
+//    ShowMessage("Unique names have been saved to names3.txt");
+//}
+//
 

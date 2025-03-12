@@ -143,7 +143,8 @@ __published:    // IDE-managed Components
 	void __fastcall ButtonRyogokuClick(TObject *Sender);
 
 private:    // User declarations
-    void __fastcall CheckNamesFile();
+	void __fastcall CheckNamesFile();
+//    void ReadAndProcessNames(); // Declare the method here
 
 public:        // User declarations
     __fastcall TMainStreet(TComponent* Owner);

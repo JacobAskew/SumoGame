@@ -8,13 +8,13 @@
 #include <System.StartUpCopy.hpp>
 //---------------------------------------------------------------------------
 USEFORM("Street.cpp", MainStreet);
+USEFORM("Storage.cpp", StorageForm);
+USEFORM("Ryogoku.cpp", RyogokuForm);
 USEFORM("Training.cpp", TrainingPopup);
 USEFORM("Dohyo.cpp", DohyoForm);
 USEFORM("Beya.cpp", YourBeya);
 USEFORM("Banzuke.cpp", BanzukeForm);
 USEFORM("Noboru.cpp", NoboruForm);
-USEFORM("Storage.cpp", StorageForm);
-USEFORM("Ryogoku.cpp", RyogokuForm);
 //---------------------------------------------------------------------------
 extern "C" int FMXmain()
 {
