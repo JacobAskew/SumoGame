@@ -62,6 +62,7 @@ std::vector<Player> players;  // Global variable
 
 // Vector to store all rikishi
 std::vector<Rikishi> rikishiVector(16);
+std::vector<Rikishi> retiredRikishi;
 
 // List of colors (excluding black, white, and very dark shades, but including brown)
 std::vector<TAlphaColor> availableColors = {
@@ -254,6 +255,12 @@ void AssignRikishiColor(Rikishi& rikishi)
 //---------------------------------------------------------------------------
 // Function to initialize a Rikishi
 void InitializeRikishi(Rikishi &rikishi, std::vector<std::string> &usedNames) {
+
+	int idTracker = 0;
+
+	rikishi.id = idTracker;
+    idTracker++;
+
     GetRandomName(rikishi.name, usedNames);
 
     // Assign basic properties
@@ -1500,6 +1507,7 @@ void RetireRikishi(std::vector<Rikishi>& rikishiVector, std::vector<Player>& pla
 			if (shouldRetire) {
 				toRetire.push_back(r.name);
 				retiredNames.push_back(r.name);
+				retiredRikishi.push_back(r);
 			}
 			return shouldRetire;
 		}), rikishiVector.end());
@@ -1540,6 +1548,7 @@ void RetireWave2(std::vector<Rikishi>& rikishiVector, std::vector<Player>& playe
 			// If found but no longer a Yokozuna, retire them
 			if (it != rikishiVector.end() && it->rank != "Yokozuna") {
 				toRetire.push_back(it->name);
+				retiredRikishi.push_back(*it);
 			}
 		}
 	}
@@ -1554,13 +1563,15 @@ void RetireWave2(std::vector<Rikishi>& rikishiVector, std::vector<Player>& playe
             // If rikishi existed before and was ranked higher than Juryo, process retirement/spirit loss
             if (it != previousRanks.end() && it->second.find("Juryo") == std::string::npos) {
                 if (rikishi.age >= 31) {
-                    toRetire.push_back(rikishi.name);
+					toRetire.push_back(rikishi.name);
+					retiredRikishi.push_back(rikishi);
                 } else {
                     if (rikishi.spirit > 0) {
                         rikishi.spirit--;
                     }
-                    if (rikishi.spirit == 0) {
-                        toRetire.push_back(rikishi.name);
+					if (rikishi.spirit == 0) {
+						toRetire.push_back(rikishi.name);
+						retiredRikishi.push_back(rikishi);
                     }
                 }
             }
@@ -1613,7 +1624,8 @@ void RetireWave3(std::vector<Rikishi>& rikishiVector, std::vector<Player>& playe
 
             // If rikishi does not have enough spirit, they retire
             if (rikishi.spirit < spiritLoss) {
-                toRetire.push_back(rikishi.name);
+				toRetire.push_back(rikishi.name);
+                retiredRikishi.push_back(rikishi);
             } else {
                 rikishi.spirit -= spiritLoss; // Deduct spirit
             }
@@ -1657,6 +1669,113 @@ std::vector<std::pair<std::string, std::string>> GetRikishiRankSnapshot(const st
     return snapshot;
 }
 
+bool operator==(const Rikishi& lhs, const Rikishi& rhs) {
+	return lhs.id == rhs.id; // Compare by unique ID
+}
+
+void EndGamePhase(std::vector<Player>& players, std::vector<Rikishi>& rikishiVector, std::vector<Rikishi>& retiredRikishi, int maxYears) {
+    if (players.empty()) return; // No players, no game.
+
+    // 1. Move all active rikishi to retiredRikishi list and recalculate scores
+	retiredRikishi.insert(retiredRikishi.end(), rikishiVector.begin(), rikishiVector.end());
+    for (auto& r : retiredRikishi) {
+        r.retirementScore = GetRankScore(r.rank) + r.age + r.technique + r.speed + r.strength +
+                            r.endurance + r.spirit + (7 - r.minBid) + (r.tournamentWins * 5);
+	}
+
+    // 2. Sort retired rikishi by totalScore (break ties by tournament wins, total skill, weight, then random)
+    std::sort(retiredRikishi.begin(), retiredRikishi.end(), [](const Rikishi& a, const Rikishi& b) {
+        if (a.retirementScore != b.retirementScore) return a.retirementScore > b.retirementScore;
+        if (a.tournamentWins != b.tournamentWins) return a.tournamentWins > b.tournamentWins;
+        int skillA = a.technique + a.speed + a.strength + a.endurance;
+        int skillB = b.technique + b.speed + b.strength + b.endurance;
+        if (skillA != skillB) return skillA > skillB;
+        if (a.weight != b.weight) return a.weight > b.weight;
+        return rand() % 2 == 0; // Random choice if still tied
+	});
+
+    // 3. Power Victory - Highest VP
+    Player* powerWinner = &players[0];
+    for (auto& p : players) {
+        if (p.VP > powerWinner->VP) powerWinner = &p;
+    }
+    ShowMessage((powerWinner->name + " wins a POWER victory! Congratz!").c_str());
+
+    // 4. Fame Victory - Own 2/3 of the Top 3 Retired Rikishi
+    for (auto& p : players) {
+        int topOwned = 0;
+        for (int i = 0; i < 3 && i < retiredRikishi.size(); i++) {
+            if (std::any_of(p.rikishiList.begin(), p.rikishiList.end(), [&](const Rikishi& r) {
+                return r.id == retiredRikishi[i].id; // Compare by unique ID
+            })) {
+                topOwned++;
+            }
+        }
+        if (topOwned >= 2) {
+            ShowMessage((p.name + " wins a FAME victory!").c_str());
+        }
+    }
+
+    // 5. Glory Victory - Tournament Wins Condition
+    for (auto& p : players) {
+        int playerTourneyWins = 0;
+        for (auto& r : p.rikishiList) {
+            playerTourneyWins += r.tournamentWins;
+        }
+        if (playerTourneyWins >= (2 * maxYears) / 5) {
+            ShowMessage((p.name + " wins a GLORY victory!").c_str());
+        }
+    }
+
+    // 6. Determine Final Winner - Glory > Fame > Power
+    std::vector<Player*> gloryWinners, fameWinners;
+    for (auto& p : players) {
+        int playerTourneyWins = 0;
+        for (auto& r : p.rikishiList) {
+            playerTourneyWins += r.tournamentWins;
+        }
+        if (playerTourneyWins >= (2 * maxYears) / 5) gloryWinners.push_back(&p);
+    }
+    if (!gloryWinners.empty()) {
+        if (gloryWinners.size() == 1) {
+            ShowMessage((gloryWinners[0]->name + " is the FINAL WINNER by GLORY!").c_str());
+        } else {
+            goto FameTiebreaker;
+        }
+        return;
+    }
+
+FameTiebreaker:
+    for (auto& p : players) {
+        int topOwned = 0;
+        for (int i = 0; i < 3 && i < retiredRikishi.size(); i++) {
+            if (std::any_of(p.rikishiList.begin(), p.rikishiList.end(), [&](const Rikishi& r) {
+                return r.id == retiredRikishi[i].id;
+            })) {
+                topOwned++;
+            }
+        }
+        if (topOwned >= 2) fameWinners.push_back(&p);
+    }
+    if (!fameWinners.empty()) {
+        if (fameWinners.size() == 1) {
+            ShowMessage((fameWinners[0]->name + " is the FINAL WINNER by FAME!").c_str());
+        } else {
+            goto PowerTiebreaker;
+        }
+        return;
+    }
+
+PowerTiebreaker:
+    if (powerWinner) {
+        ShowMessage((powerWinner->name + " is the FINAL WINNER by POWER!").c_str());
+    } else {
+        ShowMessage("The game ends in a TIE! Multiple champions reign!");
+    }
+}
+
+
+
 void EndYearPhase(std::vector<Player>& players) {
     int maxWins = 0;
     std::vector<Rikishi*> tournamentWinners;
@@ -1667,7 +1786,7 @@ void EndYearPhase(std::vector<Player>& players) {
 			for (auto& player : players) {
 				if (player.name == rikishi.owner) {
 					player.VP += 1;
-//					break;
+					break;
 				}
 			}
         }
@@ -1689,7 +1808,10 @@ void EndYearPhase(std::vector<Player>& players) {
     }
 
     // Increase spirit for tournament winners
-    for (auto* winner : tournamentWinners) {
+	for (auto* winner : tournamentWinners) {
+
+		winner->tournamentWins++;
+
         if (winner->rank != "Yokozuna" && winner->rank != "Ozeki" && winner->spirit < 4) {
             winner->spirit += 1;
 		}
@@ -1703,6 +1825,7 @@ void EndYearPhase(std::vector<Player>& players) {
 
     // Retire rikishi before proceeding
 	RetireRikishi(rikishiVector, players);
+	PopulateRetiredRikishiGrid(retiredRikishi);
 //	RyogokuForm->MemoLog->Lines->Add("Retirements have gone through ...");
 //	RyogokuForm->MemoLog->Text += "Retirements have gone through ...\n";
 
@@ -1714,7 +1837,8 @@ void EndYearPhase(std::vector<Player>& players) {
 //	RyogokuForm->MemoLog->Text += "Rikishi reordered based on ranks...\n";
 
 
-    RetireWave2(rikishiVector, players, previousRanks);
+	RetireWave2(rikishiVector, players, previousRanks);
+	PopulateRetiredRikishiGrid(retiredRikishi);
 
 	for (auto& rikishi : rikishiVector) {
 		rikishi.age += 1;
@@ -1733,6 +1857,7 @@ void EndYearPhase(std::vector<Player>& players) {
 	}
 
 	RetireWave3(rikishiVector, players);
+	PopulateRetiredRikishiGrid(retiredRikishi);
 
     // Ensure the game moves forward properly
     if (isBanzukeComplete) {
@@ -1748,6 +1873,10 @@ void EndYearPhase(std::vector<Player>& players) {
             isBanzukeComplete = false;
 			NewYearPhase();
 		} else {
+			EndGamePhase(players, rikishiVector, retiredRikishi, maxYears);
+			UpdatePoints();
+            PopulateRetiredRikishiGrid(retiredRikishi);
+
 //			RyogokuForm->MemoLog->Lines->Add("The current year is " + IntToStr(currentYear));
 //			RyogokuForm->MemoLog->Text += "The current year is " + IntToStr(currentYear) + "\n";
 //			RyogokuForm->MemoLog->Lines->Add("The " + IntToStr(maxYears) + "-year cycle is complete!");

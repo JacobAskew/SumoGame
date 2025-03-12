@@ -411,15 +411,15 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 		SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 		UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
 		UpdateTournamentGrid();
-		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+//		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
 		Application->ProcessMessages();
 //		ShowMessage(IntToStr(currentBoutIndex));
 		currentBoutIndex++;
         AssignFightersFromGrid();
 //		BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
 		UpdateTournamentGrid();
-		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
-        UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
+//		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+		UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
 		Application->ProcessMessages();
 		fighter1SkillValue = 0;
 		fighter2SkillValue = 0;
@@ -607,7 +607,7 @@ void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
 			PopulateLeaderboardGrid();
 			SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 			UpdateTournamentGrid();
-			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+//			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
 			Application->ProcessMessages();
 			currentBoutIndex++;
 			AssignFightersFromGrid();

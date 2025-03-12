@@ -39,15 +39,6 @@ __published:	// IDE-managed Components
 	TStringColumn *StringColumnFriday;
 	TStringColumn *StringColumnSaturday;
 	TStringColumn *StringColumnSunday;
-	TImage *ImageBelt1;
-	TImage *ImageRikishi1;
-	TImage *ImageYokozuna1;
-	TImage *ImageBelt2;
-	TImage *ImageRikishi2;
-	TImage *ImageYokozuna2;
-	TEdit *EditFighter1;
-	TImage *ImageVS;
-	TEdit *EditFighter2;
 	TStringGrid *StringGridLeaderboard;
 	TStringColumn *StringLeaderboard1;
 	TStringColumn *StringLeaderboard2;
@@ -92,7 +83,7 @@ extern int loserIdx;
 extern void Victory(int winner, std::vector<Player>& players);
 extern void SetBoutResult(int boutIndex, int winnerIdx, int loserIdx);
 extern void UpdateTournamentGrid();
-extern void UpdateBoutGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form);
+//extern void UpdateBoutGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form);
 extern void EndBanzuke();
 //---------------------------------------------------------------------------
 #endif

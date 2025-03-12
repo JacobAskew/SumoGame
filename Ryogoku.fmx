@@ -21,7 +21,7 @@ object RyogokuForm: TRyogokuForm
     TextSettings.Trimming = None
     OnClick = ButtonReturnStreetClick
   end
-  object BanzukeGrid: TStringGrid
+  object RetirementGrid: TStringGrid
     CanFocus = True
     ClipChildren = True
     Position.X = 8.000000000000000000
@@ -36,7 +36,7 @@ object RyogokuForm: TRyogokuForm
     Viewport.Width = 756.000000000000000000
     Viewport.Height = 264.000000000000000000
     object RankColumn: TStringColumn
-      Header = 'Position'
+      Header = 'GOAT'
       HeaderSettings.TextSettings.WordWrap = False
       HeaderSettings.TextSettings.HorzAlign = Center
       ReadOnly = True
@@ -61,14 +61,7 @@ object RyogokuForm: TRyogokuForm
       HeaderSettings.TextSettings.WordWrap = False
       HeaderSettings.TextSettings.HorzAlign = Center
       ReadOnly = True
-      Size.Width = 55.000000000000000000
-    end
-    object SpiritColumn: TStringColumn
-      Header = 'Spirit'
-      HeaderSettings.TextSettings.WordWrap = False
-      HeaderSettings.TextSettings.HorzAlign = Center
-      ReadOnly = True
-      Size.Width = 35.000000000000000000
+      Size.Width = 50.000000000000000000
     end
     object WeightColumn: TStringColumn
       Header = 'Weight'
@@ -112,19 +105,25 @@ object RyogokuForm: TRyogokuForm
       ReadOnly = True
       Size.Width = 50.000000000000000000
     end
-    object StringColumn1: TStringColumn
+    object FinalRankColumn: TStringColumn
       Header = 'Final Rank'
       HeaderSettings.TextSettings.WordWrap = False
       HeaderSettings.TextSettings.HorzAlign = Center
       ReadOnly = True
       Size.Width = 60.000000000000000000
     end
-    object StringColumn2: TStringColumn
+    object TournamentWinsColumn: TStringColumn
+      Header = '#Wins'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      Size.Width = 45.000000000000000000
+    end
+    object ScoreColumn: TStringColumn
       Header = 'Score'
       HeaderSettings.TextSettings.WordWrap = False
       HeaderSettings.TextSettings.HorzAlign = Center
       ReadOnly = True
-      Size.Width = 50.000000000000000000
+      Size.Width = 45.000000000000000000
     end
   end
   object MemoLog: TMemo

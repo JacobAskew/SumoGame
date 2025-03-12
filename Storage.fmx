@@ -41,7 +41,7 @@ object StorageForm: TStorageForm
   end
   object EditEndurance_2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 25
+    TabOrder = 27
     TextSettings.HorzAlign = Center
     Position.X = 511.000000000000000000
     Position.Y = 101.000000000000000000
@@ -51,7 +51,7 @@ object StorageForm: TStorageForm
   end
   object EditWeight_2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 23
+    TabOrder = 25
     TextSettings.HorzAlign = Center
     Position.X = 511.000000000000000000
     Position.Y = 144.000000000000000000
@@ -61,7 +61,7 @@ object StorageForm: TStorageForm
   end
   object EditTechnique_2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 21
+    TabOrder = 23
     TextSettings.HorzAlign = Center
     Position.X = 511.000000000000000000
     Position.Y = 184.000000000000000000
@@ -71,7 +71,7 @@ object StorageForm: TStorageForm
   end
   object EditSpeed_2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 20
+    TabOrder = 22
     TextSettings.HorzAlign = Center
     Position.X = 511.000000000000000000
     Position.Y = 224.000000000000000000
@@ -85,7 +85,7 @@ object StorageForm: TStorageForm
     Size.Width = 129.000000000000000000
     Size.Height = 35.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 30
+    TabOrder = 32
     TextSettings.Trimming = None
   end
   object ButtonWeight_1: TButton
@@ -94,7 +94,7 @@ object StorageForm: TStorageForm
     Size.Width = 129.000000000000000000
     Size.Height = 32.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 29
+    TabOrder = 31
     TextSettings.Trimming = None
   end
   object ButtonTechnique_1: TButton
@@ -103,7 +103,7 @@ object StorageForm: TStorageForm
     Size.Width = 129.000000000000000000
     Size.Height = 32.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 27
+    TabOrder = 29
     TextSettings.Trimming = None
   end
   object ButtonSpeed_1: TButton
@@ -112,12 +112,12 @@ object StorageForm: TStorageForm
     Size.Width = 129.000000000000000000
     Size.Height = 31.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 24
+    TabOrder = 26
     TextSettings.Trimming = None
   end
   object EditAge2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 36
+    TabOrder = 38
     Position.X = 249.000000000000000000
     Position.Y = 100.000000000000000000
     Size.Width = 56.000000000000000000
@@ -126,7 +126,7 @@ object StorageForm: TStorageForm
   end
   object EditName2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 39
+    TabOrder = 41
     Position.X = 178.000000000000000000
     Position.Y = 8.000000000000000000
     Size.Width = 129.000000000000000000
@@ -135,7 +135,7 @@ object StorageForm: TStorageForm
   end
   object EditRank2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 43
+    TabOrder = 45
     Position.X = 178.000000000000000000
     Position.Y = 70.000000000000000000
     Size.Width = 129.000000000000000000
@@ -144,7 +144,7 @@ object StorageForm: TStorageForm
   end
   object EditOwner2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 40
+    TabOrder = 42
     Position.X = 178.000000000000000000
     Position.Y = 37.000000000000000000
     Size.Width = 129.000000000000000000
@@ -162,7 +162,7 @@ object StorageForm: TStorageForm
   end
   object EditSpirit1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 13
+    TabOrder = 15
     Position.X = 8.000000000000000000
     Position.Y = 100.000000000000000000
     Size.Width = 65.000000000000000000
@@ -189,7 +189,7 @@ object StorageForm: TStorageForm
   end
   object EditName1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 16
+    TabOrder = 18
     Position.X = 8.000000000000000000
     Position.Y = 67.000000000000000000
     Size.Width = 129.000000000000000000
@@ -198,7 +198,7 @@ object StorageForm: TStorageForm
   end
   object EditRank1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 19
+    TabOrder = 21
     Position.X = 633.000000000000000000
     Position.Y = 130.000000000000000000
     Size.Width = 129.000000000000000000
@@ -229,7 +229,7 @@ object StorageForm: TStorageForm
     Size.Width = 16.000000000000000000
     Size.Height = 19.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 117
+    TabOrder = 119
   end
   object RadioButtonStr2: TRadioButton
     Position.X = 41.000000000000000000
@@ -237,7 +237,7 @@ object StorageForm: TStorageForm
     Size.Width = 16.000000000000000000
     Size.Height = 19.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 112
+    TabOrder = 114
   end
   object RadioButtonStr3: TRadioButton
     Position.X = 25.000000000000000000
@@ -245,7 +245,7 @@ object StorageForm: TStorageForm
     Size.Width = 16.000000000000000000
     Size.Height = 19.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 101
+    TabOrder = 103
   end
   object RadioButtonStr4: TRadioButton
     Position.X = 41.000000000000000000
@@ -253,7 +253,7 @@ object StorageForm: TStorageForm
     Size.Width = 16.000000000000000000
     Size.Height = 19.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 102
+    TabOrder = 104
   end
   object StringGridBouts: TStringGrid
     CanFocus = True
@@ -388,7 +388,7 @@ object StorageForm: TStorageForm
   end
   object Edit1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 14
+    TabOrder = 16
     Position.X = 188.000000000000000000
     Position.Y = 200.000000000000000000
     Size.Width = 53.000000000000000000
@@ -397,7 +397,7 @@ object StorageForm: TStorageForm
   end
   object Edit2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 17
+    TabOrder = 19
     Position.X = 95.000000000000000000
     Position.Y = 200.000000000000000000
     Size.Width = 85.000000000000000000
@@ -410,7 +410,7 @@ object StorageForm: TStorageForm
     Size.Width = 69.000000000000000000
     Size.Height = 16.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 38
+    TabOrder = 40
     TextSettings.Trimming = None
   end
   object Button3: TButton
@@ -419,7 +419,7 @@ object StorageForm: TStorageForm
     Size.Width = 69.000000000000000000
     Size.Height = 16.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 35
+    TabOrder = 37
     TextSettings.Trimming = None
   end
   object Button4: TButton
@@ -428,7 +428,7 @@ object StorageForm: TStorageForm
     Size.Width = 69.000000000000000000
     Size.Height = 16.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 32
+    TabOrder = 34
     TextSettings.Trimming = None
   end
   object Button5: TButton
@@ -437,7 +437,7 @@ object StorageForm: TStorageForm
     Size.Width = 69.000000000000000000
     Size.Height = 16.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 28
+    TabOrder = 30
     TextSettings.Trimming = None
   end
   object Edit3: TEdit
@@ -461,7 +461,7 @@ object StorageForm: TStorageForm
   end
   object Edit5: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 22
+    TabOrder = 24
     TextSettings.HorzAlign = Center
     Position.X = 272.000000000000000000
     Position.Y = 200.000000000000000000
@@ -471,7 +471,7 @@ object StorageForm: TStorageForm
   end
   object Edit6: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 18
+    TabOrder = 20
     TextSettings.HorzAlign = Center
     Position.X = 272.000000000000000000
     Position.Y = 248.000000000000000000
@@ -481,7 +481,7 @@ object StorageForm: TStorageForm
   end
   object Edit7: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 15
+    TabOrder = 17
     TextSettings.HorzAlign = Center
     Position.X = 272.000000000000000000
     Position.Y = 272.000000000000000000
@@ -491,7 +491,7 @@ object StorageForm: TStorageForm
   end
   object Edit8: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 12
+    TabOrder = 13
     TextSettings.HorzAlign = Center
     Position.X = 272.000000000000000000
     Position.Y = 296.000000000000000000
@@ -501,7 +501,7 @@ object StorageForm: TStorageForm
   end
   object Edit9: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 26
+    TabOrder = 28
     Position.X = 102.000000000000000000
     Position.Y = 307.000000000000000000
     Size.Width = 85.000000000000000000
@@ -628,5 +628,127 @@ object StorageForm: TStorageForm
     Text = 'Banzuke Shoushin'
     TextSettings.Font.Size = 55.000000000000000000
     TextSettings.Font.StyleExt = {00070000000000000004000000}
+  end
+  object ImageBelt1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 11.000000000000000000
+    Position.Y = 20.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 155.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 19.000000000000000000
+    Position.Y = 26.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 155.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt2: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 351.000000000000000000
+    Position.Y = 20.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 155.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi2: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 359.000000000000000000
+    Position.Y = 26.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 155.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditFighter1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 14
+    ReadOnly = True
+    TextSettings.HorzAlign = Center
+    Position.X = 147.000000000000000000
+    Position.Y = 20.000000000000000000
+    Size.Width = 130.000000000000000000
+    Size.Height = 30.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageVS: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 179.000000000000000000
+    Position.Y = 58.000000000000000000
+    Size.Width = 164.000000000000000000
+    Size.Height = 77.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditFighter2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 12
+    ReadOnly = True
+    TextSettings.HorzAlign = Center
+    Position.X = 251.000000000000000000
+    Position.Y = 143.000000000000000000
+    Size.Width = 130.000000000000000000
+    Size.Height = 30.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 27.000000000000000000
+    Position.Y = 26.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 155.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna2: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 367.000000000000000000
+    Position.Y = 26.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 155.000000000000000000
+    Size.PlatformDefault = False
   end
 end

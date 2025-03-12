@@ -198,79 +198,79 @@ void UpdateTournamentGrid()
 	}
 }
 
-void UpdateBoutGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form)
-{
-
-	std::regex numRegex(R"(\d+)");
-    // Update Fighter 1 images
-	TImage* imageFighter1 = dynamic_cast<TImage*>(form->FindComponent("ImageRikishi1"));
-	if (!imageFighter1) {
-		ShowMessage("Error: ImageRikishi1 component not found.");
-		return;
-	}
-	if (imageFighter1) {
-		AnsiString fullPath1 = RikishiPath + IntToStr(fighter1->spirit) + ".png";
-		imageFighter1->Bitmap->LoadFromFile(fullPath1);
-	}
-
-    TImage* imageBelt1 = dynamic_cast<TImage*>(form->FindComponent("ImageBelt1"));
-    if (imageBelt1) {
-        AnsiString fullPathBelt1 = BeltPath + ".png";
-        imageBelt1->Bitmap->LoadFromFile(fullPathBelt1);
-
-		std::string colorStr1 = AnsiString(fighter1->colour).c_str();
-		std::smatch match1;
-//        std::regex numRegex(R"(\d+)");
-        if (std::regex_search(colorStr1, match1, numRegex)) {
-            UnicodeString extractedNumber1 = UnicodeString(match1.str().c_str());
-            TAlphaColor color1 = (TAlphaColor)StrToUInt(extractedNumber1);
-            TintNoTransparent(imageBelt1->Bitmap, color1);
-        } else {
-			ShowMessage("Invalid color format: " + fighter1->colour);
-        }
-    }
-
-    TImage* imageYokozuna1 = dynamic_cast<TImage*>(form->FindComponent("ImageYokozuna1"));
-    if (imageYokozuna1) {
-		imageYokozuna1->Visible = (fighter1->rank == "Yokozuna");
-		if (fighter1->rank == "Yokozuna") {
-			AnsiString fullPathYokozuna1 = YokozunaPath + ".png";
-            imageYokozuna1->Bitmap->LoadFromFile(fullPathYokozuna1);
-        }
-    }
-
-    // Update Fighter 2 images
-	TImage* imageFighter2 = dynamic_cast<TImage*>(form->FindComponent("ImageRikishi2"));
-    if (imageFighter2) {
-		AnsiString fullPath2 = RikishiPath + IntToStr(fighter2->spirit) + ".png";
-        imageFighter2->Bitmap->LoadFromFile(fullPath2);
-	}
-
-    TImage* imageBelt2 = dynamic_cast<TImage*>(form->FindComponent("ImageBelt2"));
-	if (imageBelt2) {
-		AnsiString fullPathBelt2 = BeltPath + ".png";
-        imageBelt2->Bitmap->LoadFromFile(fullPathBelt2);
-
-		std::string colorStr2 = AnsiString(fighter2->colour).c_str();
-		std::smatch match2;
-        if (std::regex_search(colorStr2, match2, numRegex)) {
-            UnicodeString extractedNumber2 = UnicodeString(match2.str().c_str());
-            TAlphaColor color2 = (TAlphaColor)StrToUInt(extractedNumber2);
-			TintNoTransparent(imageBelt2->Bitmap, color2);
-		} else {
-			ShowMessage("Invalid color format: " + fighter2->colour);
-		}
-	}
-
-	TImage* imageYokozuna2 = dynamic_cast<TImage*>(form->FindComponent("ImageYokozuna2"));
-	if (imageYokozuna2) {
-		imageYokozuna2->Visible = (fighter2->rank == "Yokozuna");
-		if (fighter2->rank == "Yokozuna") {
-			AnsiString fullPathYokozuna2 = YokozunaPath + ".png";
-			imageYokozuna2->Bitmap->LoadFromFile(fullPathYokozuna2);
-		}
-	}
-}
+//void UpdateBoutGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form)
+//{
+//
+//	std::regex numRegex(R"(\d+)");
+//    // Update Fighter 1 images
+//	TImage* imageFighter1 = dynamic_cast<TImage*>(form->FindComponent("ImageRikishi1"));
+//	if (!imageFighter1) {
+//		ShowMessage("Error: ImageRikishi1 component not found.");
+//		return;
+//	}
+//	if (imageFighter1) {
+//		AnsiString fullPath1 = RikishiPath + IntToStr(fighter1->spirit) + ".png";
+//		imageFighter1->Bitmap->LoadFromFile(fullPath1);
+//	}
+//
+//    TImage* imageBelt1 = dynamic_cast<TImage*>(form->FindComponent("ImageBelt1"));
+//    if (imageBelt1) {
+//        AnsiString fullPathBelt1 = BeltPath + ".png";
+//        imageBelt1->Bitmap->LoadFromFile(fullPathBelt1);
+//
+//		std::string colorStr1 = AnsiString(fighter1->colour).c_str();
+//		std::smatch match1;
+////        std::regex numRegex(R"(\d+)");
+//        if (std::regex_search(colorStr1, match1, numRegex)) {
+//            UnicodeString extractedNumber1 = UnicodeString(match1.str().c_str());
+//            TAlphaColor color1 = (TAlphaColor)StrToUInt(extractedNumber1);
+//            TintNoTransparent(imageBelt1->Bitmap, color1);
+//        } else {
+//			ShowMessage("Invalid color format: " + fighter1->colour);
+//        }
+//    }
+//
+//    TImage* imageYokozuna1 = dynamic_cast<TImage*>(form->FindComponent("ImageYokozuna1"));
+//    if (imageYokozuna1) {
+//		imageYokozuna1->Visible = (fighter1->rank == "Yokozuna");
+//		if (fighter1->rank == "Yokozuna") {
+//			AnsiString fullPathYokozuna1 = YokozunaPath + ".png";
+//            imageYokozuna1->Bitmap->LoadFromFile(fullPathYokozuna1);
+//        }
+//    }
+//
+//    // Update Fighter 2 images
+//	TImage* imageFighter2 = dynamic_cast<TImage*>(form->FindComponent("ImageRikishi2"));
+//    if (imageFighter2) {
+//		AnsiString fullPath2 = RikishiPath + IntToStr(fighter2->spirit) + ".png";
+//        imageFighter2->Bitmap->LoadFromFile(fullPath2);
+//	}
+//
+//    TImage* imageBelt2 = dynamic_cast<TImage*>(form->FindComponent("ImageBelt2"));
+//	if (imageBelt2) {
+//		AnsiString fullPathBelt2 = BeltPath + ".png";
+//        imageBelt2->Bitmap->LoadFromFile(fullPathBelt2);
+//
+//		std::string colorStr2 = AnsiString(fighter2->colour).c_str();
+//		std::smatch match2;
+//        if (std::regex_search(colorStr2, match2, numRegex)) {
+//            UnicodeString extractedNumber2 = UnicodeString(match2.str().c_str());
+//            TAlphaColor color2 = (TAlphaColor)StrToUInt(extractedNumber2);
+//			TintNoTransparent(imageBelt2->Bitmap, color2);
+//		} else {
+//			ShowMessage("Invalid color format: " + fighter2->colour);
+//		}
+//	}
+//
+//	TImage* imageYokozuna2 = dynamic_cast<TImage*>(form->FindComponent("ImageYokozuna2"));
+//	if (imageYokozuna2) {
+//		imageYokozuna2->Visible = (fighter2->rank == "Yokozuna");
+//		if (fighter2->rank == "Yokozuna") {
+//			AnsiString fullPathYokozuna2 = YokozunaPath + ".png";
+//			imageYokozuna2->Bitmap->LoadFromFile(fullPathYokozuna2);
+//		}
+//	}
+//}
 
 void AssignFightersFromGrid()
 {
@@ -358,11 +358,11 @@ void AssignFightersFromGrid()
 	globalFighter2 = ptrFighter2;
 
 	// Now you can use fighter1 and fighter2 directly
-	UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+//	UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
 
 	// Update UI with fighter names
-	BanzukeForm->EditFighter1->Text = AnsiString(globalFighter1->name.c_str()) + " (" + AnsiString(globalFighter1->owner.c_str()) + ")";
-	BanzukeForm->EditFighter2->Text = AnsiString(globalFighter2->name.c_str()) + " (" + AnsiString(globalFighter2->owner.c_str()) + ")";
+//	BanzukeForm->EditFighter1->Text = AnsiString(globalFighter1->name.c_str()) + " (" + AnsiString(globalFighter1->owner.c_str()) + ")";
+//	BanzukeForm->EditFighter2->Text = AnsiString(globalFighter2->name.c_str()) + " (" + AnsiString(globalFighter2->owner.c_str()) + ")";
 
 }
 
@@ -611,9 +611,9 @@ void TBanzukeForm::StartBanzuke() {
 	currentBoutIndex = 0;    // Start from the first Rikishi
 	UpdateTournamentGrid();
 	AssignFightersFromGrid();
-	TImage* imagevs = dynamic_cast<TImage*>(BanzukeForm->FindComponent("ImageVS"));
-	AnsiString fullPathVS = VSPath;
-	ImageVS->Bitmap->LoadFromFile(fullPathVS);
+//	TImage* imagevs = dynamic_cast<TImage*>(BanzukeForm->FindComponent("ImageVS"));
+//	AnsiString fullPathVS = VSPath;
+//	ImageVS->Bitmap->LoadFromFile(fullPathVS);
 	PopulateLeaderboardGrid();
 }
 
@@ -700,7 +700,7 @@ void __fastcall TBanzukeForm::ButtonNextHumanBoutClick(TObject *Sender)
 			PopulateLeaderboardGrid();
 			SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 			UpdateTournamentGrid();
-			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+//			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
 			Application->ProcessMessages();
 			currentBoutIndex++;
 			AssignFightersFromGrid();
@@ -832,7 +832,7 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 			PopulateLeaderboardGrid();
 			SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 			UpdateTournamentGrid();
-			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+//			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
             Application->ProcessMessages();
 			currentBoutIndex++;
 //			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
@@ -840,7 +840,7 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 				PopulateLeaderboardGrid();
 				SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 				UpdateTournamentGrid();
-				UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+//				UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
 //				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
 				EndBanzuke();
                 break;
@@ -922,7 +922,7 @@ void __fastcall TBanzukeForm::ButtonNextBoutClick(TObject *Sender)
 		PopulateLeaderboardGrid();
 		SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 		UpdateTournamentGrid();
-		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+//		UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
 		Application->ProcessMessages();
 		currentBoutIndex++;
 		AssignFightersFromGrid();

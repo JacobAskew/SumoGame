@@ -31,6 +31,7 @@ void BanzukePhaseComplete();
 // Define the Rikishi struct here so it can be accessed everywhere in the file
 struct Rikishi {
 	std::string name;
+    int id;
 	int strength = 0;
 	int weight = 0;
 	int technique = 0;
@@ -48,9 +49,11 @@ struct Rikishi {
 	int minBid = 1;
 	int currentBid = 1;
 	int score = 0;
+    int retirementScore = 0;
 	String colour;
 	int wins = 0;
 	int losses = 0;
+    int tournamentWins = 0;
     std::string RandomString;
 	std::string owner = "Nobody"; // Defaults to "Computer"
 	bool isInitialized = false; // Defaults to false

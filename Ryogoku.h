@@ -3,6 +3,9 @@
 #ifndef RyogokuH
 #define RyogokuH
 //---------------------------------------------------------------------------
+
+#include "Street.h"
+
 #include <System.Classes.hpp>
 #include <FMX.Controls.hpp>
 #include <FMX.Forms.hpp>
@@ -16,25 +19,27 @@
 #include <FMX.Memo.hpp>
 #include <FMX.Memo.Types.hpp>
 //---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
 class TRyogokuForm : public TForm
 {
 __published:	// IDE-managed Components
 	TButton *ButtonReturnStreet;
-	TStringGrid *BanzukeGrid;
+	TStringGrid *RetirementGrid;
 	TStringColumn *RankColumn;
 	TStringColumn *NameColumn;
 	TStringColumn *OyakataColumn;
 	TStringColumn *AgeColumn;
-	TStringColumn *SpiritColumn;
 	TStringColumn *WeightColumn;
 	TStringColumn *EnduranceColumn;
 	TStringColumn *TechniqueColumn;
 	TStringColumn *SpeedColumn;
 	TStringColumn *StrengthColumn;
 	TStringColumn *MinBidColumn;
-	TStringColumn *StringColumn1;
-	TStringColumn *StringColumn2;
+	TStringColumn *FinalRankColumn;
+	TStringColumn *ScoreColumn;
 	TMemo *MemoLog;
+	TStringColumn *TournamentWinsColumn;
 	void __fastcall ButtonReturnStreetClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
@@ -42,5 +47,7 @@ public:		// User declarations
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TRyogokuForm *RyogokuForm;
+extern void PopulateRetiredRikishiGrid(std::vector<Rikishi>& retiredRikishi);
+extern int GetRankScore(const std::string& rank);
 //---------------------------------------------------------------------------
 #endif

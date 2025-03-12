@@ -91,6 +91,15 @@ __published:	// IDE-managed Components
 	TGlowEffect *GlowEffectWeight1;
 	TImage *ImageRoad;
 	TText *TextTitle;
+	TImage *ImageBelt1;
+	TImage *ImageRikishi1;
+	TImage *ImageBelt2;
+	TImage *ImageRikishi2;
+	TEdit *EditFighter1;
+	TImage *ImageVS;
+	TEdit *EditFighter2;
+	TImage *Image1;
+	TImage *ImageYokozuna2;
 private:	// User declarations
 public:		// User declarations
 	__fastcall TStorageForm(TComponent* Owner);
