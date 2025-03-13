@@ -81,7 +81,7 @@ object MainStreet: TMainStreet
   end
   object EditAbilityPoints: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 6
+    TabOrder = 11
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 592.000000000000000000

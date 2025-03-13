@@ -1036,13 +1036,60 @@
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\x86_64-w64-mingw32\c++\v1\set \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\x86_64-w64-mingw32\c++\v1\__tree \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\x86_64-w64-mingw32\c++\v1\map \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\System.IOUtils.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.ShlObj.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.ActiveX.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\olectl.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\docobj.H \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\comcat.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\dispex.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\objsafe.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\propvarutil.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\propapi.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\shtypes.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\shlwapi.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.CommCtrl.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\CommCtrl.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\dpa_dsa.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.ShellAPI.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.Winsock2.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.Qos.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.IpExport.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\ipexport.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\in6addr.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.RegStr.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\regstr.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.WinInet.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\wininet.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.UrlMon.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.ObjectArray.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\ObjectArray.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.PropSys.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.StructuredQueryCondition.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\structuredquerycondition.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\propsys.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\propkeydef.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.MSXMLIntf.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\MsXml2.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\shlguid.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\isguids.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\exdisp.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\shldisp.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\knownfolders.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\shlobj.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\shobjidl.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\shobjidl_core.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\sherrors.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\sdk\shlobj_core.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\Winapi.KnownFolders.hpp \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\rtl\System.Masks.hpp \
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Street.h \
+  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\fmx\FMX.Media.hpp \
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Noboru.h \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\fmx\FMX.Grid.Style.hpp \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\fmx\FMX.Presentation.Style.hpp \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\fmx\FMX.ScrollBox.Style.hpp \
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Beya.h \
-  c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\fmx\FMX.Media.hpp \
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Training.h \
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Banzuke.h \
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Dohyo.h \

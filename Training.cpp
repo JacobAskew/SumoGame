@@ -5,6 +5,7 @@
 #include "Training.h"
 #include "Street.h" // Include after Training.h
 #include "Beya.h"
+#include "Noboru.h"
 
 
 //---------------------------------------------------------------------------
@@ -130,6 +131,7 @@ void __fastcall TTrainingPopup::ButtonOption1Click(TObject *Sender)
 {
 	TrainingCost = cost1;
 	UpgradePoints = 1;
+	TrainedRikishi1 = true;
 	ReturnToBeyaPostTraining(TrainingCost, UpgradePoints);
 }
 //---------------------------------------------------------------------------

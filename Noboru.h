@@ -76,6 +76,9 @@ extern String RikishiPath;
 extern String BeltPath;
 extern String YokozunaPath;
 extern bool isBiddingComplete;
+extern bool TrainedRikishi1;
+extern bool TrainedRikishi2;
+extern bool TrainedRikishi3;
 
 #endif
 

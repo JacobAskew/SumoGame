@@ -15,6 +15,7 @@
 #include <cmath> // For std::floor
 #include <map>
 #include <functional>
+#include <System.IOUtils.hpp> // For file path handling
 
 #include "Street.h"
 #include "Noboru.h" // Include after Street.h to avoid issues
@@ -430,11 +431,54 @@ void InitializeAllRikishi() {
 
 	for (auto &rikishi : rikishiVector) {
 		if (!rikishi.isInitialized) { // Only initialize uninitialized Rikishi
-            InitializeRikishi(rikishi, usedNames);
+			InitializeRikishi(rikishi, usedNames);
 			rikishi.isInitialized = true; // Mark as initialized
-        }
+		}
 	}
 }
+
+//void __fastcall TMainStreet::PlayVideo()
+//{
+//    // Ensure MediaPlayerControl1 is attached to the form
+//    if (!MediaPlayerControl1->Parent) {
+//        MediaPlayerControl1->Parent = this;
+//    }
+//
+//    // Ensure it is visible
+//    MediaPlayerControl1->Visible = true;
+//
+//    // Resize it to fit the form
+//    MediaPlayerControl1->Align = TAlignLayout::Client;
+//
+//    // Use an MP4 or MJPEG AVI file
+//	String videoPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\jacob_win_screen.avi";
+//
+//    // Verify file exists before playing
+//    if (!TFile::Exists(videoPath)) {
+//        ShowMessage("Error: Video file not found! \n" + videoPath);
+//        return;
+//    }
+//
+//    // Assign the media file
+//    MediaPlayer1->FileName = videoPath;
+//
+//    // Make sure MediaPlayerControl is properly attached
+//    MediaPlayerControl1->Parent = this;
+//
+//	// Ensure it resizes correctly
+//    MediaPlayerControl1->Align = TAlignLayout::Client;
+//
+//	// Play the video
+//	MediaPlayer1->Play();
+////
+////    if (!MediaPlayer1->State == TMediaState::Playing) {
+////		ShowMessage("Error: Video could not play!");
+////	}
+//}
+
+
+
+
 
 void PreGameSetup() {
 	int NumberPlayers = 1;  // Set to 1 to match the total number of players
@@ -447,6 +491,8 @@ void PreGameSetup() {
 	TImage* imagebackground = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageBackground"));
 	AnsiString fullPathBackground = PathBackground;
 	imagebackground->Bitmap->LoadFromFile(fullPathBackground);
+
+//	MainStreet->PlayVideo();
 
     // Create a list of players
     std::vector<Player> allPlayers = {
@@ -1541,17 +1587,21 @@ void RetireWave2(std::vector<Rikishi>& rikishiVector, std::vector<Player>& playe
 
     // Check for demoted Yokozuna
 	for (const auto& prevRank : previousRanks) {
-		if (prevRank.second == "Yokozuna") {  // Rikishi was Yokozuna before
+		if (prevRank.second == "Yokozuna") {  // Rikishi was a Yokozuna before
 			auto it = std::find_if(rikishiVector.begin(), rikishiVector.end(),
 				[&](const Rikishi& r) { return r.name == prevRank.first; });
 
-			// If found but no longer a Yokozuna, retire them
+			// If found but no longer a Yokozuna, check if they are Ozeki or lower and retire them
 			if (it != rikishiVector.end() && it->rank != "Yokozuna") {
-				toRetire.push_back(it->name);
-				retiredRikishi.push_back(*it);
+				if (it->rank == "Ozeki" || it->rank == "Sekiwake" || it->rank == "Komusubi" || it->rank.find("Maegashira") != std::string::npos) {
+					// Only retire if they have fallen below Yokozuna
+					toRetire.push_back(it->name);
+					retiredRikishi.push_back(*it);
+				}
 			}
 		}
 	}
+
 
     // Check for rikishi demoted to Juryo 1 or Juryo 2
     for (auto& rikishi : rikishiVector) {
@@ -1923,6 +1973,12 @@ void __fastcall TMainStreet::ButtonRyogokuClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+
+
+//#include <System.IOUtils.hpp>  // For file path handling
+
+
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 // Constructor for the form
@@ -1937,6 +1993,23 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 	std::srand(std::time(0)); // Seed random number generator
 
 //    MainStreet->ReadAndProcessNames();
+
+//	MediaPlayer1->MediaPlayerControl = MediaPlayerControl1;
+//
+//	ffmpeg -i jacob_win_screen.mp4 -c:v libx264 -preset slow -crf 23 output.mp4
+//
+//	MediaPlayer1->FileName = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\jacob_win_screen.mp4";
+//	MediaPlayer1->Play();
+
+	// Ensure MediaPlayerControl is linked
+//	MediaPlayer1->MediaPlayerControl = MediaPlayerControl1;
+//
+//	// Set the correct file path (ensure the file exists)
+//	MediaPlayer1->FileName = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\output.mp4";
+//
+//	// Play the video
+//	MediaPlayer1->Play();
+
 
 	PreGameSetup(); // Pre-game setup logic
 

@@ -19,6 +19,10 @@
 TNoboruForm *NoboruForm;
 //---------------------------------------------------------------------------
 
+bool TrainedRikishi1 = false;
+bool TrainedRikishi2 = false;
+bool TrainedRikishi3 = false;
+
 bool isBiddingComplete = false;  // Flag to track if bidding is complete
 // Check if bidding is complete
 bool IsBiddingComplete() {
@@ -167,6 +171,10 @@ void UpdateBanzukeGrid()
 
 // Function to start the bidding
 void TNoboruForm::StartBidding() {
+
+	TrainedRikishi1 = false;
+	TrainedRikishi2 = false;
+	TrainedRikishi3 = false;
     NoboruForm = new TNoboruForm(this);
     isBiddingComplete = false;  // Reset the bidding status
 	currentRikishiIndex = 0;    // Start from the first Rikishi

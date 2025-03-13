@@ -1,0 +1,50 @@
+//---------------------------------------------------------------------------
+
+#ifndef TrainingH
+#define TrainingH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.Edit.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+
+#include "Street.h" // Include after Training.h
+//---------------------------------------------------------------------------
+
+class TYourBeya;
+class TMainStreet;
+
+void ReceiveTrainingRikishi(const Rikishi* rikishi);
+
+
+class TTrainingPopup : public TForm
+{
+__published:	// IDE-managed Components
+	TEdit *EditRikishiInfo;
+	TButton *ButtonOption1;
+	TButton *ButtonOption2;
+	TButton *ButtonOption3;
+	TButton *ButtonReturn;
+	void __fastcall ButtonOption1Click(TObject *Sender);
+	void __fastcall ButtonOption2Click(TObject *Sender);
+	void __fastcall ButtonOption3Click(TObject *Sender);
+	void __fastcall ButtonReturnClick(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TTrainingPopup(TComponent* Owner);
+	void SetRikishi(Rikishi* rikishi);
+	void UpdateTrainingTable(Rikishi* rikishi);
+    void ReturnToBeyaPostTraining(int TrainingCost, int UpgradePoints);
+//	void __fastcall CloseTrainingPopup(const String &message);
+//    bool IsTrainingComplete();
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TTrainingPopup *TrainingPopup;
+extern int UpgradePoints;
+extern bool isTrainingComplete;
+//---------------------------------------------------------------------------
+#endif
+

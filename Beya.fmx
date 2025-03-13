@@ -219,7 +219,7 @@ object YourBeya: TYourBeya
     Size.Width = 103.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 51
+    TabOrder = 53
     Text = 'ReturnStreet'
     TextSettings.Trimming = None
     OnClick = ReturnStreetClick
@@ -230,7 +230,7 @@ object YourBeya: TYourBeya
     Size.Width = 173.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 57
+    TabOrder = 60
     Text = 'Train Rikishi 1'
     TextSettings.Trimming = None
     OnClick = TrainRikishi1Click
@@ -241,7 +241,7 @@ object YourBeya: TYourBeya
     Size.Width = 176.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 55
+    TabOrder = 57
     Text = 'Train Rikishi 2'
     TextSettings.Trimming = None
     OnClick = TrainRikishi2Click
@@ -252,14 +252,14 @@ object YourBeya: TYourBeya
     Size.Width = 178.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 53
+    TabOrder = 55
     Text = 'Train Rikishi 3'
     TextSettings.Trimming = None
     OnClick = TrainRikishi3Click
   end
   object EditName1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 46
+    TabOrder = 48
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 56.000000000000000000
@@ -270,7 +270,7 @@ object YourBeya: TYourBeya
   end
   object EditAge2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 48
+    TabOrder = 50
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 441.000000000000000000
@@ -281,7 +281,7 @@ object YourBeya: TYourBeya
   end
   object EditName2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 43
+    TabOrder = 45
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 312.000000000000000000
@@ -292,7 +292,7 @@ object YourBeya: TYourBeya
   end
   object EditRank2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 18
+    TabOrder = 20
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 272.000000000000000000
@@ -303,7 +303,7 @@ object YourBeya: TYourBeya
   end
   object EditAge3: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 32
+    TabOrder = 34
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 697.000000000000000000
@@ -314,7 +314,7 @@ object YourBeya: TYourBeya
   end
   object EditName3: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 19
+    TabOrder = 21
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 576.000000000000000000
@@ -405,7 +405,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 62.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -422,7 +422,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 320.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -439,7 +439,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 579.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -456,7 +456,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 150.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -473,7 +473,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 408.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -490,7 +490,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 667.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -507,7 +507,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 194.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -524,7 +524,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 452.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -541,7 +541,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 711.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -558,7 +558,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 106.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -575,7 +575,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 364.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -592,7 +592,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 623.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -609,7 +609,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 18.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -626,7 +626,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 276.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -643,7 +643,7 @@ object YourBeya: TYourBeya
       item
       end>
     Position.X = 535.000000000000000000
-    Position.Y = 102.000000000000000000
+    Position.Y = 104.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False

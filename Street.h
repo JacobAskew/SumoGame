@@ -18,6 +18,7 @@
 #include <FMX.Memo.Types.hpp>
 #include <FMX.ScrollBox.hpp>
 #include <FMX.Objects.hpp>
+#include <FMX.Media.hpp>
 
 // Forward declaration for TNoboruForm to avoid circular dependency
 class TNoboruForm;
@@ -141,6 +142,7 @@ __published:    // IDE-managed Components
 	void __fastcall ButtonBanzukeClick(TObject *Sender);
 	void __fastcall ButtonDohyoClick(TObject *Sender);
 	void __fastcall ButtonRyogokuClick(TObject *Sender);
+//    void __fastcall PlayVideo();
 
 private:    // User declarations
 	void __fastcall CheckNamesFile();

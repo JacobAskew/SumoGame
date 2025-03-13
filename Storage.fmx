@@ -268,8 +268,8 @@ object StorageForm: TStorageForm
     RowHeight = 22.000000000000000000
     RowCount = 16
     Options = [ColumnResize, ColumnMove, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
-    Viewport.Width = 625.000000000000000000
-    Viewport.Height = 393.000000000000000000
+    Viewport.Width = 621.000000000000000000
+    Viewport.Height = 368.000000000000000000
     object StringColumnRanks: TStringColumn
       HorzAlign = Center
       Header = 'Rank'
@@ -750,5 +750,15 @@ object StorageForm: TStorageForm
     Size.Width = 160.000000000000000000
     Size.Height = 155.000000000000000000
     Size.PlatformDefault = False
+  end
+  object MediaPlayer1: TMediaPlayer
+    Left = 360
+    Top = 152
+  end
+  object MediaPlayerControl1: TMediaPlayerControl
+    Size.Width = 772.000000000000000000
+    Size.Height = 420.000000000000000000
+    Size.PlatformDefault = False
+    Align = Client
   end
 end

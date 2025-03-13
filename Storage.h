@@ -16,6 +16,7 @@
 #include <FMX.ScrollBox.hpp>
 #include <System.Rtti.hpp>
 #include <FMX.Effects.hpp>
+#include <FMX.Media.hpp>
 //---------------------------------------------------------------------------
 class TStorageForm : public TForm
 {
@@ -100,6 +101,8 @@ __published:	// IDE-managed Components
 	TEdit *EditFighter2;
 	TImage *Image1;
 	TImage *ImageYokozuna2;
+	TMediaPlayer *MediaPlayer1;
+	TMediaPlayerControl *MediaPlayerControl1;
 private:	// User declarations
 public:		// User declarations
 	__fastcall TStorageForm(TComponent* Owner);

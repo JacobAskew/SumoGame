@@ -173,7 +173,7 @@ void TYourBeya::UpdateBeya() {
         TImage* imageDoor = dynamic_cast<TImage*>(YourBeya->FindComponent(doorNames[i].c_str()));
         if (imageDoor) {
             imageDoor->Visible = (P1_rikishiCount < (3 - i));
-            if (imageDoor->Visible) imageDoor->Bitmap->LoadFromFile(DoorPath);
+			if (imageDoor->Visible) imageDoor->Bitmap->LoadFromFile(DoorPath);
         }
     }
 
@@ -238,8 +238,16 @@ void TYourBeya::UpdateBeya() {
 			if (imageYokozuna) {
 				AnsiString fullPathYokozuna = YokozunaPath + ".png";
 				imageYokozuna->Bitmap->LoadFromFile(fullPathYokozuna);
+				imageYokozuna->Opacity = 1.0;  // Fully visible
+			}
+		} else {
+			TImage* imageYokozuna = dynamic_cast<TImage*>(YourBeya->FindComponent("ImageYokozuna" + IntToStr(rikishiIndex)));
+			if (imageYokozuna) {
+				imageYokozuna->Opacity = 0.0;  // Invisible but still clickable
 			}
 		}
+
+
 		// Load and tint skill images
 		struct Skill {
 			const char* name;
@@ -519,60 +527,76 @@ void __fastcall TYourBeya::ReturnStreetClick(TObject *Sender) {
 
 // Fix for checking and creating TrainingPopup only once
 void __fastcall TYourBeya::TrainRikishi1Click(TObject *Sender) {
-
-	WhichRikishi = 1;
-
-	ResetPlayerRikishi();
-
-    // Ensure we are training the correct Rikishi
-	if (firstPlayerRikishi) {
-//		ReceiveTrainingRikishi(firstPlayerRikishi);
-		TrainingPopup = new TTrainingPopup(this);
-		TrainingPopup->UpdateTrainingTable(firstPlayerRikishi);
-		TrainingPopup->Show(); // Show the Noboru form
-		this->Hide();       // Hide the current form
+	if (TrainedRikishi1) {
+		ShowMessage("You can already trained this rikishi.");
 	}
 	else {
-		ShowMessage("You have no rikishi to train. Bid to get control over new rikishi.");
+
+		WhichRikishi = 1;
+
+		ResetPlayerRikishi();
+
+		// Ensure we are training the correct Rikishi
+		if (firstPlayerRikishi) {
+	//		ReceiveTrainingRikishi(firstPlayerRikishi);
+			TrainingPopup = new TTrainingPopup(this);
+			TrainingPopup->UpdateTrainingTable(firstPlayerRikishi);
+			TrainingPopup->Show(); // Show the Noboru form
+			this->Hide();       // Hide the current form
+		}
+		else {
+			ShowMessage("You have no rikishi to train. Bid to get control over new rikishi.");
+		}
 	}
 }
 
 // Repeated training functions adjusted similarly
 void __fastcall TYourBeya::TrainRikishi2Click(TObject *Sender) {
-
-	WhichRikishi = 2;
-
-	ResetPlayerRikishi();
-
-	if (secondPlayerRikishi) {
-//		ReceiveTrainingRikishi(secondPlayerRikishi);
-		TrainingPopup = new TTrainingPopup(this);
-		TrainingPopup->UpdateTrainingTable(secondPlayerRikishi);
-		TrainingPopup->Show();
-		this->Hide();
+	if (TrainedRikishi2) {
+		ShowMessage("You can already trained this rikishi.");
 	}
 	else {
-		ShowMessage("No Rikishi in second Beya slot. Try another.");
+		TrainedRikishi2 = true;
+		WhichRikishi = 2;
+
+		ResetPlayerRikishi();
+
+		// Ensure we are training the correct Rikishi
+		if (firstPlayerRikishi) {
+	//		ReceiveTrainingRikishi(firstPlayerRikishi);
+			TrainingPopup = new TTrainingPopup(this);
+			TrainingPopup->UpdateTrainingTable(secondPlayerRikishi);
+			TrainingPopup->Show(); // Show the Noboru form
+			this->Hide();       // Hide the current form
+		}
+		else {
+			ShowMessage("No Rikishi in second Beya slot. Try another.");
+		}
 	}
 }
 
 void __fastcall TYourBeya::TrainRikishi3Click(TObject *Sender) {
-
-	WhichRikishi = 3;
-
-	ResetPlayerRikishi();
-
-	if (thirdPlayerRikishi) {
-//		ReceiveTrainingRikishi(thirdPlayerRikishi);
-        TrainingPopup = new TTrainingPopup(this);
-		TrainingPopup->UpdateTrainingTable(thirdPlayerRikishi);
-		TrainingPopup->Show();
-		this->Hide();
+	if (TrainedRikishi3) {
+		ShowMessage("You can already trained this rikishi.");
 	}
 	else {
-		ShowMessage("No Rikishi in third Beya slot. Try another.");
-	}
+		TrainedRikishi3 = true;
+		WhichRikishi = 3;
 
+		ResetPlayerRikishi();
+
+		// Ensure we are training the correct Rikishi
+		if (firstPlayerRikishi) {
+	//		ReceiveTrainingRikishi(firstPlayerRikishi);
+			TrainingPopup = new TTrainingPopup(this);
+			TrainingPopup->UpdateTrainingTable(thirdPlayerRikishi);
+			TrainingPopup->Show(); // Show the Noboru form
+			this->Hide();       // Hide the current form
+		}
+		else {
+			ShowMessage("No Rikishi in third Beya slot. Try another.");
+		}
+	}
 }
 
 // Handle memory cleanup for the training popup when no longer needed (optional but good practice)
@@ -624,6 +648,7 @@ void __fastcall TYourBeya::ImageStrength1Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi1 = true;
 		UpgradeSkill(0, "Strength");
 	}
 }
@@ -636,6 +661,7 @@ void __fastcall TYourBeya::ImageStrength2Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi2 = true;
 		UpgradeSkill(1, "Strength");
 	}
 }
@@ -648,6 +674,7 @@ void __fastcall TYourBeya::ImageStrength3Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi3 = true;
 		UpgradeSkill(2, "Strength");
 	}
 }
@@ -660,6 +687,7 @@ void __fastcall TYourBeya::ImageWeight1Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi1 = true;
 		UpgradeSkill(0, "Weight");
 	}
 }
@@ -672,6 +700,7 @@ void __fastcall TYourBeya::ImageWeight2Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi2 = true;
 		UpgradeSkill(1, "Weight");
 	}
 }
@@ -684,6 +713,7 @@ void __fastcall TYourBeya::ImageWeight3Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi3 = true;
 		UpgradeSkill(2, "Weight");
 	}
 }
@@ -696,6 +726,7 @@ void __fastcall TYourBeya::ImageEndurance1Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi1 = true;
 		UpgradeSkill(0, "Endurance");
 	}
 }
@@ -708,6 +739,7 @@ void __fastcall TYourBeya::ImageEndurance2Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi2 = true;
 		UpgradeSkill(1, "Endurance");
 	}
 }
@@ -720,6 +752,7 @@ void __fastcall TYourBeya::ImageEndurance3Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi3 = true;
 		UpgradeSkill(2, "Endurance");
 	}
 }
@@ -732,6 +765,7 @@ void __fastcall TYourBeya::ImageTechnique1Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi1 = true;
 		UpgradeSkill(0, "Technique");
 	}
 }
@@ -744,6 +778,7 @@ void __fastcall TYourBeya::ImageTechnique2Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi2 = true;
 		UpgradeSkill(1, "Technique");
 	}
 }
@@ -756,6 +791,7 @@ void __fastcall TYourBeya::ImageTechnique3Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi3 = true;
 		UpgradeSkill(2, "Technique");
 	}
 }
@@ -768,6 +804,7 @@ void __fastcall TYourBeya::ImageSpeed1Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi1 = true;
 		UpgradeSkill(0, "Speed");
 	}
 }
@@ -780,6 +817,7 @@ void __fastcall TYourBeya::ImageSpeed2Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi2 = true;
 		UpgradeSkill(1, "Speed");
 	}
 }
@@ -792,6 +830,7 @@ void __fastcall TYourBeya::ImageSpeed3Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi3 = true;
 		UpgradeSkill(2, "Speed");
 	}
 }
@@ -804,6 +843,7 @@ void __fastcall TYourBeya::ImageYokozuna1Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi1 = true;
 		UpgradeSkill(0, "Spirit");
 	}
 }
@@ -816,6 +856,7 @@ void __fastcall TYourBeya::ImageYokozuna2Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+		TrainedRikishi2 = true;
 		UpgradeSkill(1, "Spirit");
 	}
 }
@@ -828,6 +869,7 @@ void __fastcall TYourBeya::ImageYokozuna3Click(TObject *Sender) {
 		ShowMessage("You have no upgrades, try buying some.");
 	}
 	else {
+    	TrainedRikishi3 = true;
 		UpgradeSkill(2, "Spirit");
 	}
 }
