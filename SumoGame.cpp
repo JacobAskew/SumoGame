@@ -7,14 +7,15 @@
 #pragma hdrstop
 #include <System.StartUpCopy.hpp>
 //---------------------------------------------------------------------------
-USEFORM("Street.cpp", MainStreet);
 USEFORM("Storage.cpp", StorageForm);
 USEFORM("Ryogoku.cpp", RyogokuForm);
+USEFORM("Street.cpp", MainStreet);
 USEFORM("Training.cpp", TrainingPopup);
 USEFORM("Dohyo.cpp", DohyoForm);
 USEFORM("Beya.cpp", YourBeya);
 USEFORM("Banzuke.cpp", BanzukeForm);
 USEFORM("Noboru.cpp", NoboruForm);
+USEFORM("EndGame.cpp", GameOver);
 //---------------------------------------------------------------------------
 extern "C" int FMXmain()
 {
@@ -28,6 +29,7 @@ extern "C" int FMXmain()
 		Application->CreateForm(__classid(TDohyoForm), &DohyoForm);
 		Application->CreateForm(__classid(TStorageForm), &StorageForm);
 		Application->CreateForm(__classid(TRyogokuForm), &RyogokuForm);
+		Application->CreateForm(__classid(TGameOver), &GameOver);
 		Application->Run();
 	}
 	catch (Exception &exception)

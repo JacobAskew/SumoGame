@@ -270,7 +270,8 @@ void UpdateTournamentGrid()
 //			imageYokozuna2->Bitmap->LoadFromFile(fullPathYokozuna2);
 //		}
 //	}
-//}
+//}
+
 
 void AssignFightersFromGrid()
 {
@@ -619,10 +620,10 @@ void TBanzukeForm::StartBanzuke() {
 
 // Function to end the Banzuke phase
 void EndBanzuke() {
-	UpdateBanzukeGrid();
 	isBanzukeComplete = true;  // Mark Banzuke as complete
 	ShowMessage("Ending Banzuke Phase...");
 	BanzukePhaseComplete();    // Call the function to complete the Banzuke phase in MainStreet.cpp
+	UpdateBanzukeGrid();
 }
 //---------------------------------------------------------------------------
 
@@ -630,10 +631,13 @@ void EndBanzuke() {
 
 void __fastcall TBanzukeForm::ButtonNextHumanBoutClick(TObject *Sender)
 {
+
+	PopulateLeaderboardGrid();
+
 	for (int i = 0; i < 49; i++) {
 		if (isBanzukeComplete == false && isTrainingComplete == true && currentBoutIndex != 49) {
 
-			PopulateLeaderboardGrid();
+
 			AssignFightersFromGrid();
 
 			if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
@@ -797,11 +801,11 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 	//			ShowMessage("Rikishi 2 has high spirits!");
 			}
 
-			if (i >= 42 && i < 49) {
-				if (globalFighter1->wins == 3 && globalFighter1->losses == 3) {
+			if (currentBoutIndex >= 42 && currentBoutIndex < 49) {
+				if (globalFighter1->wins == 3 && globalFighter1->losses == 3 && globalFighter1->owner == "CPU") {
 					fighter1Total += 1;
 				}
-				if (globalFighter2->wins == 3 && globalFighter2->losses == 3) {
+				if (globalFighter2->wins == 3 && globalFighter2->losses == 3 && globalFighter2->owner == "CPU") {
 					fighter2Total += 1;
 				}
 			}
@@ -833,7 +837,7 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 			SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 			UpdateTournamentGrid();
 //			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
-            Application->ProcessMessages();
+			Application->ProcessMessages();
 			currentBoutIndex++;
 //			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
 			if (currentBoutIndex==49) {

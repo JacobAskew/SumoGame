@@ -1,0 +1,20 @@
+//---------------------------------------------------------------------------
+
+#ifndef EndGameH
+#define EndGameH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+//---------------------------------------------------------------------------
+class TGameOver : public TForm
+{
+__published:	// IDE-managed Components
+private:	// User declarations
+public:		// User declarations
+	__fastcall TGameOver(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TGameOver *GameOver;
+//---------------------------------------------------------------------------
+#endif

@@ -535,12 +535,14 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 
 void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
 {
-//	UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
+
+	PopulateLeaderboardGrid();
+
 	for (int i = 0; i < 49; i++) {
 		UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
 		if (isBanzukeComplete == false && isTrainingComplete == true && currentBoutIndex != 49) {
 
-			PopulateLeaderboardGrid();
+
 			AssignFightersFromGrid();
 
 			if (globalFighter1->owner == "P1" && globalFighter2->owner == "P1") {
@@ -616,7 +618,7 @@ void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
 			PopulateLeaderboardGrid();
 			if (currentBoutIndex == 49) {
 //				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
-//				PopulateLeaderboardGrid();
+				PopulateLeaderboardGrid();
 				EndBanzuke();
 				break;
 			}
@@ -624,7 +626,7 @@ void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
 		}
 		else if (currentBoutIndex == 49) {
 //			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
-//			PopulateLeaderboardGrid();
+			PopulateLeaderboardGrid();
 			EndBanzuke();
 			break;
 		}

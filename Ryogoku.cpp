@@ -2,6 +2,7 @@
 #include <fmx.h>
 #include "Ryogoku.h"
 #include "Street.h"
+#include "EndGame.h"
 #include <algorithm>  // For std::sort
 #include <unordered_map>
 #include <vector>
@@ -90,3 +91,10 @@ void __fastcall TRyogokuForm::ButtonReturnStreetClick(TObject *Sender)
 	this->Hide();     // Hide the second form
 }
 //---------------------------------------------------------------------------
+void __fastcall TRyogokuForm::ButtonEndScreenClick(TObject *Sender)
+{
+	GameOver->Show(); // Show the main form
+	this->Hide();     // Hide the second form
+}
+//---------------------------------------------------------------------------
+

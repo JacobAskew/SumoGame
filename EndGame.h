@@ -1,0 +1,28 @@
+//---------------------------------------------------------------------------
+
+#ifndef EndGameH
+#define EndGameH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.Objects.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+//---------------------------------------------------------------------------
+class TGameOver : public TForm
+{
+__published:	// IDE-managed Components
+	TButton *ButtonReturn;
+	TImage *ImageEndScreen;
+	void __fastcall ButtonReturnClick(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TGameOver(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TGameOver *GameOver;
+extern void UpdateEndScreen();
+//---------------------------------------------------------------------------
+#endif

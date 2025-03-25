@@ -1,0 +1,31 @@
+object GameOver: TGameOver
+  Left = 0
+  Top = 0
+  Caption = 'GAME OVER!'
+  ClientHeight = 420
+  ClientWidth = 720
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ImageEndScreen: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Size.Width = 720.000000000000000000
+    Size.Height = 420.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonReturn: TButton
+    Position.X = 624.000000000000000000
+    Position.Y = 384.000000000000000000
+    Size.Width = 88.000000000000000000
+    Size.Height = 28.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Return'
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnClick
+  end
+end

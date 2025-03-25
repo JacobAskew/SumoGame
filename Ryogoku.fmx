@@ -1,6 +1,6 @@
 object RyogokuForm: TRyogokuForm
-  Left = 0
-  Top = 0
+  Left = 552
+  Top = 240
   Caption = 'The Ryogoku Kokugikan'
   ClientHeight = 420
   ClientWidth = 772
@@ -8,6 +8,8 @@ object RyogokuForm: TRyogokuForm
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  Left = 552
+  Top = 240
   DesignerMasterStyle = 0
   object ButtonReturnStreet: TButton
     Position.X = 8.000000000000000000
@@ -15,7 +17,7 @@ object RyogokuForm: TRyogokuForm
     Size.Width = 89.000000000000000000
     Size.Height = 132.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 1
+    TabOrder = 2
     Text = 'Return to the Street'
     TextSettings.WordWrap = True
     TextSettings.Trimming = None
@@ -30,7 +32,7 @@ object RyogokuForm: TRyogokuForm
     Size.Height = 264.000000000000000000
     Size.PlatformDefault = False
     TextSettings.HorzAlign = Center
-    TabOrder = 7
+    TabOrder = 8
     RowHeight = 22.000000000000000000
     RowCount = 16
     Viewport.Width = 756.000000000000000000
@@ -132,11 +134,23 @@ object RyogokuForm: TRyogokuForm
     ReadOnly = True
     Position.X = 105.000000000000000000
     Position.Y = 280.000000000000000000
-    Size.Width = 659.000000000000000000
+    Size.Width = 562.000000000000000000
     Size.Height = 132.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
-    Viewport.Width = 659.000000000000000000
+    Viewport.Width = 562.000000000000000000
     Viewport.Height = 132.000000000000000000
+  end
+  object ButtonEndScreen: TButton
+    Position.X = 675.000000000000000000
+    Position.Y = 280.000000000000000000
+    Size.Width = 89.000000000000000000
+    Size.Height = 132.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'See End Game Screen'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+    OnClick = ButtonEndScreenClick
   end
 end

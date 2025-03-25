@@ -24,6 +24,7 @@
 #include "Banzuke.h"
 #include "Dohyo.h"
 #include "Ryogoku.h"
+#include "Endgame.h"
 
 #pragma hdrstop
 #pragma package(smart_init)
@@ -42,8 +43,10 @@ TMainStreet *MainStreet;
 //int ColourDiceNo = 6;
 //int DiceNo = 7;
 int move;
-const int maxYears = 10; // Maximum number of years
+const int maxYears = 1; // Maximum number of years
+int PowerWinLim = 50;
 int currentYear = 0;    // Initialize year counter
+bool WinGame;
 //int currentPlayerIndex = 0;
 //String player1Tactic, Rank1;
 //String player2Tactic, Rank2;
@@ -1733,95 +1736,110 @@ void EndGamePhase(std::vector<Player>& players, std::vector<Rikishi>& rikishiVec
                             r.endurance + r.spirit + (7 - r.minBid) + (r.tournamentWins * 5);
 	}
 
-    // 2. Sort retired rikishi by totalScore (break ties by tournament wins, total skill, weight, then random)
-    std::sort(retiredRikishi.begin(), retiredRikishi.end(), [](const Rikishi& a, const Rikishi& b) {
-        if (a.retirementScore != b.retirementScore) return a.retirementScore > b.retirementScore;
-        if (a.tournamentWins != b.tournamentWins) return a.tournamentWins > b.tournamentWins;
-        int skillA = a.technique + a.speed + a.strength + a.endurance;
-        int skillB = b.technique + b.speed + b.strength + b.endurance;
-        if (skillA != skillB) return skillA > skillB;
-        if (a.weight != b.weight) return a.weight > b.weight;
+	// 2. Sort retired rikishi by totalScore (break ties by tournament wins, total skill, weight, then random)
+	std::sort(retiredRikishi.begin(), retiredRikishi.end(), [](const Rikishi& a, const Rikishi& b) {
+		if (a.retirementScore != b.retirementScore) return a.retirementScore > b.retirementScore;
+		if (a.tournamentWins != b.tournamentWins) return a.tournamentWins > b.tournamentWins;
+		int skillA = a.technique + a.speed + a.strength + a.endurance;
+		int skillB = b.technique + b.speed + b.strength + b.endurance;
+		if (skillA != skillB) return skillA > skillB;
+		if (a.weight != b.weight) return a.weight > b.weight;
         return rand() % 2 == 0; // Random choice if still tied
 	});
 
-    // 3. Power Victory - Highest VP
-    Player* powerWinner = &players[0];
-    for (auto& p : players) {
-        if (p.VP > powerWinner->VP) powerWinner = &p;
-    }
-    ShowMessage((powerWinner->name + " wins a POWER victory! Congratz!").c_str());
-
-    // 4. Fame Victory - Own 2/3 of the Top 3 Retired Rikishi
-    for (auto& p : players) {
-        int topOwned = 0;
-        for (int i = 0; i < 3 && i < retiredRikishi.size(); i++) {
-            if (std::any_of(p.rikishiList.begin(), p.rikishiList.end(), [&](const Rikishi& r) {
-                return r.id == retiredRikishi[i].id; // Compare by unique ID
-            })) {
-                topOwned++;
-            }
-        }
-        if (topOwned >= 2) {
-            ShowMessage((p.name + " wins a FAME victory!").c_str());
-        }
-    }
-
-    // 5. Glory Victory - Tournament Wins Condition
-    for (auto& p : players) {
-        int playerTourneyWins = 0;
-        for (auto& r : p.rikishiList) {
-            playerTourneyWins += r.tournamentWins;
-        }
-        if (playerTourneyWins >= (2 * maxYears) / 5) {
-            ShowMessage((p.name + " wins a GLORY victory!").c_str());
-        }
-    }
-
-    // 6. Determine Final Winner - Glory > Fame > Power
-    std::vector<Player*> gloryWinners, fameWinners;
-    for (auto& p : players) {
-        int playerTourneyWins = 0;
-        for (auto& r : p.rikishiList) {
-            playerTourneyWins += r.tournamentWins;
-        }
-        if (playerTourneyWins >= (2 * maxYears) / 5) gloryWinners.push_back(&p);
-    }
-    if (!gloryWinners.empty()) {
-        if (gloryWinners.size() == 1) {
-            ShowMessage((gloryWinners[0]->name + " is the FINAL WINNER by GLORY!").c_str());
-        } else {
-            goto FameTiebreaker;
-        }
-        return;
-    }
-
-FameTiebreaker:
-    for (auto& p : players) {
-        int topOwned = 0;
-        for (int i = 0; i < 3 && i < retiredRikishi.size(); i++) {
-            if (std::any_of(p.rikishiList.begin(), p.rikishiList.end(), [&](const Rikishi& r) {
-                return r.id == retiredRikishi[i].id;
-            })) {
-                topOwned++;
-            }
-        }
-        if (topOwned >= 2) fameWinners.push_back(&p);
-    }
-    if (!fameWinners.empty()) {
-        if (fameWinners.size() == 1) {
-            ShowMessage((fameWinners[0]->name + " is the FINAL WINNER by FAME!").c_str());
-        } else {
-            goto PowerTiebreaker;
-        }
-        return;
-    }
-
-PowerTiebreaker:
-    if (powerWinner) {
-        ShowMessage((powerWinner->name + " is the FINAL WINNER by POWER!").c_str());
-    } else {
-        ShowMessage("The game ends in a TIE! Multiple champions reign!");
-    }
+	// 3. Power Victory - Highest VP
+	Player* powerWinner = &players[0];
+	for (auto& p : players) {
+		if (p.VP > powerWinner->VP && p.VP > PowerWinLim) {
+			WinGame = true;
+            UpdateEndScreen();
+			GameOver->Show(); // Show the main form
+			MainStreet->Hide();     // Hide the second form
+			BanzukeForm->Hide();
+			ShowMessage((powerWinner->name + " wins a POWER victory! Congratz!").c_str());
+		}
+		else {
+			WinGame = false;
+			UpdateEndScreen();
+			GameOver->Show(); // Show the main form
+			MainStreet->Hide();     // Hide the second form
+            BanzukeForm->Hide();
+			ShowMessage((powerWinner->name + " YOU LOSE!").c_str());
+		}
+	}
+//
+//
+//	// 4. Fame Victory - Own 2/3 of the Top 3 Retired Rikishi
+//	for (auto& p : players) {
+//		int topOwned = 0;
+//		for (int i = 0; i < 3 && i < retiredRikishi.size(); i++) {
+//			if (std::any_of(p.rikishiList.begin(), p.rikishiList.end(), [&](const Rikishi& r) {
+//				return r.id == retiredRikishi[i].id; // Compare by unique ID
+//			})) {
+//				topOwned++;
+//            }
+//        }
+//        if (topOwned >= 2) {
+//			ShowMessage((p.name + " wins a FAME victory!").c_str());
+//        }
+//    }
+//
+//    // 5. Glory Victory - Tournament Wins Condition
+//    for (auto& p : players) {
+//		int playerTourneyWins = 0;
+//        for (auto& r : p.rikishiList) {
+//            playerTourneyWins += r.tournamentWins;
+//        }
+//        if (playerTourneyWins >= (2 * maxYears) / 5) {
+//            ShowMessage((p.name + " wins a GLORY victory!").c_str());
+//		}
+//    }
+//
+//    // 6. Determine Final Winner - Glory > Fame > Power
+//	std::vector<Player*> gloryWinners, fameWinners;
+//    for (auto& p : players) {
+//		int playerTourneyWins = 0;
+//		for (auto& r : p.rikishiList) {
+//			playerTourneyWins += r.tournamentWins;
+//		}
+//		if (playerTourneyWins >= (2 * maxYears) / 5) gloryWinners.push_back(&p);
+//	}
+//	if (!gloryWinners.empty()) {
+//		if (gloryWinners.size() == 1) {
+//			ShowMessage((gloryWinners[0]->name + " is the FINAL WINNER by GLORY!").c_str());
+//		} else {
+//			goto FameTiebreaker;
+//		}
+//		return;
+//	}
+//
+//FameTiebreaker:
+//	for (auto& p : players) {
+//        int topOwned = 0;
+//        for (int i = 0; i < 3 && i < retiredRikishi.size(); i++) {
+//            if (std::any_of(p.rikishiList.begin(), p.rikishiList.end(), [&](const Rikishi& r) {
+//				return r.id == retiredRikishi[i].id;
+//			})) {
+//				topOwned++;
+//			}
+//        }
+//		if (topOwned >= 2) fameWinners.push_back(&p);
+//    }
+//    if (!fameWinners.empty()) {
+//		if (fameWinners.size() == 1) {
+//			ShowMessage((fameWinners[0]->name + " is the FINAL WINNER by FAME!").c_str());
+//		} else {
+//			goto PowerTiebreaker;
+//		}
+//		return;
+//	}
+//
+//PowerTiebreaker:
+//	if (powerWinner) {
+//		ShowMessage((powerWinner->name + " is the FINAL WINNER by POWER!").c_str());
+//	} else {
+//		ShowMessage("The game ends in a TIE! Multiple champions reign!");
+//	}
 }
 
 

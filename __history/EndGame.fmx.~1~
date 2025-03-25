@@ -1,0 +1,12 @@
+object GameOver: TGameOver
+  Left = 0
+  Top = 0
+  Caption = 'GAME OVER!'
+  ClientHeight = 420
+  ClientWidth = 720
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+end

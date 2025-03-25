@@ -1,6 +1,6 @@
 object NoboruForm: TNoboruForm
-  Left = 0
-  Top = 0
+  Left = 527
+  Top = 288
   Caption = 'Banzuke'
   ClientHeight = 420
   ClientWidth = 772
@@ -8,6 +8,8 @@ object NoboruForm: TNoboruForm
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  Left = 527
+  Top = 288
   DesignerMasterStyle = 0
   object ReturnStreet: TButton
     Position.X = 601.000000000000000000
@@ -30,8 +32,8 @@ object NoboruForm: TNoboruForm
     Size.Height = 115.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
-    Viewport.Width = 156.000000000000000000
-    Viewport.Height = 111.000000000000000000
+    Viewport.Width = 160.000000000000000000
+    Viewport.Height = 115.000000000000000000
   end
   object EditBidInput: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -102,8 +104,8 @@ object NoboruForm: TNoboruForm
     RowHeight = 22.000000000000000000
     RowCount = 16
     OnDrawColumnCell = BanzukeGridDrawColumnCell
-    Viewport.Width = 581.000000000000000000
-    Viewport.Height = 373.000000000000000000
+    Viewport.Width = 585.000000000000000000
+    Viewport.Height = 398.000000000000000000
     object RankColumn: TStringColumn
       Header = 'Rank'
       HeaderSettings.TextSettings.WordWrap = False

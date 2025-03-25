@@ -1,0 +1,99 @@
+//---------------------------------------------------------------------------
+#include <fmx.h>
+#include "Ryogoku.h"
+#include "Street.h"
+#include <algorithm>  // For std::sort
+#include <unordered_map>
+#include <vector>
+#include <string>
+//---------------------------------------------------------------------------
+#pragma hdrstop
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+//---------------------------------------------------------------------------
+TRyogokuForm *RyogokuForm;
+//---------------------------------------------------------------------------
+
+
+// Function to get the integer score for a given rank
+int GetRankScore(const std::string& rank) {
+    static std::unordered_map<std::string, int> rankScores = {
+        {"Yokozuna", 16}, {"Ozeki", 15}, {"Sekiwake", 14}, {"Komusubi", 13},
+        {"Maegashira 1", 12}, {"Maegashira 2", 11}, {"Maegashira 3", 10},
+        {"Maegashira 4", 9}, {"Maegashira 5", 8}, {"Maegashira 6", 7},
+        {"Maegashira 7", 6}, {"Maegashira 8", 5}, {"Maegashira 9", 4},
+        {"Maegashira 10", 3}, {"Juryo 1", 2}, {"Juryo 2", 1}
+    };
+
+    // Return score if found, otherwise default to 0
+    auto it = rankScores.find(rank);
+    return (it != rankScores.end()) ? it->second : 0;
+}
+
+
+void PopulateRetiredRikishiGrid(std::vector<Rikishi>& retiredRikishi) {
+	// Step 1: Calculate scores
+	for (auto& rikishi : retiredRikishi) {
+		rikishi.retirementScore = GetRankScore(rikishi.rank) + rikishi.age + rikishi.technique +
+							 rikishi.speed + rikishi.strength + rikishi.endurance + rikishi.weight +
+							 rikishi.spirit + (7 - rikishi.minBid) + (rikishi.tournamentWins * 5);
+	}
+
+    // Step 2: Sort rikishi by totalScore (Descending Order)
+    std::sort(retiredRikishi.begin(), retiredRikishi.end(),
+              [](const Rikishi& a, const Rikishi& b) {
+				  return a.retirementScore > b.retirementScore;  // Higher score comes first
+              });
+
+    // Step 3: Update Grid
+	RyogokuForm->RetirementGrid->RowCount = retiredRikishi.size();  // Ensure correct row count
+
+    // Get column indices dynamically
+	int posCol = 0, nameCol = 1, oyakataCol = 2, ageCol = 3, weightCol = 4;
+	int enduranceCol = 5, techniqueCol = 6, speedCol = 7, strengthCol = 8;
+	int minBidCol = 9, finalRankCol = 10, numWinsCol=11, scoreCol = 12;
+	int position = 1;
+
+    // Fill the grid with sorted Rikishi
+    for (size_t i = 0; i < retiredRikishi.size(); ++i) {
+        const Rikishi& rikishi = retiredRikishi[i];
+
+		RyogokuForm->RetirementGrid->Cells[nameCol][i] = rikishi.name.c_str();
+		RyogokuForm->RetirementGrid->Cells[ageCol][i] = IntToStr(rikishi.age);
+		RyogokuForm->RetirementGrid->Cells[posCol][i] = position;
+		RyogokuForm->RetirementGrid->Cells[oyakataCol][i] = rikishi.owner.c_str();
+		RyogokuForm->RetirementGrid->Cells[numWinsCol][i] = IntToStr(rikishi.tournamentWins);
+		RyogokuForm->RetirementGrid->Cells[finalRankCol][i] = rikishi.rank.c_str();
+		RyogokuForm->RetirementGrid->Cells[scoreCol][i] = IntToStr(rikishi.retirementScore);
+
+        // Show weight limits as "current/max"
+		RyogokuForm->RetirementGrid->Cells[weightCol][i] = IntToStr(rikishi.weight) + "/" + IntToStr(rikishi.weightLimit);
+		RyogokuForm->RetirementGrid->Cells[enduranceCol][i] = IntToStr(rikishi.endurance) + "/" + IntToStr(rikishi.enduranceLimit);
+		RyogokuForm->RetirementGrid->Cells[techniqueCol][i] = IntToStr(rikishi.technique) + "/" + IntToStr(rikishi.techniqueLimit);
+		RyogokuForm->RetirementGrid->Cells[speedCol][i] = IntToStr(rikishi.speed) + "/" + IntToStr(rikishi.speedLimit);
+		RyogokuForm->RetirementGrid->Cells[strengthCol][i] = IntToStr(rikishi.strength) + "/" + IntToStr(rikishi.strengthLimit);
+		RyogokuForm->RetirementGrid->Cells[minBidCol][i] = IntToStr(rikishi.minBid);
+
+		position++;
+	}
+}
+
+//---------------------------------------------------------------------------
+__fastcall TRyogokuForm::TRyogokuForm(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TRyogokuForm::ButtonReturnStreetClick(TObject *Sender)
+{
+	MainStreet->Show(); // Show the main form
+	this->Hide();     // Hide the second form
+}
+//---------------------------------------------------------------------------
+void __fastcall TRyogokuForm::ButtonEndScreenClick(TObject *Sender)
+{
+	GameOver->Show(); // Show the main form
+	this->Hide();     // Hide the second form
+}
+//---------------------------------------------------------------------------
+

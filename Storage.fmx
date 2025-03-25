@@ -1,6 +1,6 @@
 object StorageForm: TStorageForm
-  Left = 0
-  Top = 0
+  Left = 528
+  Top = 240
   Caption = 'Form2'
   ClientHeight = 420
   ClientWidth = 772
@@ -8,6 +8,8 @@ object StorageForm: TStorageForm
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  Left = 528
+  Top = 240
   DesignerMasterStyle = 0
   object fight_button: TButton
     Position.X = 368.000000000000000000
@@ -268,8 +270,8 @@ object StorageForm: TStorageForm
     RowHeight = 22.000000000000000000
     RowCount = 16
     Options = [ColumnResize, ColumnMove, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
-    Viewport.Width = 621.000000000000000000
-    Viewport.Height = 368.000000000000000000
+    Viewport.Width = 625.000000000000000000
+    Viewport.Height = 393.000000000000000000
     object StringColumnRanks: TStringColumn
       HorzAlign = Center
       Header = 'Rank'

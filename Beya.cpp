@@ -530,6 +530,9 @@ void __fastcall TYourBeya::TrainRikishi1Click(TObject *Sender) {
 	if (TrainedRikishi1) {
 		ShowMessage("You can already trained this rikishi.");
 	}
+	else if (isBiddingComplete == false) {
+		ShowMessage("Bidding is not complete, please complete the bidding before starting to train!");
+	}
 	else {
 
 		WhichRikishi = 1;
@@ -555,6 +558,9 @@ void __fastcall TYourBeya::TrainRikishi2Click(TObject *Sender) {
 	if (TrainedRikishi2) {
 		ShowMessage("You can already trained this rikishi.");
 	}
+	else if (isBiddingComplete == false) {
+		ShowMessage("Bidding is not complete, please complete the bidding before starting to train!");
+	}
 	else {
 		TrainedRikishi2 = true;
 		WhichRikishi = 2;
@@ -578,6 +584,9 @@ void __fastcall TYourBeya::TrainRikishi2Click(TObject *Sender) {
 void __fastcall TYourBeya::TrainRikishi3Click(TObject *Sender) {
 	if (TrainedRikishi3) {
 		ShowMessage("You can already trained this rikishi.");
+	}
+	else if (isBiddingComplete == false) {
+		ShowMessage("Bidding is not complete, please complete the bidding before starting to train!");
 	}
 	else {
 		TrainedRikishi3 = true;
@@ -631,8 +640,11 @@ void EndTraining() {
 
 // When skipping training
 void __fastcall TYourBeya::ButtonSkipTrainingClick(TObject *Sender) {
-	if (isTrainingComplete) {
+	if (isTrainingComplete && isBiddingComplete) {
 		ShowMessage("Training is complete, they are waiting in the Dohyo!");
+	}
+	else if (isBiddingComplete == false) {
+        ShowMessage("Bidding is not complete, please complete the bidding before ending training!");
 	}
 	else {
 		EndTraining();

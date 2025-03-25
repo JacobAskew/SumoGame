@@ -1,6 +1,6 @@
 object TrainingPopup: TTrainingPopup
-  Left = 72
-  Top = 83
+  Left = 612
+  Top = 443
   Caption = 'Training Table'
   ClientHeight = 88
   ClientWidth = 512
@@ -8,8 +8,8 @@ object TrainingPopup: TTrainingPopup
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  Left = 72
-  Top = 83
+  Left = 612
+  Top = 443
   DesignerMasterStyle = 0
   object EditRikishiInfo: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]

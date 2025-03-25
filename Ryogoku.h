@@ -40,7 +40,9 @@ __published:	// IDE-managed Components
 	TStringColumn *ScoreColumn;
 	TMemo *MemoLog;
 	TStringColumn *TournamentWinsColumn;
+	TButton *ButtonEndScreen;
 	void __fastcall ButtonReturnStreetClick(TObject *Sender);
+	void __fastcall ButtonEndScreenClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TRyogokuForm(TComponent* Owner);
