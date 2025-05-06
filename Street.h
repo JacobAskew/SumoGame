@@ -137,11 +137,21 @@ __published:    // IDE-managed Components
 	TEdit *EditAbilityPoints;
 	TEdit *EditVictoryPoints;
 	TImage *ImageBackground;
+	TButton *ButtonStartGame;
+	TEdit *EditRounds;
+	TButton *ButtonEasy;
+	TButton *ButtonHard;
+	TButton *ButtonMedium;
+	TText *TextWelcome;
     void __fastcall ButtonNoboruClick(TObject *Sender);
 	void __fastcall ButtonBeyaClick(TObject *Sender);
 	void __fastcall ButtonBanzukeClick(TObject *Sender);
 	void __fastcall ButtonDohyoClick(TObject *Sender);
 	void __fastcall ButtonRyogokuClick(TObject *Sender);
+	void __fastcall ButtonStartGameClick(TObject *Sender);
+	void __fastcall ButtonEasyClick(TObject *Sender);
+	void __fastcall ButtonMediumClick(TObject *Sender);
+	void __fastcall ButtonHardClick(TObject *Sender);
 //    void __fastcall PlayVideo();
 
 private:    // User declarations

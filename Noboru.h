@@ -17,6 +17,7 @@
 #include <FMX.Grid.hpp>
 #include <FMX.Grid.Style.hpp>
 #include <System.Rtti.hpp>
+#include <FMX.Effects.hpp>
 
 void EndBidding();
 void PlaceBid(int bidAmount);
@@ -29,39 +30,60 @@ class TMainStreet;
 class TNoboruForm : public TForm
 {
 __published:    // IDE-managed Components
-    TButton *ReturnStreet;
-    TMemo *MemoLogNoboru;
-    TEdit *EditBidInput;
-    TLabel *BidLabel;
-	TButton *NextBidButton;
-    TEdit *EditCurrentRikishiBid;
-	TImage *ImageRikishi;
-    TStringGrid *BanzukeGrid;
-    TStringColumn *RankColumn;
-    TStringColumn *NameColumn;
-    TStringColumn *OyakataColumn;
-    TStringColumn *AgeColumn;
-    TStringColumn *SpiritColumn;
-    TStringColumn *WeightColumn;
-    TStringColumn *EnduranceColumn;
-    TStringColumn *TechniqueColumn;
-    TStringColumn *SpeedColumn;
-    TStringColumn *StrengthColumn;
-    TStringColumn *MinBidColumn;
-	TButton *ButtonMinBid;
-	TButton *ButtonSubmitBid;
+	TButton *ReturnStreet;
+	TImage *ImageBackground;
 	TButton *ButtonSkipAllBids;
+	TButton *ButtonSubmitBid;
+	TButton *NextBidButton;
+	TButton *ButtonMinBid;
+	TImage *ImageCoin1;
+	TImage *ImageCoin2;
+	TImage *ImageCoin3;
+	TImage *ImageCoin4;
+	TImage *ImageCoin5;
+	TImage *ImageCoin6;
+	TImage *ImageCoin7;
+	TImage *ImageCoinStack;
+	TText *TextAP;
 	TImage *ImageBelt;
+	TImage *ImageRikishi;
 	TImage *ImageYokozuna;
+	TText *TextName;
+	TText *TextAge;
+	TText *TextRank;
+	TText *TextMinBid;
+	TText *TextSpirit;
+	TText *TextOyakata;
+	TImage *ImageEndurance1;
+	TGlowEffect *GlowEffectEndurance1;
+	TImage *ImageSpeed1;
+	TGlowEffect *GlowEffectSpeed1;
+	TImage *ImageStrength1;
+	TGlowEffect *GlowEffectStrength1;
+	TImage *ImageTechnique1;
+	TGlowEffect *GlowEffectTechnique1;
+	TImage *ImageWeight1;
+	TGlowEffect *GlowEffectWeight1;
+	TImage *ImageCancel;
+	TButton *ButtonBanzuke;
 
     void __fastcall ReturnStreetClick(TObject *Sender);
 	void __fastcall ButtonMinBidClick(TObject *Sender);
 	void __fastcall NextBidButtonClick(TObject *Sender);
 	void __fastcall ButtonSkipAllBidsClick(TObject *Sender);
-	void __fastcall ButtonSubmitBidClick(TObject *Sender);
-	void __fastcall BanzukeGridDrawColumnCell(TObject *Sender, TCanvas * const Canvas,
-          TColumn * const Column, const TRectF &Bounds, const int Row,
-          const TValue &Value, const TGridDrawStates State);
+	void __fastcall ButtonSubmitClick(TObject *Sender);
+//	void __fastcall ImageCoinStackClick(TObject *Sender);
+	void __fastcall ImageCoin1Click(TObject *Sender);
+	void __fastcall ImageCoin2Click(TObject *Sender);
+	void __fastcall ImageCoin3Click(TObject *Sender);
+	void __fastcall ImageCoin4Click(TObject *Sender);
+	void __fastcall ImageCoin5Click(TObject *Sender);
+	void __fastcall ImageCoin6Click(TObject *Sender);
+	void __fastcall ImageCoin7Click(TObject *Sender);
+	void __fastcall TextAPClick(TObject *Sender);
+//	void __fastcall BanzukeGridDrawColumnCell(TObject *Sender, TCanvas * const Canvas,
+//          TColumn * const Column, const TRectF &Bounds, const int Row,
+//          const TValue &Value, const TGridDrawStates State);
 
 private:    // User declarations
 
@@ -71,7 +93,7 @@ public:     // User declarations
 };
 
 extern PACKAGE TNoboruForm *NoboruForm;
-extern void UpdateBanzukeGrid();
+//extern void UpdateBanzukeGrid();
 extern String RikishiPath;
 extern String BeltPath;
 extern String YokozunaPath;

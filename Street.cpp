@@ -25,6 +25,7 @@
 #include "Dohyo.h"
 #include "Ryogoku.h"
 #include "Endgame.h"
+#include "Battle.h"
 
 #pragma hdrstop
 #pragma package(smart_init)
@@ -44,7 +45,7 @@ TMainStreet *MainStreet;
 //int DiceNo = 7;
 int move;
 const int maxYears = 1; // Maximum number of years
-int PowerWinLim = 50;
+int PowerWinLim = 1;
 int currentYear = 0;    // Initialize year counter
 bool WinGame;
 //int currentPlayerIndex = 0;
@@ -52,7 +53,8 @@ bool WinGame;
 //String player2Tactic, Rank2;
 //String boutTactic;
 String PathRoad = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Road2.png";
-String PathBackground = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\BackgroundImage3.png";
+String PathBackground = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Street";
+String BackPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Billboard_Baggins2.png";
 String player1Owner = "P1";   // Put YOUR name here!
 String player2Owner = "CPU";
 std::vector<std::string> usedNames; // Initialize the vector before use
@@ -293,7 +295,7 @@ void InitializeRikishi(Rikishi &rikishi, std::vector<std::string> &usedNames) {
     // Set the current bid based on age
     rikishi.currentBid = rikishi.minBid - std::floor((29 - rikishi.age) / 2);
     rikishi.rank = Ranks[16 - rikishi.minBid];
-	rikishi.owner = "None";
+	rikishi.owner = "Free Agent";
     rikishi.spirit = 2;  // Assign spirit value
 
     // Assign default skill limits (they remain 4 unless modified)
@@ -417,6 +419,15 @@ void __fastcall TMainStreet::ButtonBanzukeClick(TObject *Sender)
 	{
 		BanzukeForm = new TBanzukeForm(this); // Assign the created form to the global pointer
 	}
+
+	TImage* imageBackGround = dynamic_cast<TImage*>(BanzukeForm->FindComponent("ImageBackGround"));
+	if (imageBackGround) {
+		AnsiString fullPath = BackPath;
+		imageBackGround->Bitmap->LoadFromFile(fullPath);
+	}
+
+    UpdateTournamentGrid();
+
 	BanzukeForm->Show(); // Show the Banzuke form
 //	BanzukeForm->UpdateBouts();     // ????
 	this->Hide();       // Hide the current form
@@ -492,7 +503,7 @@ void PreGameSetup() {
 //	imageroad->Bitmap->LoadFromFile(fullPathRoad);
 
 	TImage* imagebackground = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageBackground"));
-	AnsiString fullPathBackground = PathBackground;
+	AnsiString fullPathBackground = PathBackground + "_Title.png";
 	imagebackground->Bitmap->LoadFromFile(fullPathBackground);
 
 //	MainStreet->PlayVideo();
@@ -732,11 +743,40 @@ void NewYearPhase() {
 		y++;
 	}
 
+	// Waiting for player input to select difficulty and start game with input on year length
+
+
 	// Bidding Phase
-	NoboruForm->StartBidding();  // Start the bidding process in NoboruForm
+	  // Start the bidding process in NoboruForm
 //	RyogokuForm->MemoLog->Lines->Add("Bidding phase started...");
 //	RyogokuForm->MemoLog->Text += "Bidding phase started...!\n";
 }
+
+void __fastcall TMainStreet::ButtonStartGameClick(TObject *Sender)
+{
+
+	if (EditRounds->Text.Trim().IsEmpty()) {
+		int maxYears = 5;
+	}
+	else {
+		int maxYears = StrToInt(EditRounds->Text);
+    }
+
+
+	ButtonStartGame->Visible = false;
+	ButtonEasy->Visible = false;
+	ButtonMedium->Visible = false;
+	ButtonHard->Visible = false;
+	EditRounds->Visible = false;
+	TextWelcome->Visible = false;
+
+	NoboruForm->StartBidding();
+
+	TImage* imagebackground = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageBackground"));
+	AnsiString fullPathBackground = PathBackground + ".png";
+	imagebackground->Bitmap->LoadFromFile(fullPathBackground);
+}
+//---------------------------------------------------------------------------
 
 // The function to trigger the next phase (e.g., after bidding is complete)
 void BiddingPhaseComplete() {
@@ -1929,14 +1969,14 @@ void EndYearPhase(std::vector<Player>& players) {
 
     // Ensure the game moves forward properly
     if (isBanzukeComplete) {
-        if (currentYear < maxYears) {
+		if (currentYear < maxYears) {
             currentYear++;
 //			RyogokuForm->MemoLog->Lines->Add("The end of the year has come...");
 //			RyogokuForm->MemoLog->Text += "The end of the year has come...\n";
 //			RyogokuForm->MemoLog->Lines->Add("-------------------------------------------------");
 //			RyogokuForm->MemoLog->Text += "-------------------------------------------------\n";
-			UpdateBanzukeGrid();
-            isBiddingComplete = false;
+//			UpdateBanzukeGrid();
+			isBiddingComplete = false;
             isTrainingComplete = false;
             isBanzukeComplete = false;
 			NewYearPhase();
@@ -2115,4 +2155,39 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 //    ShowMessage("Unique names have been saved to names3.txt");
 //}
 //
+
+
+
+void __fastcall TMainStreet::ButtonEasyClick(TObject *Sender)
+{
+	if (maxYears == 1) {
+		PowerWinLim = 1;
+	}
+	else {
+		PowerWinLim = maxYears * 3;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonMediumClick(TObject *Sender)
+{
+	if (maxYears == 1) {
+		PowerWinLim = 5;
+	}
+	else {
+		PowerWinLim = maxYears * 6;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonHardClick(TObject *Sender)
+{
+	if (maxYears == 1) {
+		PowerWinLim = 8;
+	}
+	else {
+		PowerWinLim = maxYears * 10;
+	}
+}
+//---------------------------------------------------------------------------
 

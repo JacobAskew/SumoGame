@@ -1,6 +1,6 @@
 object MainStreet: TMainStreet
-  Left = 552
-  Top = 240
+  Left = 228
+  Top = 168
   Caption = 'Sumo Street'
   ClientHeight = 420
   ClientWidth = 772
@@ -8,8 +8,8 @@ object MainStreet: TMainStreet
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  Left = 552
-  Top = 240
+  Left = 228
+  Top = 168
   DesignerMasterStyle = 0
   object ImageBackground: TImage
     MultiResBitmap = <
@@ -28,22 +28,10 @@ object MainStreet: TMainStreet
     Size.Width = 65.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 0
+    TabOrder = 5
     Text = 'Bidding'
     TextSettings.Trimming = None
     OnClick = ButtonNoboruClick
-  end
-  object ButtonBeya: TButton
-    Opacity = 0.250000000000000000
-    Position.X = 224.000000000000000000
-    Position.Y = 288.000000000000000000
-    Size.Width = 89.000000000000000000
-    Size.Height = 45.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 1
-    Text = 'Sumo House'
-    TextSettings.Trimming = None
-    OnClick = ButtonBeyaClick
   end
   object ButtonBanzuke: TButton
     Opacity = 0.250000000000000000
@@ -52,19 +40,19 @@ object MainStreet: TMainStreet
     Size.Width = 73.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 2
+    TabOrder = 7
     Text = 'Tournament'
     TextSettings.Trimming = None
     OnClick = ButtonBanzukeClick
   end
   object ButtonDohyo: TButton
     Opacity = 0.250000000000000000
-    Position.X = 168.000000000000000000
-    Position.Y = 120.000000000000000000
+    Position.X = 160.000000000000000000
+    Position.Y = 119.000000000000000000
     Size.Width = 49.000000000000000000
     Size.Height = 41.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 3
+    TabOrder = 8
     Text = 'Arena'
     TextSettings.Trimming = None
     OnClick = ButtonDohyoClick
@@ -76,14 +64,14 @@ object MainStreet: TMainStreet
     Size.Width = 89.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 4
+    TabOrder = 9
     Text = 'Hall of Fame'
     TextSettings.Trimming = None
     OnClick = ButtonRyogokuClick
   end
   object EditAbilityPoints: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 13
+    TabOrder = 23
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 592.000000000000000000
@@ -94,7 +82,7 @@ object MainStreet: TMainStreet
   end
   object EditVictoryPoints: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 5
+    TabOrder = 10
     ReadOnly = True
     TextSettings.HorzAlign = Center
     Position.X = 32.000000000000000000
@@ -102,5 +90,90 @@ object MainStreet: TMainStreet
     Size.Width = 148.000000000000000000
     Size.Height = 31.000000000000000000
     Size.PlatformDefault = False
+  end
+  object ButtonStartGame: TButton
+    StyledSettings = [FontColor]
+    Position.X = 32.000000000000000000
+    Position.Y = 206.000000000000000000
+    Size.Width = 337.000000000000000000
+    Size.Height = 49.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 24
+    Text = 'Start Game'
+    TextSettings.Font.Family = 'New Gulim'
+    TextSettings.Font.Size = 24.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.Trimming = None
+    OnClick = ButtonStartGameClick
+  end
+  object EditRounds: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 25
+    TextSettings.Font.Size = 20.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.HorzAlign = Center
+    Position.X = 32.000000000000000000
+    Position.Y = 119.000000000000000000
+    Size.Width = 337.000000000000000000
+    Size.Height = 49.000000000000000000
+    Size.PlatformDefault = False
+    TextPrompt = 'How many rounds/tournaments?'
+    StyledSettings = [Family, FontColor]
+  end
+  object ButtonBeya: TButton
+    Opacity = 0.250000000000000000
+    Position.X = 228.000000000000000000
+    Position.Y = 288.000000000000000000
+    Size.Width = 89.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    Text = 'Sumo House'
+    TextSettings.Trimming = None
+    OnClick = ButtonBeyaClick
+  end
+  object ButtonEasy: TButton
+    Position.X = 32.000000000000000000
+    Position.Y = 176.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 26
+    Text = 'Spring Time'
+    TextSettings.Trimming = None
+    OnClick = ButtonEasyClick
+  end
+  object ButtonHard: TButton
+    Position.X = 269.000000000000000000
+    Position.Y = 176.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Seppuku'
+    TextSettings.Trimming = None
+    OnClick = ButtonHardClick
+  end
+  object ButtonMedium: TButton
+    Position.X = 152.000000000000000000
+    Position.Y = 176.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Challenge'
+    TextSettings.Trimming = None
+    OnClick = ButtonMediumClick
+  end
+  object TextWelcome: TText
+    Position.X = 32.000000000000000000
+    Position.Y = 53.000000000000000000
+    Size.Width = 337.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'W E L C O M E'
+    TextSettings.Font.Family = 'Showcard Gothic'
+    TextSettings.Font.Size = 28.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
   end
 end

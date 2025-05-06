@@ -1,0 +1,87 @@
+//---------------------------------------------------------------------------
+
+#ifndef BattleH
+#define BattleH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+#include <FMX.Effects.hpp>
+#include <FMX.Objects.hpp>
+//---------------------------------------------------------------------------
+class TBattleForm : public TForm
+{
+__published:	// IDE-managed Components
+	TButton *ButtonFight;
+	TImage *ImageEndurance1;
+	TGlowEffect *GlowEffectEndurance1;
+	TImage *ImageSpeed1;
+	TGlowEffect *GlowEffectSpeed1;
+	TImage *ImageStrength1;
+	TGlowEffect *GlowEffectStrength1;
+	TImage *ImageTechnique1;
+	TGlowEffect *GlowEffectTechnique1;
+	TImage *ImageWeight1;
+	TGlowEffect *GlowEffectWeight1;
+	TImage *ImageBackground;
+	TImage *ImageTextBox;
+	TImage *ImageBelt1;
+	TImage *ImageBelt2;
+	TImage *ImageRikishi1;
+	TImage *ImageRikishi2;
+	TImage *ImageYokozuna1;
+	TImage *ImageYokozuna2;
+	TButton *ButtonBack;
+	TImage *ImageChatBox2;
+	TImage *ImageChatBox1;
+	TImage *ImageBoutTactic2;
+	TImage *ImageBoutTactic1;
+	TText *TextChat1;
+	TText *TextChat2;
+	TImage *ImageEndGame1;
+	TImage *ImageEndGame2;
+	TTimer *Timer1;
+	TTimer *Timer3;
+	void __fastcall ButtonFightClick(TObject *Sender);
+	void __fastcall ImageWeight1Click(TObject *Sender);
+	void __fastcall ImageStrength1Click(TObject *Sender);
+	void __fastcall ImageEndurance1Click(TObject *Sender);
+	void __fastcall ImageTechnique1Click(TObject *Sender);
+	void __fastcall ImageSpeed1Click(TObject *Sender);
+	void __fastcall ButtonBackClick(TObject *Sender);
+	void __fastcall Timer1Timer(TObject *Sender);
+	void __fastcall Timer3Timer(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TBattleForm(TComponent* Owner);
+	// Helper functions for image handling
+	void LoadAndDisplayImage(const AnsiString& imageName, const AnsiString& filePath);
+	void UpdateBoutImage(const AnsiString& imageName, int skillValue, int skillLimit, TAlphaColor skillColor);
+
+	// Helper functions for adjusting totals
+	void AdjustTotalsForSpirit();
+	void AdjustTotalsForBoutConditions();
+
+	// Function for determining the winner and handling tiebreakers
+	void DetermineWinner();
+	void HandleTiebreaker();
+
+	// Functions for displaying and hiding winner images
+	void DisplayWinnerImage(const AnsiString& imageName, const AnsiString& path, int winner);
+	void HideImage(const AnsiString& imageName);
+
+	// Function to reset the battle phase
+	void ResetBattlePhase();
+
+    void UpdateTempBoutValues(std::string InputBout1, std::string InputBout2);
+//    void UpdateTempBoutValues(String InputBout1, String InputBout2, Rikishi* globalfighter1, Rikishi* globalfighter2);
+//	void SetupBattle(Rikishi *globalFighter1, Rikishi *globalFighter2);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TBattleForm *BattleForm;
+extern void SetupBattle();
+//---------------------------------------------------------------------------
+#endif

@@ -1,0 +1,384 @@
+object NoboruForm: TNoboruForm
+  Left = 222
+  Top = 150
+  Caption = 'Banzuke'
+  ClientHeight = 420
+  ClientWidth = 772
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 222
+  Top = 150
+  DesignerMasterStyle = 0
+  object ImageBackground: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Size.Width = 777.000000000000000000
+    Size.Height = 420.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ReturnStreet: TButton
+    Position.X = 680.000000000000000000
+    Position.Y = 136.000000000000000000
+    Size.Width = 89.000000000000000000
+    Size.Height = 177.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = '---->                Street'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+    OnClick = ReturnStreetClick
+  end
+  object ButtonSkipAllBids: TButton
+    Position.X = 640.000000000000000000
+    Position.Y = 336.000000000000000000
+    RotationAngle = -17.000000000000000000
+    Size.Width = 64.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Text = 'Skip All'
+    TextSettings.Trimming = None
+    OnClick = ButtonSkipAllBidsClick
+  end
+  object ButtonSubmitBid: TButton
+    Position.X = 105.000000000000000000
+    Position.Y = 199.000000000000000000
+    RotationAngle = -22.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    Text = 'Submit Bid'
+    TextSettings.Trimming = None
+    OnClick = ButtonSubmitClick
+  end
+  object NextBidButton: TButton
+    Position.X = 105.000000000000000000
+    Position.Y = 130.000000000000000000
+    RotationAngle = 21.000000000000000000
+    Size.Width = 56.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 10
+    Text = 'Next Bid'
+    TextSettings.Trimming = None
+    OnClick = NextBidButtonClick
+  end
+  object ButtonMinBid: TButton
+    Position.X = 93.000000000000000000
+    Position.Y = 263.000000000000000000
+    RotationAngle = 21.000000000000000000
+    Size.Width = 59.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+    Text = 'Min Bid'
+    TextSettings.Trimming = None
+    OnClick = ButtonMinBidClick
+  end
+  object ImageCoin1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 144.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 75.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = ImageCoin1Click
+  end
+  object ImageCoin2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 230.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 75.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = ImageCoin2Click
+  end
+  object ImageCoin3: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 322.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 75.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = ImageCoin3Click
+  end
+  object ImageCoin4: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 411.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 75.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = ImageCoin4Click
+  end
+  object ImageCoin5: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 500.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 75.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = ImageCoin5Click
+  end
+  object ImageCoin6: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 589.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 75.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = ImageCoin6Click
+  end
+  object ImageCoin7: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 680.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 75.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = ImageCoin7Click
+  end
+  object ImageCoinStack: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 16.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 120.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object TextAP: TText
+    Position.X = 16.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 120.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 24.000000000000000000
+    OnClick = TextAPClick
+  end
+  object ImageRikishi: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 375.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 280.000000000000000000
+    Size.Height = 258.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 375.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 280.000000000000000000
+    Size.Height = 258.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 375.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 280.000000000000000000
+    Size.Height = 258.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object TextName: TText
+    Position.X = 400.000000000000000000
+    Position.Y = 91.000000000000000000
+    Size.Width = 229.000000000000000000
+    Size.Height = 43.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 24.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    OnClick = TextAPClick
+  end
+  object TextAge: TText
+    Position.X = 222.000000000000000000
+    Position.Y = 100.000000000000000000
+    Size.Width = 145.000000000000000000
+    Size.Height = 43.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 18.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    OnClick = TextAPClick
+  end
+  object TextRank: TText
+    Position.X = 222.000000000000000000
+    Position.Y = 143.000000000000000000
+    Size.Width = 145.000000000000000000
+    Size.Height = 43.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 18.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    OnClick = TextAPClick
+  end
+  object TextMinBid: TText
+    Position.X = 222.000000000000000000
+    Position.Y = 292.000000000000000000
+    Size.Width = 145.000000000000000000
+    Size.Height = 43.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 18.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    OnClick = TextAPClick
+  end
+  object TextSpirit: TText
+    Position.X = 222.000000000000000000
+    Position.Y = 241.000000000000000000
+    Size.Width = 145.000000000000000000
+    Size.Height = 43.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 18.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    OnClick = TextAPClick
+  end
+  object TextOyakata: TText
+    Position.X = 222.000000000000000000
+    Position.Y = 203.000000000000000000
+    Size.Width = 145.000000000000000000
+    Size.Height = 43.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 18.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    OnClick = TextAPClick
+  end
+  object ImageEndurance1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 444.000000000000000000
+    Position.Y = 320.000000000000000000
+    Size.Width = 45.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectEndurance1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageSpeed1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 532.000000000000000000
+    Position.Y = 320.000000000000000000
+    Size.Width = 45.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectSpeed1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageStrength1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 576.000000000000000000
+    Position.Y = 320.000000000000000000
+    Size.Width = 45.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectStrength1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageTechnique1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 488.000000000000000000
+    Position.Y = 320.000000000000000000
+    Size.Width = 45.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectTechnique1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageWeight1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 400.000000000000000000
+    Position.Y = 320.000000000000000000
+    Size.Width = 45.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectWeight1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageCancel: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 177.000000000000000000
+    Position.Y = 91.000000000000000000
+    Size.Width = 452.000000000000000000
+    Size.Height = 302.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonBanzuke: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 136.000000000000000000
+    Size.Width = 80.000000000000000000
+    Size.Height = 177.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 36
+    Text = '<----             Banzuke'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+  end
+end

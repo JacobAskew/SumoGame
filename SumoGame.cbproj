@@ -8,7 +8,7 @@
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win64x</Platform>
         <ProjectName Condition="'$(ProjectName)'==''">SumoGame</ProjectName>
-        <TargetedPlatforms>1048579</TargetedPlatforms>
+        <TargetedPlatforms>1048578</TargetedPlatforms>
         <AppType>Application</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -95,8 +95,6 @@
         <SanitizedProjectName>SumoGame</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <PackageImports>adortl;appanalytics;bcbie;bcbsmp;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindcompvclsmp;bindcompvclwinx;bindengine;CloudService;CustomIPTransport;DataSnapClient;DataSnapCommon;DataSnapConnectors;DatasnapConnectorsFreePascal;DataSnapFireDAC;DataSnapIndy10ServerTransport;DataSnapNativeClient;DataSnapProviderClient;DataSnapServer;DataSnapServerMidas;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXDb2Driver;DBXFirebirdDriver;DBXInformixDriver;DBXInterBaseDriver;DBXMSSQLDriver;DBXMySQLDriver;DBXOdbcDriver;DBXOracleDriver;DBXSqliteDriver;DBXSybaseASADriver;DBXSybaseASEDriver;dsnap;dsnapcon;dsnapxml;emsclient;emsclientfiredac;emsedge;emshosting;emsserverresource;FireDAC;FireDACADSDriver;FireDACASADriver;FireDACCommon;FireDACCommonDriver;FireDACCommonODBC;FireDACDb2Driver;FireDACDBXDriver;FireDACDSDriver;FireDACIBDriver;FireDACInfxDriver;FireDACMongoDBDriver;FireDACMSAccDriver;FireDACMSSQLDriver;FireDACMySQLDriver;FireDACODBCDriver;FireDACOracleDriver;FireDACPgDriver;FireDACSqliteDriver;FireDACTDataDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;inetstn;RESTBackendComponents;RESTComponents;rtl;Skia;soapmidas;soaprtl;soapserver;tethering;vcl;vclactnband;vcldb;vcldsnap;vcledge;vclFireDAC;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
-        <IncludePath>$(BDSINCLUDE)\windows\fmx;$(IncludePath)</IncludePath>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -157,8 +155,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
-        <ILINK_LibraryPath>$(BDSLIB)\$(PLATFORM)$(CC_SUFFIX)\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
@@ -173,7 +169,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
@@ -188,6 +183,12 @@
             <DependentOn>Banzuke.h</DependentOn>
             <BuildOrder>10</BuildOrder>
         </CppCompile>
+        <CppCompile Include="Battle.cpp">
+            <Form>BattleForm</Form>
+            <FormType>fmx</FormType>
+            <DependentOn>Battle.h</DependentOn>
+            <BuildOrder>17</BuildOrder>
+        </CppCompile>
         <CppCompile Include="Beya.cpp">
             <Form>YourBeya</Form>
             <FormType>fmx</FormType>
@@ -199,6 +200,12 @@
             <FormType>fmx</FormType>
             <DependentOn>Dohyo.h</DependentOn>
             <BuildOrder>11</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="Dohyo2.cpp">
+            <Form>Form2</Form>
+            <FormType>fmx</FormType>
+            <DependentOn>Dohyo2.h</DependentOn>
+            <BuildOrder>16</BuildOrder>
         </CppCompile>
         <CppCompile Include="EndGame.cpp">
             <Form>GameOver</Form>
@@ -213,6 +220,12 @@
             <FormType>fmx</FormType>
             <DependentOn>Noboru.h</DependentOn>
             <BuildOrder>6</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="Noboru2.cpp">
+            <Form>Storage_2</Form>
+            <FormType>fmx</FormType>
+            <DependentOn>Noboru2.h</DependentOn>
+            <BuildOrder>15</BuildOrder>
         </CppCompile>
         <None Include="OldCpp.txt"/>
         <None Include="OldHfile.txt"/>
@@ -247,15 +260,18 @@
             <DependentOn>Training.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
-        <FormResources Include="Storage.fmx"/>
         <FormResources Include="Ryogoku.fmx"/>
-        <FormResources Include="Street.fmx"/>
+        <FormResources Include="Noboru2.fmx"/>
+        <FormResources Include="Storage.fmx"/>
         <FormResources Include="Training.fmx"/>
+        <FormResources Include="Street.fmx"/>
         <FormResources Include="Dohyo.fmx"/>
         <FormResources Include="Beya.fmx"/>
+        <FormResources Include="Battle.fmx"/>
         <FormResources Include="Banzuke.fmx"/>
-        <FormResources Include="EndGame.fmx"/>
+        <FormResources Include="Dohyo2.fmx"/>
         <FormResources Include="Noboru.fmx"/>
+        <FormResources Include="EndGame.fmx"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -1329,7 +1345,7 @@
                 <ProjectRoot Platform="Win64x" Name="$(PROJECTNAME)"/>
             </Deployment>
             <Platforms>
-                <Platform value="Win32">True</Platform>
+                <Platform value="Win32">False</Platform>
                 <Platform value="Win64">True</Platform>
                 <Platform value="Win64x">True</Platform>
             </Platforms>

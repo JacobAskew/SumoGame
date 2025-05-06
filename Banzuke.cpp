@@ -28,6 +28,7 @@ int fighter1Total = 0;
 int fighter2SkillValue = 0;
 int fighter2Total = 0;
 int Luck;
+int winner;
 int winnerIdx;
 int loserIdx;
 //int i = 0;
@@ -43,6 +44,7 @@ Rikishi* globalFighter1 = nullptr;
 Rikishi* globalFighter2 = nullptr;
 
 String VSPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Vs.png";
+
 
 // Helper function to apply a tint to a pixel
 TAlphaColor ApplyTintPixel(TAlphaColor originalColor, TAlphaColor tintColor) {
@@ -138,18 +140,17 @@ void PopulateLeaderboardGrid() {
             int row = x % 7;  // Row index is 0-6 for both columns
 
             // Fill the grid cell with the combined string
-            BanzukeForm->StringGridLeaderboard->Cells[column][row] = fighterInfo;
+//            BanzukeForm->StringGridLeaderboard->Cells[column][row] = fighterInfo;
         } else {
-            // In case there are fewer than 14 rikishi, clear the remaining cells
-            BanzukeForm->StringGridLeaderboard->Cells[0][x] = "";
-            BanzukeForm->StringGridLeaderboard->Cells[1][x] = "";
+			// In case there are fewer than 14 rikishi, clear the remaining cells
+//            BanzukeForm->StringGridLeaderboard->Cells[0][x] = "";
+//            BanzukeForm->StringGridLeaderboard->Cells[1][x] = "";
         }
     }
 }
 
 void UpdateTournamentGrid()
 {
-
 	BanzukeForm->StringGridTournament->Repaint();
 
 	// Ensure NoboruForm and its grid exist
@@ -190,7 +191,7 @@ void UpdateTournamentGrid()
 			int rikishi1_idx = TournamentSchedule[day][bout].first;
 			int rikishi2_idx = TournamentSchedule[day][bout].second;
 
-			std::string boutText = TRanks[rikishi1_idx] + " vs " + TRanks[rikishi2_idx];
+			std::string boutText = TRanks[rikishi1_idx] + " / " + TRanks[rikishi2_idx];
 
 			// Fill the grid correctly (no +1 offset)
 			BanzukeForm->StringGridTournament->Cells[day][bout] = AnsiString(boutText.c_str());
@@ -245,7 +246,7 @@ void UpdateTournamentGrid()
 //		AnsiString fullPath2 = RikishiPath + IntToStr(fighter2->spirit) + ".png";
 //        imageFighter2->Bitmap->LoadFromFile(fullPath2);
 //	}
-//
+
 //    TImage* imageBelt2 = dynamic_cast<TImage*>(form->FindComponent("ImageBelt2"));
 //	if (imageBelt2) {
 //		AnsiString fullPathBelt2 = BeltPath + ".png";
@@ -292,14 +293,14 @@ void AssignFightersFromGrid()
 
     // Extract the two rank strings from the bout text
     std::string boutStr = boutText.c_str();
-    size_t vsPos = boutStr.find(" vs ");
+    size_t vsPos = boutStr.find(" / ");
     if (vsPos == std::string::npos) {
         ShowMessage("Error: Invalid bout format.");
 		return;
     }
 
 	std::string shortRank1 = boutStr.substr(0, vsPos);
-    std::string shortRank2 = boutStr.substr(vsPos + 4); // Skip " vs "
+    std::string shortRank2 = boutStr.substr(vsPos + 3); // Skip " / "
 
     // Convert short ranks to long-form ranks
 	std::string longRank1, longRank2;
@@ -318,6 +319,10 @@ void AssignFightersFromGrid()
 
 	if (longRank1.empty() || longRank2.empty()) {
 		ShowMessage("Error: Invalid rank abbreviation in bout.");
+		ShowMessage(AnsiString(longRank1.c_str()));
+		ShowMessage(AnsiString(longRank2.c_str()));
+		ShowMessage(AnsiString(shortRank1.c_str()));
+		ShowMessage(AnsiString(shortRank2.c_str()));
 		return;
 	}
 
@@ -623,7 +628,7 @@ void EndBanzuke() {
 	isBanzukeComplete = true;  // Mark Banzuke as complete
 	ShowMessage("Ending Banzuke Phase...");
 	BanzukePhaseComplete();    // Call the function to complete the Banzuke phase in MainStreet.cpp
-	UpdateBanzukeGrid();
+//	UpdateBanzukeGrid();
 }
 //---------------------------------------------------------------------------
 
@@ -695,7 +700,7 @@ void __fastcall TBanzukeForm::ButtonNextHumanBoutClick(TObject *Sender)
 					} else if (globalFighter1->technique < globalFighter2->technique) {
 						Victory(1, players);
 					} else {
-						int winner = std::rand() % 2;
+						winner = std::rand() % 2;
 						Victory(winner, players);
 					}
 				}
@@ -828,7 +833,7 @@ void __fastcall TBanzukeForm::ButtonAutomateAllClick(TObject *Sender)
 						Victory(1, players);
 					} else {
 //						ShowMessage("O...M...G... Chance tiebreaker!");
-						int winner = std::rand() % 2;
+						winner = std::rand() % 2;
 						Victory(winner, players);
 					}
 				}
@@ -917,7 +922,7 @@ void __fastcall TBanzukeForm::ButtonNextBoutClick(TObject *Sender)
 				} else if (globalFighter1->technique < globalFighter2->technique) {
 					Victory(1, players);
 				} else {
-					int winner = std::rand() % 2;
+					winner = std::rand() % 2;
 					Victory(winner, players);
 				}
 			}
@@ -972,6 +977,11 @@ void __fastcall TBanzukeForm::StringGridTournamentDrawColumnCell(TObject *Sender
 	TCanvas * const Canvas, TColumn * const Column, const TRectF &Bounds,
 	const int Row, const TValue &Value, const TGridDrawStates State)
 {
+
+	// Remove the grid border (set stroke to transparent)
+	Canvas->Stroke->Color = TAlphaColorRec::Null;
+	Canvas->Stroke->Thickness = 0;
+
 	// Define colors
 	TAlphaColor SemiTransparentCyan = TAlphaColorF::Create(0, 1, 1, 0.75).ToAlphaColor(); // Current bout
 	TAlphaColor Green = TAlphaColorF::Create(0, 1, 0).ToAlphaColor();  // Winner color
@@ -987,16 +997,16 @@ void __fastcall TBanzukeForm::StringGridTournamentDrawColumnCell(TObject *Sender
 	// Get current bout ID
 	int currentBout = colIndex * 7 + boutIndex;
 
-    // **Highlight the current bout in cyan** (background highlight)
+	// **Highlight the current bout in cyan** (background highlight)
 	if (currentBout == currentBoutIndex) {
-        Canvas->Fill->Color = SemiTransparentCyan;
+		Canvas->Fill->Color = SemiTransparentCyan;
 		Canvas->FillRect(Bounds, 0, 0, AllCorners, 1);
 	}
 
 	// Retrieve the cell text
 	UnicodeString cellText = BanzukeForm->StringGridTournament->Cells[colIndex][boutIndex];
 
-    // Convert UnicodeString to std::string
+	// Convert UnicodeString to std::string
     std::string text = std::string(reinterpret_cast<const char*>(cellText.c_str()));
 	size_t vsPos = text.find(" vs ");
     if (vsPos == std::string::npos) return;
@@ -1005,7 +1015,7 @@ void __fastcall TBanzukeForm::StringGridTournamentDrawColumnCell(TObject *Sender
 	std::string rank2 = text.substr(vsPos + 4); // Skip " vs "
 
     // Convert std::string to UnicodeString for compatibility
-    UnicodeString rank1U = UnicodeString(rank1.c_str());
+	UnicodeString rank1U = UnicodeString(rank1.c_str());
 	UnicodeString rank2U = UnicodeString(rank2.c_str());
 
     // **Highlight the previous bout's winner and loser** (color highlight)
@@ -1060,8 +1070,6 @@ void __fastcall TBanzukeForm::StringGridTournamentDrawColumnCell(TObject *Sender
 					 rank2U, false, 1.0, TFillTextFlags(),
 					 TTextAlign::Leading, TTextAlign::Center);
 }
-
-
 
 //void __fastcall TBanzukeForm::StringGridTournamentDrawColumnCell(TObject *Sender,
 //	TCanvas * const Canvas, TColumn * const Column, const TRectF &Bounds,

@@ -1,0 +1,55 @@
+//---------------------------------------------------------------------------
+
+#ifndef Storage2H
+#define Storage2H
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.Edit.hpp>
+#include <FMX.Grid.hpp>
+#include <FMX.Grid.Style.hpp>
+#include <FMX.Memo.hpp>
+#include <FMX.Memo.Types.hpp>
+#include <FMX.Objects.hpp>
+#include <FMX.ScrollBox.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+#include <System.Rtti.hpp>
+//---------------------------------------------------------------------------
+class TStorage_2 : public TForm
+{
+__published:	// IDE-managed Components
+	TStringGrid *BanzukeGrid;
+	TStringColumn *RankColumn;
+	TStringColumn *NameColumn;
+	TStringColumn *OyakataColumn;
+	TStringColumn *AgeColumn;
+	TStringColumn *SpiritColumn;
+	TStringColumn *WeightColumn;
+	TStringColumn *EnduranceColumn;
+	TStringColumn *TechniqueColumn;
+	TStringColumn *SpeedColumn;
+	TStringColumn *StrengthColumn;
+	TStringColumn *MinBidColumn;
+	TLabel *BidLabel;
+	TButton *ButtonMinBid;
+	TButton *ButtonSkipAllBids;
+	TButton *ButtonSubmitBid;
+	TEdit *EditBidInput;
+	TEdit *EditCurrentRikishiBid;
+	TImage *ImageBelt;
+	TImage *ImageRikishi;
+	TImage *ImageYokozuna;
+	TMemo *MemoLogNoboru;
+	TButton *NextBidButton;
+	TButton *ReturnStreet;
+private:	// User declarations
+public:		// User declarations
+	__fastcall TStorage_2(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TStorage_2 *Storage_2;
+//---------------------------------------------------------------------------
+#endif

@@ -9,13 +9,16 @@
 //---------------------------------------------------------------------------
 USEFORM("Storage.cpp", StorageForm);
 USEFORM("Ryogoku.cpp", RyogokuForm);
-USEFORM("Street.cpp", MainStreet);
 USEFORM("Training.cpp", TrainingPopup);
+USEFORM("Street.cpp", MainStreet);
+USEFORM("EndGame.cpp", GameOver);
 USEFORM("Dohyo.cpp", DohyoForm);
 USEFORM("Beya.cpp", YourBeya);
 USEFORM("Banzuke.cpp", BanzukeForm);
+USEFORM("Noboru2.cpp", Storage_2);
 USEFORM("Noboru.cpp", NoboruForm);
-USEFORM("EndGame.cpp", GameOver);
+USEFORM("Dohyo2.cpp", Form2);
+USEFORM("Battle.cpp", BattleForm);
 //---------------------------------------------------------------------------
 extern "C" int FMXmain()
 {
@@ -30,6 +33,9 @@ extern "C" int FMXmain()
 		Application->CreateForm(__classid(TStorageForm), &StorageForm);
 		Application->CreateForm(__classid(TRyogokuForm), &RyogokuForm);
 		Application->CreateForm(__classid(TGameOver), &GameOver);
+		Application->CreateForm(__classid(TStorage_2), &Storage_2);
+		Application->CreateForm(__classid(TForm2), &Form2);
+		Application->CreateForm(__classid(TBattleForm), &BattleForm);
 		Application->Run();
 	}
 	catch (Exception &exception)

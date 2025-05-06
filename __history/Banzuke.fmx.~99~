@@ -1,0 +1,114 @@
+object BanzukeForm: TBanzukeForm
+  Left = 221
+  Top = 126
+  Caption = 'The Grand Tournament!'
+  ClientHeight = 420
+  ClientWidth = 772
+  Position = Designed
+  StyleBook = StyleBook1
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 221
+  Top = 126
+  DesignerMasterStyle = 0
+  object ImageBackGround: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Size.Width = 770.000000000000000000
+    Size.Height = 420.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object StringGridTournament: TStringGrid
+    CanFocus = True
+    HitTest = False
+    Position.X = 72.000000000000000000
+    Position.Y = 150.000000000000000000
+    Size.Width = 290.000000000000000000
+    Size.Height = 207.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'StringGridTournamentStyle1'
+    TextSettings.Font.Size = 7.000000000000000000
+    StyledSettings = [Family, Style, FontColor]
+    TabOrder = 4
+    RowHeight = 25.000000000000000000
+    RowCount = 7
+    Options = [ColumnResize, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
+    OnDrawColumnCell = StringGridTournamentDrawColumnCell
+    Viewport.Width = 286.000000000000000000
+    Viewport.Height = 182.000000000000000000
+    object StringColumnMonday: TStringColumn
+      HorzAlign = Center
+      Header = 'M'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnTuesday: TStringColumn
+      HorzAlign = Center
+      Header = 'Tu'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnWednesday: TStringColumn
+      HorzAlign = Center
+      Header = 'W'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnThursday: TStringColumn
+      HorzAlign = Center
+      Header = 'Th'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnFriday: TStringColumn
+      HorzAlign = Center
+      Header = 'F'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnSaturday: TStringColumn
+      HorzAlign = Center
+      Header = 'Sa'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnSunday: TStringColumn
+      HorzAlign = Center
+      Header = 'Su'
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+  end
+  object ButtonReturnStreet: TButton
+    Position.X = 642.000000000000000000
+    Position.Y = 360.000000000000000000
+    Size.Width = 113.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Return'
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnStreetClick
+  end
+  object StyleBook1: TStyleBook
+    Styles = <
+      item
+      end>
+  end
+end

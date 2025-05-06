@@ -1094,4 +1094,5 @@
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Banzuke.h \
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Dohyo.h \
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Ryogoku.h \
-  C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Endgame.h
+  C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Endgame.h \
+  C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Battle.h

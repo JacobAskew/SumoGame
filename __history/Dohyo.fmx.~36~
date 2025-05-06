@@ -1,0 +1,364 @@
+object DohyoForm: TDohyoForm
+  Left = 240
+  Top = 168
+  Caption = 'Welcome to the Dohyo'
+  ClientHeight = 420
+  ClientWidth = 772
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 240
+  Top = 168
+  DesignerMasterStyle = 0
+  object ImageFightBackground: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 2.000000000000000000
+    Size.Width = 770.000000000000000000
+    Size.Height = 420.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna2: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 400.000000000000000000
+    Position.Y = -30.000000000000000000
+    Size.Width = 500.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = -100.000000000000000000
+    Position.Y = -30.000000000000000000
+    Size.Width = 500.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt2: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 400.000000000000000000
+    Position.Y = -30.000000000000000000
+    Size.Width = 500.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = -100.000000000000000000
+    Position.Y = -30.000000000000000000
+    Size.Width = 500.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi2: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 400.000000000000000000
+    Position.Y = -30.000000000000000000
+    Size.Width = 500.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageVS: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 120.000000000000000000
+    Size.Width = 246.000000000000000000
+    Size.Height = 246.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = -100.000000000000000000
+    Position.Y = -30.000000000000000000
+    Size.Width = 500.000000000000000000
+    Size.Height = 700.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonReturnStreet: TButton
+    Position.X = 2.000000000000000000
+    Position.Y = 384.000000000000000000
+    Size.Width = 90.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 37
+    Text = '<-----                                Return to Street'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnStreetClick
+  end
+  object ButtonNextPlayerBout: TButton
+    Position.X = 675.000000000000000000
+    Position.Y = 384.000000000000000000
+    Size.Width = 90.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 44
+    Text = 'Skip CPU'
+    TextSettings.Trimming = None
+    OnClick = ButtonNextPlayerBoutClick
+  end
+  object ImageEndurance1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 54.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectEndurance1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageSpeed1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 162.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectSpeed1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageStrength1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 216.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectStrength1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageTechnique1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 108.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectTechnique1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageWeight1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectWeight1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageEndurance2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 555.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectEndurance2: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageSpeed2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 663.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectSpeed2: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageStrength2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 717.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectStrength2: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageTechnique2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 609.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectTechnique2: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageWeight2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 501.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 55.000000000000000000
+    Size.Height = 55.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectWeight2: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object TextFighter1: TText
+    Size.Width = 264.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 20.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.FontColor = claWhitesmoke
+  end
+  object TextFighter2: TText
+    Position.X = 508.000000000000000000
+    Size.Width = 264.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 20.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.FontColor = claWhitesmoke
+  end
+  object TextOwner1: TText
+    Position.Y = 40.000000000000000000
+    Size.Width = 264.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.FontColor = claWhitesmoke
+  end
+  object TextOwner2: TText
+    Position.X = 508.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 264.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.FontColor = claWhitesmoke
+  end
+  object TextDateTime: TText
+    Position.X = 263.000000000000000000
+    Position.Y = -20.000000000000000000
+    Size.Width = 246.000000000000000000
+    Size.Height = 65.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.FontColor = claWhitesmoke
+  end
+  object ButtonDohyo: TButton
+    StyledSettings = [Family, FontColor]
+    Position.X = 284.000000000000000000
+    Position.Y = 344.000000000000000000
+    Size.Width = 209.000000000000000000
+    Size.Height = 72.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 71
+    Text = 'Watch it live!'
+    TextSettings.Font.Size = 32.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.Trimming = None
+  end
+end

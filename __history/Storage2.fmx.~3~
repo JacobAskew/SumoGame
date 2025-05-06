@@ -1,0 +1,80 @@
+object Storage_2: TStorage_2
+  Left = 0
+  Top = 0
+  Caption = 'Storage2'
+  ClientHeight = 420
+  ClientWidth = 772
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object EditCurrentRikishiBid: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 1
+    ReadOnly = True
+    TextSettings.HorzAlign = Center
+    Position.X = 601.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 600.000000000000000000
+    Position.Y = 55.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 107.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 597.000000000000000000
+    Position.Y = 55.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 107.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 597.000000000000000000
+    Position.Y = 56.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 107.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object MemoLogNoboru: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    ReadOnly = True
+    Position.X = 601.000000000000000000
+    Position.Y = 240.000000000000000000
+    Size.Width = 160.000000000000000000
+    Size.Height = 115.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Viewport.Width = 160.000000000000000000
+    Viewport.Height = 115.000000000000000000
+  end
+end

@@ -499,7 +499,7 @@ void UpgradeSkill(int rikishiIndex, const std::string& skillName) {
 		}
 		UpgradePoints--;
         YourBeya->UpdateBeya();
-        UpdateBanzukeGrid();
+//        UpdateBanzukeGrid();
     } else {
         ShowMessage("You cannot improve this skill any more this round of training.");
     }
@@ -630,7 +630,7 @@ void ResetSkillTrackers() {
 // Call Cleanup after usage (for example after closing the training phase)
 void EndTraining() {
     TrainCPUrikishi(rikishiVector);
-	UpdateBanzukeGrid();
+//	UpdateBanzukeGrid();
     ResetSkillTrackers();
     Application->ProcessMessages();
 	isTrainingComplete = true;

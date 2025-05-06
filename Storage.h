@@ -103,6 +103,13 @@ __published:	// IDE-managed Components
 	TImage *ImageYokozuna2;
 	TMediaPlayer *MediaPlayer1;
 	TMediaPlayerControl *MediaPlayerControl1;
+	TButton *ButtonAutomateAll;
+	TButton *ButtonNextBout;
+	TButton *ButtonNextHumanBout;
+	TButton *ButtonDohyo;
+	TStringGrid *StringGridLeaderboard;
+	TStringColumn *StringLeaderboard1;
+	TStringColumn *StringLeaderboard2;
 private:	// User declarations
 public:		// User declarations
 	__fastcall TStorageForm(TComponent* Owner);

@@ -1,0 +1,64 @@
+//---------------------------------------------------------------------------
+
+#ifndef BattleH
+#define BattleH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+#include <FMX.Effects.hpp>
+#include <FMX.Objects.hpp>
+//---------------------------------------------------------------------------
+class TBattleForm : public TForm
+{
+__published:	// IDE-managed Components
+	TButton *ButtonFight;
+	TImage *ImageEndurance1;
+	TGlowEffect *GlowEffectEndurance1;
+	TImage *ImageSpeed1;
+	TGlowEffect *GlowEffectSpeed1;
+	TImage *ImageStrength1;
+	TGlowEffect *GlowEffectStrength1;
+	TImage *ImageTechnique1;
+	TGlowEffect *GlowEffectTechnique1;
+	TImage *ImageWeight1;
+	TGlowEffect *GlowEffectWeight1;
+	TImage *ImageBackground;
+	TImage *ImageTextBox;
+	TImage *ImageBelt1;
+	TImage *ImageBelt2;
+	TImage *ImageRikishi1;
+	TImage *ImageRikishi2;
+	TImage *ImageYokozuna1;
+	TImage *ImageYokozuna2;
+	TButton *ButtonBack;
+	TImage *ImageChatBox2;
+	TImage *ImageChatBox1;
+	TImage *ImageBoutTactic2;
+	TImage *ImageBoutTactic1;
+	TText *TextChat1;
+	TText *TextChat2;
+	TImage *ImageEndGame1;
+	TImage *ImageEndGame2;
+	void UpdateTempBoutValues(std::string InputBout1, std::string InputBout2);
+	void __fastcall ButtonFightClick(TObject *Sender);
+	void __fastcall ImageWeight1Click(TObject *Sender);
+	void __fastcall ImageStrength1Click(TObject *Sender);
+	void __fastcall ImageEndurance1Click(TObject *Sender);
+	void __fastcall ImageTechnique1Click(TObject *Sender);
+	void __fastcall ImageSpeed1Click(TObject *Sender);
+	void __fastcall ButtonBackClick(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TBattleForm(TComponent* Owner);
+//    void UpdateTempBoutValues(String InputBout1, String InputBout2, Rikishi* globalfighter1, Rikishi* globalfighter2);
+//	void SetupBattle(Rikishi *globalFighter1, Rikishi *globalFighter2);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TBattleForm *BattleForm;
+extern void SetupBattle();
+//---------------------------------------------------------------------------
+#endif
