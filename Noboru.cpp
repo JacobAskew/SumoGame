@@ -6,16 +6,17 @@
 #include <FMX.Graphics.hpp>   // For TBitmap
 #include <System.SysUtils.hpp>  // Required for UnicodeString conversion
 #include <regex>
-
+//---------------------------------------------------------------------------
 #include "Noboru.h"
 #include "Street.h" // Include after Noboru.h
 #include "Beya.h" // Include after Noboru.h to avoid issues
 #include "Banzuke.h"
-
+#include "NoboruDisplay.h"
+//---------------------------------------------------------------------------
 #pragma hdrstop
 #pragma package(smart_init)
 #pragma resource "*.fmx"
-
+//---------------------------------------------------------------------------
 TNoboruForm *NoboruForm;
 //---------------------------------------------------------------------------
 
@@ -1013,4 +1014,12 @@ __fastcall TNoboruForm::TNoboruForm(TComponent* Owner)
 
 
 
+
+void __fastcall TNoboruForm::ButtonBanzukeClick(TObject *Sender)
+{
+	NoboruDisplayForm->Show();
+	this->Hide();
+	SetupNoboruDisplay();
+}
+//---------------------------------------------------------------------------
 

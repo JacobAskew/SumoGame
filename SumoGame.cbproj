@@ -227,8 +227,20 @@
             <DependentOn>Noboru2.h</DependentOn>
             <BuildOrder>15</BuildOrder>
         </CppCompile>
+        <CppCompile Include="NoboruDisplay.cpp">
+            <Form>NoboruDisplayForm</Form>
+            <FormType>fmx</FormType>
+            <DependentOn>NoboruDisplay.h</DependentOn>
+            <BuildOrder>19</BuildOrder>
+        </CppCompile>
         <None Include="OldCpp.txt"/>
         <None Include="OldHfile.txt"/>
+        <CppCompile Include="Retirement.cpp">
+            <Form>RetirementForm</Form>
+            <FormType>fmx</FormType>
+            <DependentOn>Retirement.h</DependentOn>
+            <BuildOrder>18</BuildOrder>
+        </CppCompile>
         <CppCompile Include="Ryogoku.cpp">
             <Form>RyogokuForm</Form>
             <FormType>fmx</FormType>
@@ -272,6 +284,8 @@
         <FormResources Include="Dohyo2.fmx"/>
         <FormResources Include="Noboru.fmx"/>
         <FormResources Include="EndGame.fmx"/>
+        <FormResources Include="Retirement.fmx"/>
+        <FormResources Include="NoboruDisplay.fmx"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

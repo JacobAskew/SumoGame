@@ -142,7 +142,13 @@ __published:    // IDE-managed Components
 	TButton *ButtonEasy;
 	TButton *ButtonHard;
 	TButton *ButtonMedium;
-	TText *TextWelcome;
+	TButton *ButtonSignEasy;
+	TButton *ButtonSignMedium;
+	TButton *ButtonSignHard;
+	TImage *ImagePathEasy;
+	TImage *ImagePathMedium;
+	TImage *ImagePathHard;
+	TButton *ButtonRetirement;
     void __fastcall ButtonNoboruClick(TObject *Sender);
 	void __fastcall ButtonBeyaClick(TObject *Sender);
 	void __fastcall ButtonBanzukeClick(TObject *Sender);
@@ -152,6 +158,7 @@ __published:    // IDE-managed Components
 	void __fastcall ButtonEasyClick(TObject *Sender);
 	void __fastcall ButtonMediumClick(TObject *Sender);
 	void __fastcall ButtonHardClick(TObject *Sender);
+	void __fastcall ButtonRetirementClick(TObject *Sender);
 //    void __fastcall PlayVideo();
 
 private:    // User declarations

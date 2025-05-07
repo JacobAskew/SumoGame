@@ -7,18 +7,20 @@
 #pragma hdrstop
 #include <System.StartUpCopy.hpp>
 //---------------------------------------------------------------------------
-USEFORM("Storage.cpp", StorageForm);
 USEFORM("Ryogoku.cpp", RyogokuForm);
+USEFORM("Noboru2.cpp", Storage_2);
+USEFORM("Storage.cpp", StorageForm);
 USEFORM("Training.cpp", TrainingPopup);
 USEFORM("Street.cpp", MainStreet);
-USEFORM("EndGame.cpp", GameOver);
 USEFORM("Dohyo.cpp", DohyoForm);
 USEFORM("Beya.cpp", YourBeya);
-USEFORM("Banzuke.cpp", BanzukeForm);
-USEFORM("Noboru2.cpp", Storage_2);
-USEFORM("Noboru.cpp", NoboruForm);
-USEFORM("Dohyo2.cpp", Form2);
 USEFORM("Battle.cpp", BattleForm);
+USEFORM("Banzuke.cpp", BanzukeForm);
+USEFORM("Dohyo2.cpp", Form2);
+USEFORM("Noboru.cpp", NoboruForm);
+USEFORM("EndGame.cpp", GameOver);
+USEFORM("Retirement.cpp", RetirementForm);
+USEFORM("NoboruDisplay.cpp", NoboruDisplayForm);
 //---------------------------------------------------------------------------
 extern "C" int FMXmain()
 {
@@ -36,6 +38,8 @@ extern "C" int FMXmain()
 		Application->CreateForm(__classid(TStorage_2), &Storage_2);
 		Application->CreateForm(__classid(TForm2), &Form2);
 		Application->CreateForm(__classid(TBattleForm), &BattleForm);
+		Application->CreateForm(__classid(TRetirementForm), &RetirementForm);
+		Application->CreateForm(__classid(TNoboruDisplayForm), &NoboruDisplayForm);
 		Application->Run();
 	}
 	catch (Exception &exception)

@@ -1,0 +1,22 @@
+//---------------------------------------------------------------------------
+#include <fmx.h>
+//---------------------------------------------------------------------------
+#include "NoboruDisplay.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+#pragma hdrstop
+//---------------------------------------------------------------------------
+TNoboruDisplayForm *NoboruDisplayForm;
+//---------------------------------------------------------------------------
+__fastcall TNoboruDisplayForm::TNoboruDisplayForm(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TNoboruDisplayForm::ButtonReturnClick(TObject *Sender)
+{
+	NoboruForm->Show();
+	this->Hide();
+}
+//---------------------------------------------------------------------------

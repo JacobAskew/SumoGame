@@ -978,4 +978,5 @@
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Street.h \
   c:\program\ files\ (x86)\embarcadero\studio\23.0\include\windows\fmx\FMX.Media.hpp \
   C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Beya.h \
-  C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Banzuke.h
+  C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Banzuke.h \
+  C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\NoboruDisplay.h

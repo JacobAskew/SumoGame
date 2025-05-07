@@ -26,6 +26,8 @@
 #include "Ryogoku.h"
 #include "Endgame.h"
 #include "Battle.h"
+#include "Retirement.h"
+#include "NoboruDisplay.h"
 
 #pragma hdrstop
 #pragma package(smart_init)
@@ -52,6 +54,7 @@ bool WinGame;
 //String player1Tactic, Rank1;
 //String player2Tactic, Rank2;
 //String boutTactic;
+String Path2Background = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\path";
 String PathRoad = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Road2.png";
 String PathBackground = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Street";
 String BackPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Billboard_Baggins2.png";
@@ -503,8 +506,27 @@ void PreGameSetup() {
 //	imageroad->Bitmap->LoadFromFile(fullPathRoad);
 
 	TImage* imagebackground = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageBackground"));
-	AnsiString fullPathBackground = PathBackground + "_Title.png";
+	AnsiString fullPathBackground = PathBackground + "_Title3.png";
 	imagebackground->Bitmap->LoadFromFile(fullPathBackground);
+
+//	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
+//	AnsiString fullPathBackground1 = Path2Background + "easy.png";
+//	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
+//	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
+//	AnsiString fullPathBackground2 = Path2Background + "medium.png";
+//	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
+//	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
+//	AnsiString fullPathBackground3 = Path2Background + "hard.png";
+//	imagebackground3->Bitmap->LoadFromFile(fullPathBackground3);
+
+	MainStreet->ButtonNoboru->Visible=false;
+	MainStreet->ButtonBanzuke->Visible=false;
+	MainStreet->ButtonBeya->Visible=false;
+	MainStreet->ButtonDohyo->Visible=false;
+	MainStreet->ButtonRyogoku->Visible=false;
+	MainStreet->EditVictoryPoints->Visible=false;
+	MainStreet->EditAbilityPoints->Visible=false;
+	MainStreet->ButtonRetirement->Visible=false;
 
 //	MainStreet->PlayVideo();
 
@@ -767,14 +789,38 @@ void __fastcall TMainStreet::ButtonStartGameClick(TObject *Sender)
 	ButtonEasy->Visible = false;
 	ButtonMedium->Visible = false;
 	ButtonHard->Visible = false;
+	ButtonSignEasy->Visible = false;
+	ButtonSignMedium->Visible = false;
+	ButtonSignHard->Visible = false;
 	EditRounds->Visible = false;
-	TextWelcome->Visible = false;
+
+	ButtonStartGame->Enabled = false;
+	ButtonEasy->Enabled = false;
+	ButtonMedium->Enabled = false;
+	ButtonHard->Enabled = false;
+	ButtonSignEasy->Enabled = false;
+	ButtonSignMedium->Enabled = false;
+	ButtonSignHard->Enabled = false;
+	EditRounds->Enabled = false;
+
+
+//	TextWelcome->Enabled = false;
+
+	MainStreet->ButtonNoboru->Visible=true;
+	MainStreet->ButtonBanzuke->Visible=true;
+	MainStreet->ButtonBeya->Visible=true;
+	MainStreet->ButtonDohyo->Visible=true;
+	MainStreet->ButtonRyogoku->Visible=true;
+	MainStreet->EditVictoryPoints->Visible=true;
+	MainStreet->EditAbilityPoints->Visible=true;
+	MainStreet->ButtonRetirement->Visible=true;
 
 	NoboruForm->StartBidding();
 
 	TImage* imagebackground = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageBackground"));
 	AnsiString fullPathBackground = PathBackground + ".png";
 	imagebackground->Bitmap->LoadFromFile(fullPathBackground);
+
 }
 //---------------------------------------------------------------------------
 
@@ -2188,6 +2234,12 @@ void __fastcall TMainStreet::ButtonHardClick(TObject *Sender)
 	else {
 		PowerWinLim = maxYears * 10;
 	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TMainStreet::ButtonRetirementClick(TObject *Sender)
+{
+	RetirementForm->Show();
+	this->Hide();
 }
 //---------------------------------------------------------------------------
 

@@ -81,6 +81,7 @@ __published:    // IDE-managed Components
 	void __fastcall ImageCoin6Click(TObject *Sender);
 	void __fastcall ImageCoin7Click(TObject *Sender);
 	void __fastcall TextAPClick(TObject *Sender);
+	void __fastcall ButtonBanzukeClick(TObject *Sender);
 //	void __fastcall BanzukeGridDrawColumnCell(TObject *Sender, TCanvas * const Canvas,
 //          TColumn * const Column, const TRectF &Bounds, const int Row,
 //          const TValue &Value, const TGridDrawStates State);
