@@ -1,0 +1,41 @@
+object NoboruDisplayForm: TNoboruDisplayForm
+  Left = 240
+  Top = 191
+  Caption = 'Check out the competition!'
+  ClientHeight = 664
+  ClientWidth = 1100
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 240
+  Top = 191
+  DesignerMasterStyle = 0
+  object ImageBackground: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Size.Width = 772.000000000000000000
+    Size.Height = 420.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBook: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Size.Width = 772.000000000000000000
+    Size.Height = 420.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonReturn: TButton
+    Position.X = 12.000000000000000000
+    Position.Y = 560.000000000000000000
+    Size.Width = 205.000000000000000000
+    Size.Height = 97.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Go Back'
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnClick
+  end
+end

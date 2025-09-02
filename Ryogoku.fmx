@@ -1,6 +1,6 @@
 object RyogokuForm: TRyogokuForm
-  Left = 552
-  Top = 240
+  Left = 467
+  Top = 191
   Caption = 'The Ryogoku Kokugikan'
   ClientHeight = 420
   ClientWidth = 772
@@ -8,8 +8,8 @@ object RyogokuForm: TRyogokuForm
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  Left = 552
-  Top = 240
+  Left = 467
+  Top = 191
   DesignerMasterStyle = 0
   object ButtonReturnStreet: TButton
     Position.X = 8.000000000000000000
@@ -35,8 +35,8 @@ object RyogokuForm: TRyogokuForm
     TabOrder = 8
     RowHeight = 22.000000000000000000
     RowCount = 16
-    Viewport.Width = 756.000000000000000000
-    Viewport.Height = 264.000000000000000000
+    Viewport.Width = 736.000000000000000000
+    Viewport.Height = 239.000000000000000000
     object RankColumn: TStringColumn
       Header = 'GOAT'
       HeaderSettings.TextSettings.WordWrap = False
@@ -138,8 +138,8 @@ object RyogokuForm: TRyogokuForm
     Size.Height = 132.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
-    Viewport.Width = 562.000000000000000000
-    Viewport.Height = 132.000000000000000000
+    Viewport.Width = 558.000000000000000000
+    Viewport.Height = 128.000000000000000000
   end
   object ButtonEndScreen: TButton
     Position.X = 675.000000000000000000

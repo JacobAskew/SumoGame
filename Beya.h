@@ -32,9 +32,6 @@ __published:    // IDE-managed Components
     TRectangle *Background2;
     TRectangle *Background3;
     TButton *ReturnStreet;
-    TButton *TrainRikishi1;
-    TButton *TrainRikishi2;
-    TButton *TrainRikishi3;
     TImage *ImageRikishi1;
     TImage *ImageRikishi2;
     TImage *ImageRikishi3;
@@ -87,9 +84,9 @@ __published:    // IDE-managed Components
     // Event Handlers
     void __fastcall ReturnStreetClick(TObject *Sender);
     void __fastcall ButtonSkipTrainingClick(TObject *Sender);
-    void __fastcall TrainRikishi1Click(TObject *Sender);
-    void __fastcall TrainRikishi2Click(TObject *Sender);
-	void __fastcall TrainRikishi3Click(TObject *Sender);
+//	void __fastcall TrainRikishi1Click(TObject *Sender);
+//	void __fastcall TrainRikishi2Click(TObject *Sender);
+//	void __fastcall TrainRikishi3Click(TObject *Sender);
 //	void __fastcall ImageAttributeClick(TObject *Sender);
 	void __fastcall ImageWeight1Click(TObject *Sender);
 	void __fastcall ImageWeight2Click(TObject *Sender);
@@ -131,8 +128,10 @@ public:     // User declarations
     __fastcall TYourBeya(TComponent* Owner);
     void UpdateBeya();
     void StartTraining();
-    void CleanupTrainingPopup();
-    void CollectUpgradePoints(int UpgradePoints);
+//    void CleanupTrainingPopup();
+	void CollectUpgradePoints(int UpgradePoints);
+	void CheckUpgrade(int rikishiIndex, String skillstring);
+    void UpgradeSkill(int rikishiIndex, String skillName);
 };
 
 //---------------------------------------------------------------------------

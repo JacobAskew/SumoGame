@@ -139,7 +139,6 @@ __published:    // IDE-managed Components
 	TImage *ImageBackground;
 	TButton *ButtonStartGame;
 	TEdit *EditRounds;
-	TButton *ButtonEasy;
 	TButton *ButtonHard;
 	TButton *ButtonMedium;
 	TButton *ButtonSignEasy;
@@ -149,6 +148,10 @@ __published:    // IDE-managed Components
 	TImage *ImagePathMedium;
 	TImage *ImagePathHard;
 	TButton *ButtonRetirement;
+	TButton *ButtonHome;
+	TImage *ImageSignPost;
+	TImage *ImageSignEntry;
+	TButton *ButtonEasy;
     void __fastcall ButtonNoboruClick(TObject *Sender);
 	void __fastcall ButtonBeyaClick(TObject *Sender);
 	void __fastcall ButtonBanzukeClick(TObject *Sender);
@@ -159,6 +162,10 @@ __published:    // IDE-managed Components
 	void __fastcall ButtonMediumClick(TObject *Sender);
 	void __fastcall ButtonHardClick(TObject *Sender);
 	void __fastcall ButtonRetirementClick(TObject *Sender);
+	void __fastcall ButtonHomeClick(TObject *Sender);
+	void __fastcall ButtonSignEasyClick(TObject *Sender);
+	void __fastcall ButtonSignHardClick(TObject *Sender);
+	void __fastcall ButtonSignMediumClick(TObject *Sender);
 //    void __fastcall PlayVideo();
 
 private:    // User declarations

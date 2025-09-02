@@ -1,0 +1,130 @@
+object BanzukeForm: TBanzukeForm
+  Left = 221
+  Top = 126
+  Caption = 'The Grand Tournament!'
+  ClientHeight = 664
+  ClientWidth = 1100
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 221
+  Top = 126
+  DesignerMasterStyle = 0
+  object ImageBackGround: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Size.Width = 1100.000000000000000000
+    Size.Height = 664.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object StringGridTournament: TStringGrid
+    CanFocus = True
+    ClipChildren = True
+    HitTest = False
+    Position.X = 600.000000000000000000
+    Position.Y = 286.000000000000000000
+    Size.Width = 290.000000000000000000
+    Size.Height = 207.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'StringGridTournamentStyle1'
+    TextSettings.Font.Size = 7.000000000000000000
+    StyledSettings = [Family, Style, FontColor]
+    TabOrder = 8
+    RowHeight = 25.000000000000000000
+    RowCount = 7
+    Options = [ColumnResize, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
+    OnDrawColumnCell = StringGridTournamentDrawColumnCell
+    Viewport.Width = 286.000000000000000000
+    Viewport.Height = 182.000000000000000000
+    object StringColumnMonday: TStringColumn
+      HorzAlign = Center
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnTuesday: TStringColumn
+      HorzAlign = Center
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnWednesday: TStringColumn
+      HorzAlign = Center
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnThursday: TStringColumn
+      HorzAlign = Center
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnFriday: TStringColumn
+      HorzAlign = Center
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnSaturday: TStringColumn
+      HorzAlign = Center
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+    object StringColumnSunday: TStringColumn
+      HorzAlign = Center
+      HeaderSettings.TextSettings.WordWrap = False
+      HeaderSettings.TextSettings.HorzAlign = Center
+      ReadOnly = True
+      Size.Width = 40.000000000000000000
+    end
+  end
+  object ButtonReturnStreet: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 552.000000000000000000
+    Size.Width = 161.000000000000000000
+    Size.Height = 104.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 
+      '<----                                                        Str' +
+      'eet'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnStreetClick
+  end
+  object ButtonBanzuke: TButton
+    Opacity = 0.400000005960464500
+    Position.X = 221.000000000000000000
+    Position.Y = 256.000000000000000000
+    Size.Width = 201.000000000000000000
+    Size.Height = 289.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 35
+    Text = 'Banzuke Placeholder'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+    OnClick = ButtonBanzukeClick
+  end
+  object ButtonNewspaper: TButton
+    Opacity = 0.400000005960464500
+    Position.X = 64.000000000000000000
+    Position.Y = 200.000000000000000000
+    Size.Width = 217.000000000000000000
+    Size.Height = 265.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 36
+    Text = 'Newspaper Placeholder'
+    TextSettings.Trimming = None
+    OnClick = ButtonNewspaperClick
+  end
+end

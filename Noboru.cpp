@@ -40,6 +40,7 @@ String CoinPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\P
 String CoinsPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\CoinPile_";
 String BackgroundPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\BanzukeBackground2.png";
 String RikishiPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Sumo";
+//String RikishiPath2 = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Sumo_Chair";
 String BeltPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\SumoBelt";
 String YokozunaPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\SumoYokozunaBelt";
 
@@ -1010,16 +1011,4 @@ __fastcall TNoboruForm::TNoboruForm(TComponent* Owner)
 
 //---------------------------------------------------------------------------
 
-
-
-
-
-
-void __fastcall TNoboruForm::ButtonBanzukeClick(TObject *Sender)
-{
-	NoboruDisplayForm->Show();
-	this->Hide();
-	SetupNoboruDisplay();
-}
-//---------------------------------------------------------------------------
 

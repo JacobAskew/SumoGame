@@ -27,8 +27,128 @@ TDohyoForm *DohyoForm;
 String DayLabel = "????";
 String ClockLabel = "????";
 String TimeLabel = "????";
-String VSPath2 = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Vs.png";
+String VSPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Vs.png";
 String FirePath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\fire.png";
+
+int fighter1SkillValue = 0;
+int fighter1Total = 0;
+int fighter2SkillValue = 0;
+int fighter2Total = 0;
+int Luck;
+int winner;
+int winnerIdx;
+int loserIdx;
+//int i = 0;
+std::string fighter1Tactic;
+std::string fighter2Tactic;
+std::string boutTactic;
+int TotalBouts = 49;
+int currentBoutIndex = 0;
+bool isBanzukeComplete = false;
+void BanzukePhaseComplete();
+
+Rikishi* globalFighter1 = nullptr;
+Rikishi* globalFighter2 = nullptr;
+
+std::map<int, std::pair<int, int>> currentBoutResults; // Maps bout index to (winnerIdx, loserIdx)
+//int currentBoutIndex = 0;  // The index of the current bout (for cyan highlighting)
+
+//---------------------------------------------------------------------------
+// Helper function to apply a tint to a pixel
+TAlphaColor ApplyTintPixel(TAlphaColor originalColor, TAlphaColor tintColor) {
+	// Extract RGB components from the original color
+	uint8_t r = (originalColor >> 16) & 0xFF;
+	uint8_t g = (originalColor >> 8) & 0xFF;
+	uint8_t b = (originalColor >> 0) & 0xFF;
+
+    // Extract RGB components from the tint color
+    uint8_t tr = (tintColor >> 16) & 0xFF;
+	uint8_t tg = (tintColor >> 8) & 0xFF;
+	uint8_t tb = (tintColor >> 0) & 0xFF;
+
+	// Simple blend of the original color with the tint (adjust as needed)
+	r = (r + tr) / 2;
+	g = (g + tg) / 2;
+	b = (b + tb) / 2;
+
+	// Recreate the tinted color and return it
+	return (originalColor & 0xFF000000) | (r << 16) | (g << 8) | b;
+}
+
+// Function to apply tint to non-transparent pixels of the bitmap
+void TintNoTransparent(TBitmap* bitmap, TAlphaColor tintColor) {
+	if (!bitmap || bitmap->IsEmpty()) return;  // <-- Added null check
+
+    TBitmapData bitmapData;
+	if (bitmap->Map(TMapAccess::ReadWrite, bitmapData)) {
+        for (int y = 0; y < bitmap->Height; ++y) {
+			for (int x = 0; x < bitmap->Width; ++x) {
+				TAlphaColor pixelColor = bitmapData.GetPixel(x, y);
+				uint8_t alpha = (pixelColor >> 24) & 0xFF;
+
+                if (alpha > 0) {
+					TAlphaColor tintedPixel = ApplyTintPixel(pixelColor, tintColor);
+                    bitmapData.SetPixel(x, y, tintedPixel);
+                }
+			}
+        }
+		bitmap->Unmap(bitmapData);
+    }
+}
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+
+void UpdateTournamentGrid()
+{
+	DohyoForm->StringGridTournament->Repaint();
+
+	// Ensure NoboruForm and its grid exist
+	if (!DohyoForm || !DohyoForm->StringGridTournament) {
+		ShowMessage("Error: Tournament Grid is missing.");
+		return;
+	}
+
+    // Define the ranks in order
+	std::vector<std::string> TRanks = {
+		"Y", "O", "S", "K",
+		"M1", "M2", "M3", "M4",
+		"M5", "M6", "M7", "M8",
+		"M9", "M10", "J1", "J2"
+	};
+
+    // Define a fixed tournament schedule (pre-determined matchups)
+    std::vector<std::pair<int, int>> TournamentSchedule[7] = {
+        // Monday
+		{ {11, 13}, {10, 12}, {7, 8}, {5, 6}, {4, 9}, {1, 2}, {0, 3} },
+		// Tuesday
+		{ {11, 12}, {9, 10}, {8, 13}, {3, 6}, {2, 7}, {1, 5}, {0, 4} },
+		// Wednesday
+		{ {9, 11}, {7, 13}, {5, 12}, {3, 10}, {2, 4}, {1, 8}, {0, 6} },
+		// Thursday
+		{ {8, 9}, {7, 12}, {6, 13}, {5, 10}, {4, 11}, {1, 3}, {0, 2} },
+		// Friday
+		{ {10, 13}, {9, 12}, {8, 11}, {3, 4}, {2, 5}, {1, 6}, {0, 7} },
+		// Saturday
+		{ {12, 13}, {7, 10}, {6, 11}, {3, 8}, {2, 9}, {1, 4}, {0, 5} },
+		// Sunday
+		{ {10, 11}, {9, 13}, {8, 12}, {6, 7}, {4, 5}, {2, 3}, {0, 1} }
+    };
+
+	// Populate the grid with matchups
+	for (int day = 0; day < 7; day++) {
+		for (int bout = 0; bout < 7; bout++) {
+			int rikishi1_idx = TournamentSchedule[day][bout].first;
+			int rikishi2_idx = TournamentSchedule[day][bout].second;
+
+			std::string boutText = TRanks[rikishi1_idx] + " / " + TRanks[rikishi2_idx];
+
+			// Fill the grid correctly (no +1 offset)
+			DohyoForm->StringGridTournament->Cells[day][bout] = AnsiString(boutText.c_str());
+		}
+	}
+}
+
 //---------------------------------------------------------------------------
 void UpdateDohyoGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form) {
 
@@ -160,7 +280,7 @@ void UpdateDohyoGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form) {
 	std::regex numRegex(R"(\d+)");
 	// VS symbol
 	TImage* imagevs = dynamic_cast<TImage*>(form->FindComponent("ImageVS"));
-	AnsiString fullPathVS = VSPath2;
+	AnsiString fullPathVS = VSPath;
 	imagevs->Bitmap->LoadFromFile(fullPathVS);
 	// Arena
 	TImage* imagefire = dynamic_cast<TImage*>(form->FindComponent("ImageFightBackground"));
@@ -283,11 +403,12 @@ void TDohyoForm::DohyoSetup(){
 	UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
 }
 //---------------------------------------------------------------------------
-void __fastcall TDohyoForm::ButtonReturnBanzukeClick(TObject *Sender)
-{
-	BanzukeForm->Show();
-	this->Hide();
-}
+//void __fastcall TDohyoForm::ButtonReturnBanzukeClick(TObject *Sender)
+//{
+//	BanzukeForm->Show();
+//	this->Hide();
+//}
+
 //---------------------------------------------------------------------------
 void __fastcall TDohyoForm::ButtonReturnStreetClick(TObject *Sender)
 {
@@ -499,7 +620,7 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 		});
 
 	if (isBanzukeComplete == false && isTrainingComplete == true) {
-		PopulateLeaderboardGrid();
+//		PopulateLeaderboardGrid();
 		AssignFightersFromGrid();
 
 		if (fighter1Tactic.empty()) {
@@ -582,12 +703,282 @@ void __fastcall TDohyoForm::ButtonFightClick(TObject *Sender)
 		EndBanzuke();
 	}
 }
-//---------------------------------------------------------------------------
+
+
+void AssignFightersFromGrid()
+{
+//    for (const Rikishi& r : rikishiVector) {
+//		ShowMessage("Rikishi: " + AnsiString(r.name.c_str()) + " with rank '" + AnsiString(r.rank.c_str()) + "'");
+//	}
+
+	if (currentBoutIndex >= 7 * 7) { // 7 days * 7 bouts per day
+		ShowMessage("The Tournament is complete!");
+		return;
+	}
+
+	int day = currentBoutIndex / 7;  // Get the current day (column)
+	int bout = currentBoutIndex % 7; // Get the current bout (row)
+
+	// Get the bout text from the grid
+	AnsiString boutText = DohyoForm->StringGridTournament->Cells[day][bout];
+
+	// Extract the two rank strings from the bout text
+	std::string boutStr = boutText.c_str();
+	size_t vsPos = boutStr.find(" / ");
+	if (vsPos == std::string::npos) {
+		ShowMessage("Error: Invalid bout format.");
+		return;
+	}
+
+	std::string shortRank1 = boutStr.substr(0, vsPos);
+	std::string shortRank2 = boutStr.substr(vsPos + 3); // Skip " / "
+
+	// Convert short ranks to long-form ranks
+	std::string longRank1, longRank2;
+	std::unordered_map<std::string, std::string> rankMap = {
+        {"Y", "Yokozuna"}, {"O", "Ozeki"}, {"S", "Sekiwake"}, {"K", "Komusubi"},
+        {"M1", "Maegashira 1"}, {"M2", "Maegashira 2"}, {"M3", "Maegashira 3"},
+		{"M4", "Maegashira 4"}, {"M5", "Maegashira 5"}, {"M6", "Maegashira 6"},
+        {"M7", "Maegashira 7"}, {"M8", "Maegashira 8"}, {"M9", "Maegashira 9"},
+        {"M10", "Maegashira 10"}, {"J1", "Juryo 1"}, {"J2", "Juryo 2"}
+    };
+
+	auto it1 = rankMap.find(shortRank1);
+	auto it2 = rankMap.find(shortRank2);
+	if (it1 != rankMap.end()) longRank1 = it1->second;
+	if (it2 != rankMap.end()) longRank2 = it2->second;
+
+	if (longRank1.empty() || longRank2.empty()) {
+		ShowMessage("Error: Invalid rank abbreviation in bout.");
+		ShowMessage(AnsiString(longRank1.c_str()));
+		ShowMessage(AnsiString(longRank2.c_str()));
+		ShowMessage(AnsiString(shortRank1.c_str()));
+		ShowMessage(AnsiString(shortRank2.c_str()));
+		return;
+	}
+
+	// Find the Rikishi with the corresponding ranks
+	Rikishi* ptrFighter1 = nullptr;
+	Rikishi* ptrFighter2 = nullptr;
+
+    for (Rikishi& r : rikishiVector) {
+        if (r.rank == longRank1 && ptrFighter1 == nullptr) {
+			ptrFighter1 = &r;
+        } else if (r.rank == longRank2 && ptrFighter2 == nullptr) {
+            ptrFighter2 = &r;
+        }
+
+        if (ptrFighter1 && ptrFighter2) {
+			break; // Found both fighters, exit loop
+        }
+	}
+
+	if (!ptrFighter1 || !ptrFighter2) {
+		ShowMessage("Error: Fighters not found for ranks " + AnsiString(longRank1.c_str()) + " and " + AnsiString(longRank2.c_str()));
+        return;
+    }
+
+	// Convert pointers to references
+	Rikishi& fighter1 = *ptrFighter1;
+    Rikishi& fighter2 = *ptrFighter2;
+
+	if (fighter1.name.empty()) {
+		ShowMessage("fighter1 is nullptr during AssignFightersFromGrid");
+	}
+	if (fighter2.name.empty()) {
+		ShowMessage("fighter2 is nullptr during AssignFightersFromGrid");
+	}
+
+	globalFighter1 = nullptr;
+	globalFighter2 = nullptr;
+	globalFighter1 = ptrFighter1;
+	globalFighter2 = ptrFighter2;
+
+	// Now you can use fighter1 and fighter2 directly
+//	UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
+
+	// Update UI with fighter names
+//	BanzukeForm->EditFighter1->Text = AnsiString(globalFighter1->name.c_str()) + " (" + AnsiString(globalFighter1->owner.c_str()) + ")";
+//	BanzukeForm->EditFighter2->Text = AnsiString(globalFighter2->name.c_str()) + " (" + AnsiString(globalFighter2->owner.c_str()) + ")";
+
+}
+
+
+void RandomSkillForFighter(Rikishi& fighter, std::string& fighterTactic) {
+	// Define skill choices as strings only
+	const std::vector<std::string> skills = {
+		"Strength", "Weight", "Technique", "Endurance", "Speed"
+	};
+
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(1, 6); // 1-6 roll
+
+	int roll = dis(gen);
+	if (roll <= 2) { // 1/3 chance for preferred skill
+		fighterTactic = fighter.preferredSkill;
+	} else { // 1/6 chance for each of the remaining skills
+		// Adjust roll to pick one of the 4 remaining skills
+        int remainingRoll = dis(gen) % 4;
+		int count = 0;
+		for (const auto& skill : skills) {
+			if (skill != fighter.preferredSkill) {
+				if (count == remainingRoll) {
+					fighterTactic = skill;
+					break;
+				}
+				count++;
+			}
+		}
+	}
+
+	if (fighterTactic.empty()) {
+		ShowMessage("Something went wrong!");
+		fighterTactic = skills[std::rand() % skills.size()];
+	}
+}
+
+
+void GetBoutTactic() {
+	// If both players choose the same tactic, use that
+	if (fighter1Tactic == fighter2Tactic) {
+		boutTactic = fighter1Tactic;
+	} else {
+		// Define tactic dominance rules
+		static const std::unordered_map<std::string, std::unordered_set<std::string>> tacticWins = {
+			{"Strength", {"Weight", "Technique"}},
+			{"Speed", {"Strength", "Endurance"}},
+			{"Technique", {"Weight", "Speed"}},
+			{"Endurance", {"Strength", "Technique"}},
+			{"Weight", {"Endurance", "Speed"}}
+		};
+
+		auto it1 = tacticWins.find(fighter1Tactic);
+		auto it2 = tacticWins.find(fighter2Tactic);
+
+		if (it1 != tacticWins.end() && it1->second.count(fighter2Tactic)) {
+			boutTactic = fighter1Tactic;
+		} else if (it2 != tacticWins.end() && it2->second.count(fighter1Tactic)) {
+			boutTactic = fighter2Tactic;
+		} else {
+			boutTactic = "Unknown";
+		}
+	}
+
+	// Log the bout tactic
+//    MainStreet->MemoLog->Lines->Add("The bout tactic is " + boutTactic + "!");
+}
+
+
+void FighterSkillValue(Rikishi& fighter, int& fighterSkillValue) {
+	if (boutTactic == "Strength") {
+		fighterSkillValue = fighter.strength; // Replace with actual value
+	} else if (boutTactic == "Weight") {
+		fighterSkillValue = fighter.weight; // Replace with actual value
+	} else if (boutTactic == "Technique") {
+		fighterSkillValue = fighter.technique; // Replace with actual value
+	} else if (boutTactic == "Endurance") {
+		fighterSkillValue = fighter.endurance; // Replace with actual value
+	} else if (boutTactic == "Speed") {
+		fighterSkillValue = fighter.speed; // Replace with actual value
+	} else {
+		fighterSkillValue = 0; // Default if no valid skill
+		ShowMessage("Error: Invalid skill detected.");
+	}
+}
+//
+//
+void HandleInjury(Rikishi& fighter, int& fighterTotal) {
+	// Perform luck roll (0-6)
+	Luck = std::rand() % 7;
+
+    // Output the luck roll value
+//	MainStreet->MemoLog->Lines->Add(fighter.name + " rolled a " + std::to_string(Luck) + " on the luck die.");
+
+	// Add luck roll value to fighterTotal (you can adjust this logic as per your needs)
+	fighterTotal += Luck;
+
+	// Now, handle the injury part (same as before)
+	if (Luck == 1) {
+        // Randomly choose one of the 5 skills (strength, weight, endurance, technique, speed)
+        int skillRoll = std::rand() % 5;
+        std::string selectedSkill;
+        bool injuryOccurred = false;
+
+		// Determine which skill was selected
+        switch (skillRoll) {
+			case 0: selectedSkill = "Strength"; break;
+			case 1: selectedSkill = "Weight"; break;
+            case 2: selectedSkill = "Endurance"; break;
+			case 3: selectedSkill = "Technique"; break;
+			case 4: selectedSkill = "Speed"; break;
+		}
+
+		// Check if the selected skill is one that can cause injury (Endurance, Strength, Speed)
+		if (selectedSkill == "Endurance" && !fighter.isInjuredEndurance) {
+            fighter.isInjuredEndurance = true;
+			injuryOccurred = true;
+		} else if (selectedSkill == "Strength" && !fighter.isInjuredStrength) {
+            fighter.isInjuredStrength = true;
+            injuryOccurred = true;
+        } else if (selectedSkill == "Speed" && !fighter.isInjuredSpeed) {
+			fighter.isInjuredSpeed = true;
+            injuryOccurred = true;
+        }
+
+        // If the injury bool is already true, the fighter gets a major injury
+        if (injuryOccurred) {
+            // Reduce the skill by 1
+			if (selectedSkill == "Strength") {
+				if (fighter.strength > 0) {
+					fighter.strength--;
+				}
+				else {
+					if (fighter.strengthLimit > 0) {
+						fighter.strengthLimit--;
+					}
+					else {
+						fighter.strength = 0;
+					}
+				}
+			} else if (selectedSkill == "Endurance") {
+				if (fighter.endurance > 0) {
+					fighter.endurance--;
+				}
+				else {
+					if (fighter.enduranceLimit > 0) {
+						fighter.enduranceLimit--;
+					}
+					else {
+						fighter.endurance = 0;
+					}
+				}
+			} else if (selectedSkill == "Speed") {
+				if (fighter.speed > 0) {
+					fighter.speed--;
+				}
+				else {
+					if (fighter.speed > 0) {
+						fighter.speed--;
+					}
+					else {
+						fighter.speed = 0;
+					}
+				}
+			}
+
+			// Log injury outcome
+//            MainStreet->MemoLog->Lines->Add(fighter.name + " selected skill: " + selectedSkill + ". Injury status: " + (injuryOccurred ? "Injured" : "Not Injured"));
+		}
+	}
+}
+
+
 
 void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
 {
 
-	PopulateLeaderboardGrid();
+//	PopulateLeaderboardGrid();
 
 	for (int i = 0; i < 49; i++) {
 		UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
@@ -657,7 +1048,7 @@ void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
 				}
 			}
 
-			PopulateLeaderboardGrid();
+//			PopulateLeaderboardGrid();
 			SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 			UpdateTournamentGrid();
 //			UpdateBoutGUI(globalFighter1, globalFighter2, BanzukeForm);
@@ -666,10 +1057,10 @@ void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
 			AssignFightersFromGrid();
 //			BanzukeForm->MemoBoutLog->Lines->Add("Battle over ...");
 			UpdateTournamentGrid();
-			PopulateLeaderboardGrid();
+//			PopulateLeaderboardGrid();
 			if (currentBoutIndex == 49) {
 //				BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
-				PopulateLeaderboardGrid();
+//				PopulateLeaderboardGrid();
 				EndBanzuke();
 				break;
 			}
@@ -677,7 +1068,7 @@ void __fastcall TDohyoForm::ButtonNextPlayerBoutClick(TObject *Sender)
 		}
 		else if (currentBoutIndex == 49) {
 //			BanzukeForm->MemoBoutLog->Lines->Add("The fighting has finished.");
-			PopulateLeaderboardGrid();
+//			PopulateLeaderboardGrid();
 			EndBanzuke();
 			break;
 		}
@@ -696,4 +1087,107 @@ void __fastcall TDohyoForm::ButtonDohyoClick(TObject *Sender)
 	this->Hide();
 }
 //---------------------------------------------------------------------------
+
+
+void TDohyoForm::StartBanzuke() {
+	isBanzukeComplete = false;  // Reset the Banzuke status
+	currentBoutIndex = 0;    // Start from the first Rikishi
+	UpdateTournamentGrid();
+	AssignFightersFromGrid();
+//	TImage* imagevs = dynamic_cast<TImage*>(BanzukeForm->FindComponent("ImageVS"));
+//	AnsiString fullPathVS = VSPath;
+//	ImageVS->Bitmap->LoadFromFile(fullPathVS);
+//	PopulateLeaderboardGrid();
+}
+
+// Function to end the Banzuke phase
+void EndBanzuke() {
+	isBanzukeComplete = true;  // Mark Banzuke as complete
+	ShowMessage("Ending Banzuke Phase...");
+	BanzukePhaseComplete();    // Call the function to complete the Banzuke phase in MainStreet.cpp
+//	UpdateBanzukeGrid();
+}
+//---------------------------------------------------------------------------
+
+
+// Function to set the result of a bout
+void SetBoutResult(int boutIndex, int winnerIdx, int loserIdx) {
+	currentBoutResults[boutIndex] = std::make_pair(winnerIdx, loserIdx);
+}
+
+void Victory(int winner, std::vector<Player>& players) {
+	if (winner == 0) {
+		globalFighter1->wins += 1;
+		globalFighter2->losses += 1;
+
+		if (globalFighter1->isShaken) {
+			globalFighter1->isShaken = false;
+		}
+
+		// Check if fighter1 is M1-M10 and defeated a Yokozuna or Ozeki
+		if ((globalFighter1->rank.find("Maegashira") != std::string::npos) &&
+			(globalFighter2->rank == "Yokozuna" || globalFighter2->rank == "Ozeki")) {
+
+			if (globalFighter1->spirit < 4) {
+				globalFighter1->spirit += 1;
+			}
+
+			// Award VP to the player who owns fighter1
+			for (auto& player : players) {
+				if (player.name == globalFighter1->owner) {
+					player.VP += 1;
+					break;
+				}
+			}
+		}
+
+		if (globalFighter2->isShaken) {
+			if (globalFighter2->spirit > 0) {
+				globalFighter2->spirit -= 1;
+			}
+            globalFighter2->isShaken = false;
+		} else {
+            globalFighter2->isShaken = true;
+		}
+	}
+	else if (winner == 1) {
+		globalFighter2->wins += 1;
+		globalFighter1->losses += 1;
+
+		if (globalFighter2->isShaken) {
+			globalFighter2->isShaken = false;
+		}
+
+		// Check if fighter2 is M1-M10 and defeated a Yokozuna or Ozeki
+		if ((globalFighter2->rank.find("Maegashira") != std::string::npos) &&
+			(globalFighter1->rank == "Yokozuna" || globalFighter1->rank == "Ozeki")) {
+
+			if (globalFighter2->spirit < 4) {
+				globalFighter2->spirit += 1;
+			}
+
+			// Award VP to the player who owns fighter2
+			for (auto& player : players) {
+				if (player.name == globalFighter2->owner) {
+					player.VP += 1;
+                    break;
+				}
+			}
+		}
+
+		if (globalFighter1->isShaken) {
+			if (globalFighter1->spirit > 0) {
+				globalFighter1->spirit -= 1;
+			}
+            globalFighter1->isShaken = false;
+		} else {
+			globalFighter1->isShaken = true;
+		}
+	}
+	else {
+		ShowMessage("Error: Invalid winner input.");
+	}
+}
+//---------------------------------------------------------------------------
+
 

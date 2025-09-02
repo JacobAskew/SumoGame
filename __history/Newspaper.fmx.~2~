@@ -1,0 +1,22 @@
+object FormNewspaper: TFormNewspaper
+  Left = 0
+  Top = 0
+  Caption = 'EXTRA EXTRA EXTRA!'
+  ClientHeight = 664
+  ClientWidth = 1100
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ButtonGoBack: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 600.000000000000000000
+    Size.Width = 153.000000000000000000
+    Size.Height = 56.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Go Back'
+    TextSettings.Trimming = None
+    OnClick = ButtonGoBackClick
+  end
+end

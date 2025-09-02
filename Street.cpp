@@ -16,11 +16,12 @@
 #include <map>
 #include <functional>
 #include <System.IOUtils.hpp> // For file path handling
+#include <regex>
 
 #include "Street.h"
 #include "Noboru.h" // Include after Street.h to avoid issues
 #include "Beya.h" // Include after Street.h to avoid issues
-#include "Training.h"
+//#include "Training.h"
 #include "Banzuke.h"
 #include "Dohyo.h"
 #include "Ryogoku.h"
@@ -28,6 +29,7 @@
 #include "Battle.h"
 #include "Retirement.h"
 #include "NoboruDisplay.h"
+#include "Hotel.h"
 
 #pragma hdrstop
 #pragma package(smart_init)
@@ -54,15 +56,20 @@ bool WinGame;
 //String player1Tactic, Rank1;
 //String player2Tactic, Rank2;
 //String boutTactic;
+String Path2Retire = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\retire";
 String Path2Background = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\path";
 String PathRoad = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Road2.png";
-String PathBackground = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Street";
-String BackPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Billboard_Baggins2.png";
+String PathBackground = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\BackgroundImage5";
+String BackPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\background_billboard.png";
+String Path2Hotel = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\hotel";
 String player1Owner = "P1";   // Put YOUR name here!
 String player2Owner = "CPU";
 std::vector<std::string> usedNames; // Initialize the vector before use
 std::vector<std::string> retiredNames;
 std::string player1Name, player2Name;
+bool Path1 = true;
+bool Path2 = true;
+bool Path3 = true;
 // Size of the Ranks array
 constexpr int RanksSize = 16; // Number of ranks (Yokozuna to Juryo 2)
 
@@ -429,7 +436,7 @@ void __fastcall TMainStreet::ButtonBanzukeClick(TObject *Sender)
 		imageBackGround->Bitmap->LoadFromFile(fullPath);
 	}
 
-    UpdateTournamentGrid();
+//    UpdateTournamentGrid();
 
 	BanzukeForm->Show(); // Show the Banzuke form
 //	BanzukeForm->UpdateBouts();     // ????
@@ -506,18 +513,24 @@ void PreGameSetup() {
 //	imageroad->Bitmap->LoadFromFile(fullPathRoad);
 
 	TImage* imagebackground = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageBackground"));
-	AnsiString fullPathBackground = PathBackground + "_Title3.png";
+	AnsiString fullPathBackground = Path2Background + "_start.png";
 	imagebackground->Bitmap->LoadFromFile(fullPathBackground);
 
-//	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
-//	AnsiString fullPathBackground1 = Path2Background + "easy.png";
-//	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
-//	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
-//	AnsiString fullPathBackground2 = Path2Background + "medium.png";
-//	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
-//	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
-//	AnsiString fullPathBackground3 = Path2Background + "hard.png";
-//	imagebackground3->Bitmap->LoadFromFile(fullPathBackground3);
+	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
+	AnsiString fullPathBackground1 = Path2Background + "_easy.png";
+	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
+	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
+	AnsiString fullPathBackground2 = Path2Background + "_medium.png";
+	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
+	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
+	AnsiString fullPathBackground3 = Path2Background + "_hard.png";
+	imagebackground3->Bitmap->LoadFromFile(fullPathBackground3);
+	TImage* imagebackground4 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageSignPost"));
+	AnsiString fullPathBackground4 = Path2Background + "_post.png";
+	imagebackground4->Bitmap->LoadFromFile(fullPathBackground4);
+	TImage* imagebackground5 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageSignEntry"));
+	AnsiString fullPathBackground5 = Path2Background + "_sign.png";
+	imagebackground5->Bitmap->LoadFromFile(fullPathBackground5);
 
 	MainStreet->ButtonNoboru->Visible=false;
 	MainStreet->ButtonBanzuke->Visible=false;
@@ -527,6 +540,7 @@ void PreGameSetup() {
 	MainStreet->EditVictoryPoints->Visible=false;
 	MainStreet->EditAbilityPoints->Visible=false;
 	MainStreet->ButtonRetirement->Visible=false;
+	MainStreet->ButtonHome->Visible=false;
 
 //	MainStreet->PlayVideo();
 
@@ -814,6 +828,39 @@ void __fastcall TMainStreet::ButtonStartGameClick(TObject *Sender)
 	MainStreet->EditVictoryPoints->Visible=true;
 	MainStreet->EditAbilityPoints->Visible=true;
 	MainStreet->ButtonRetirement->Visible=true;
+	MainStreet->ButtonHome->Visible=true;
+
+	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
+	AnsiString fullPathBackground1 = Path2Background + "_easy.png";
+	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
+	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
+	AnsiString fullPathBackground2 = Path2Background + "_medium.png";
+	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
+	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
+	AnsiString fullPathBackground3 = Path2Background + "_hard.png";
+	imagebackground3->Bitmap->LoadFromFile(fullPathBackground3);
+	TImage* imagebackground4 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageSignPost"));
+	AnsiString fullPathBackground4 = Path2Background + "_post.png";
+	imagebackground4->Bitmap->LoadFromFile(fullPathBackground4);
+	TImage* imagebackground5 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImageSignEntry"));
+	AnsiString fullPathBackground5 = Path2Background + "_sign.png";
+	imagebackground5->Bitmap->LoadFromFile(fullPathBackground5);
+
+	if (imagebackground1) {
+		imagebackground1->Visible=false;
+	}
+	if (imagebackground2) {
+		imagebackground2->Visible=false;
+	}
+	if (imagebackground3) {
+		imagebackground3->Visible=false;
+	}
+	if (imagebackground4) {
+		imagebackground4->Visible=false;
+	}
+	if (imagebackground5) {
+		imagebackground5->Visible=false;
+	}
 
 	NoboruForm->StartBidding();
 
@@ -837,7 +884,7 @@ void TrainingPhaseComplete() {
 //	RyogokuForm->MemoLog->Lines->Add("Training phase complete.");
 //	RyogokuForm->MemoLog->Text += "Training phase complete.\n";
 	// Trigger the next phase here, like the BOUT phase, etc.
-	BanzukeForm->StartBanzuke();
+	DohyoForm->StartBanzuke();
 }
 
 //void ReorderRikishi(std::vector<Rikishi>& rikishiVector) {
@@ -1841,7 +1888,7 @@ void EndGamePhase(std::vector<Player>& players, std::vector<Rikishi>& rikishiVec
             UpdateEndScreen();
 			GameOver->Show(); // Show the main form
 			MainStreet->Hide();     // Hide the second form
-			BanzukeForm->Hide();
+			DohyoForm->Hide();
 			ShowMessage((powerWinner->name + " wins a POWER victory! Congratz!").c_str());
 		}
 		else {
@@ -1849,7 +1896,7 @@ void EndGamePhase(std::vector<Player>& players, std::vector<Rikishi>& rikishiVec
 			UpdateEndScreen();
 			GameOver->Show(); // Show the main form
 			MainStreet->Hide();     // Hide the second form
-            BanzukeForm->Hide();
+			DohyoForm->Hide();
 			ShowMessage((powerWinner->name + " YOU LOSE!").c_str());
 		}
 	}
@@ -2206,6 +2253,32 @@ __fastcall TMainStreet::TMainStreet(TComponent* Owner)
 
 void __fastcall TMainStreet::ButtonEasyClick(TObject *Sender)
 {
+	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
+	AnsiString fullPathBackground1 = Path2Background + "_easy.png";
+	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
+	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
+	AnsiString fullPathBackground2 = Path2Background + "_medium.png";
+	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
+	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
+	AnsiString fullPathBackground3 = Path2Background + "_hard.png";
+
+	if (Path1 && Path2 == false && Path3 == false) {
+		Path1 = true;
+		Path2 = true;
+		Path3 = true;
+		imagebackground1->Opacity = 1.0;
+		imagebackground2->Opacity = 1.0;
+		imagebackground3->Opacity = 1.0;
+	}
+	else if (Path1 && Path2 && Path3) {
+		Path1 = true;
+		Path2 = false;
+		Path3 = false;
+		imagebackground1->Opacity = 1.0;
+		imagebackground2->Opacity = 0.1;
+		imagebackground3->Opacity = 0.1;
+	}
+
 	if (maxYears == 1) {
 		PowerWinLim = 1;
 	}
@@ -2217,6 +2290,32 @@ void __fastcall TMainStreet::ButtonEasyClick(TObject *Sender)
 
 void __fastcall TMainStreet::ButtonMediumClick(TObject *Sender)
 {
+	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
+	AnsiString fullPathBackground1 = Path2Background + "_easy.png";
+	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
+	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
+	AnsiString fullPathBackground2 = Path2Background + "_medium.png";
+	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
+	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
+	AnsiString fullPathBackground3 = Path2Background + "_hard.png";
+
+	if (Path1 == false && Path2 && Path3 == false) {
+		Path1 = true;
+		Path2 = true;
+		Path3 = true;
+		imagebackground1->Opacity = 1.0;
+		imagebackground2->Opacity = 1.0;
+		imagebackground3->Opacity = 1.0;
+	}
+	else if (Path1 && Path2 && Path3) {
+		Path1 = false;
+		Path2 = true;
+		Path3 = false;
+		imagebackground1->Opacity = 0.1;
+		imagebackground2->Opacity = 1.0;
+		imagebackground3->Opacity = 0.1;
+	}
+
 	if (maxYears == 1) {
 		PowerWinLim = 5;
 	}
@@ -2228,6 +2327,32 @@ void __fastcall TMainStreet::ButtonMediumClick(TObject *Sender)
 
 void __fastcall TMainStreet::ButtonHardClick(TObject *Sender)
 {
+	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
+	AnsiString fullPathBackground1 = Path2Background + "_easy.png";
+	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
+	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
+	AnsiString fullPathBackground2 = Path2Background + "_medium.png";
+	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
+	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
+	AnsiString fullPathBackground3 = Path2Background + "_hard.png";
+
+	if (Path1 == false && Path2 == false && Path3) {
+		Path1 = true;
+		Path2 = true;
+		Path3 = true;
+		imagebackground1->Opacity = 1.0;
+		imagebackground2->Opacity = 1.0;
+		imagebackground3->Opacity = 1.0;
+	}
+	else if (Path1 && Path2 && Path3) {
+		Path1 = false;
+		Path2 = false;
+		Path3 = true;
+		imagebackground1->Opacity = 0.1;
+		imagebackground2->Opacity = 0.1;
+		imagebackground3->Opacity = 1.0;
+	}
+
 	if (maxYears == 1) {
 		PowerWinLim = 8;
 	}
@@ -2238,8 +2363,234 @@ void __fastcall TMainStreet::ButtonHardClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainStreet::ButtonRetirementClick(TObject *Sender)
 {
+	// Load background image
+	TImage* imageretire1 = dynamic_cast<TImage*>(RetirementForm->FindComponent("ImageBackground"));
+	AnsiString fullPathRetire1 = Path2Retire + "_background.png";
+	if (imageretire1) {
+		try {
+			imageretire1->Bitmap->LoadFromFile(fullPathRetire1);
+			imageretire1->Repaint();
+		} catch (...) {
+			ShowMessage("Failed to load retirement background image: " + fullPathRetire1);
+		}
+	}
+
+	// Only enter loop if retiredRikishi is not empty
+	if (!retiredRikishi.empty()) {
+		for (int retireIndex = 0; retireIndex < retiredRikishi.size() && retireIndex < 3; retireIndex++) {
+			Rikishi& rikishi = retiredRikishi[retireIndex];
+
+			// Rikishi Image
+			TImage* imageRikishi = dynamic_cast<TImage*>(RetirementForm->FindComponent("ImageRikishi" + IntToStr(retireIndex + 1)));
+			if (imageRikishi) {
+				AnsiString fullPathRikishi = RikishiPath + IntToStr(rikishi.spirit) + ".png";
+				try {
+					imageRikishi->Bitmap->LoadFromFile(fullPathRikishi);
+					imageRikishi->Repaint();
+				} catch (...) {
+					ShowMessage("Failed to load rikishi image: " + fullPathRikishi);
+				}
+			}
+
+			// Belt Image
+			TImage* imageBelt = dynamic_cast<TImage*>(RetirementForm->FindComponent("ImageBelt" + IntToStr(retireIndex + 1)));
+			if (imageBelt) {
+				AnsiString fullPathBelt = BeltPath + ".png";
+				try {
+					imageBelt->Bitmap->LoadFromFile(fullPathBelt);
+					imageBelt->Repaint();
+				} catch (...) {
+					ShowMessage("Failed to load belt image: " + fullPathBelt);
+				}
+
+				std::string colorStr = AnsiString(rikishi.colour).c_str();
+				std::smatch match;
+				std::regex numRegex(R"(\d+)");
+				if (std::regex_search(colorStr, match, numRegex)) {
+					UnicodeString extractedNumber = UnicodeString(match.str().c_str());
+					TAlphaColor color = (TAlphaColor)StrToUInt(extractedNumber);
+					TintNoTransparent(imageBelt->Bitmap, color);
+					imageBelt->Repaint();
+				} else {
+					ShowMessage("Invalid color format: " + rikishi.colour);
+				}
+			}
+
+			// Yokozuna Badge
+			TImage* imageYokozuna = dynamic_cast<TImage*>(RetirementForm->FindComponent("ImageYokozuna" + IntToStr(retireIndex + 1)));
+			if (imageYokozuna) {
+				if (rikishi.rank == "Yokozuna") {
+					AnsiString fullPathYokozuna = YokozunaPath + ".png";
+					try {
+						imageYokozuna->Bitmap->LoadFromFile(fullPathYokozuna);
+						imageYokozuna->Opacity = 1.0;
+						imageYokozuna->Repaint();
+					} catch (...) {
+						ShowMessage("Failed to load Yokozuna image: " + fullPathYokozuna);
+					}
+				} else {
+					imageYokozuna->Opacity = 0.0;
+				}
+			}
+		}
+	} else {
+		ShowMessage("Nobody is at the retirement villiage yet ...");
+	}
+
+	// Show RetirementForm and hide MainStreet
 	RetirementForm->Show();
 	this->Hide();
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonHomeClick(TObject *Sender)
+{
+	TImage* imagehotel1 = dynamic_cast<TImage*>(HotelForm->FindComponent("ImageBackground"));
+	AnsiString fullPathHotel1 = Path2Hotel + "_background.png";
+	imagehotel1->Bitmap->LoadFromFile(fullPathHotel1);
+
+	TImage* imagehotel2 = dynamic_cast<TImage*>(HotelForm->FindComponent("ImageBlanket"));
+	AnsiString fullPathHotel2 = Path2Hotel + "_blanket.png";
+	imagehotel2->Bitmap->LoadFromFile(fullPathHotel2);
+
+	TImage* imagehotel3 = dynamic_cast<TImage*>(HotelForm->FindComponent("ImageBook"));
+	AnsiString fullPathHotel3 = Path2Hotel + "_book.png";
+	imagehotel3->Bitmap->LoadFromFile(fullPathHotel3);
+
+	TImage* imagehotel4 = dynamic_cast<TImage*>(HotelForm->FindComponent("ImageDoormat"));
+	AnsiString fullPathHotel4 = Path2Hotel + "_mat.png";
+	imagehotel4->Bitmap->LoadFromFile(fullPathHotel4);
+
+	TImage* imagehotel5 = dynamic_cast<TImage*>(HotelForm->FindComponent("ImageFish"));
+	AnsiString fullPathHotel5 = Path2Hotel + "_fish.png";
+	imagehotel5->Bitmap->LoadFromFile(fullPathHotel5);
+
+	TImage* imagehotel6 = dynamic_cast<TImage*>(HotelForm->FindComponent("ImageHat"));
+	AnsiString fullPathHotel6 = Path2Hotel + "_hat.png";
+	imagehotel6->Bitmap->LoadFromFile(fullPathHotel6);
+
+	TImage* imagehotel7 = dynamic_cast<TImage*>(HotelForm->FindComponent("ImageMoney"));
+	AnsiString fullPathHotel7 = Path2Hotel + "_money.png";
+	imagehotel7->Bitmap->LoadFromFile(fullPathHotel7);
+
+	TImage* imagehotel8 = dynamic_cast<TImage*>(HotelForm->FindComponent("ImagePinboard"));
+	AnsiString fullPathHotel8 = Path2Hotel + "_pinboard.png";
+	imagehotel8->Bitmap->LoadFromFile(fullPathHotel8);
+
+	HotelForm->Show();
+	this->Hide();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonSignEasyClick(TObject *Sender)
+{
+	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
+	AnsiString fullPathBackground1 = Path2Background + "_easy.png";
+	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
+	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
+	AnsiString fullPathBackground2 = Path2Background + "_medium.png";
+	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
+	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
+	AnsiString fullPathBackground3 = Path2Background + "_hard.png";
+
+	if (Path1 && Path2 == false && Path3 == false) {
+		Path1 = true;
+		Path2 = true;
+		Path3 = true;
+		imagebackground1->Opacity = 1.0;
+		imagebackground2->Opacity = 1.0;
+		imagebackground3->Opacity = 1.0;
+	}
+	else if (Path1 && Path2 && Path3) {
+		Path1 = true;
+		Path2 = false;
+		Path3 = false;
+		imagebackground1->Opacity = 1.0;
+		imagebackground2->Opacity = 0.1;
+		imagebackground3->Opacity = 0.1;
+	}
+
+	if (maxYears == 1) {
+		PowerWinLim = 1;
+	}
+	else {
+		PowerWinLim = maxYears * 3;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonSignHardClick(TObject *Sender)
+{
+	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
+	AnsiString fullPathBackground1 = Path2Background + "_easy.png";
+	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
+	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
+	AnsiString fullPathBackground2 = Path2Background + "_medium.png";
+	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
+	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
+	AnsiString fullPathBackground3 = Path2Background + "_hard.png";
+
+	if (Path1 == false && Path2 == false && Path3) {
+		Path1 = true;
+		Path2 = true;
+		Path3 = true;
+		imagebackground1->Opacity = 1.0;
+		imagebackground2->Opacity = 1.0;
+		imagebackground3->Opacity = 1.0;
+	}
+	else if (Path1 && Path2 && Path3) {
+		Path1 = false;
+		Path2 = false;
+		Path3 = true;
+		imagebackground1->Opacity = 0.1;
+		imagebackground2->Opacity = 0.1;
+		imagebackground3->Opacity = 1.0;
+	}
+
+	if (maxYears == 1) {
+		PowerWinLim = 8;
+	}
+	else {
+		PowerWinLim = maxYears * 10;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainStreet::ButtonSignMediumClick(TObject *Sender)
+{
+	TImage* imagebackground1 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathEasy"));
+	AnsiString fullPathBackground1 = Path2Background + "_easy.png";
+	imagebackground1->Bitmap->LoadFromFile(fullPathBackground1);
+	TImage* imagebackground2 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathMedium"));
+	AnsiString fullPathBackground2 = Path2Background + "_medium.png";
+	imagebackground2->Bitmap->LoadFromFile(fullPathBackground2);
+	TImage* imagebackground3 = dynamic_cast<TImage*>(MainStreet->FindComponent("ImagePathHard"));
+	AnsiString fullPathBackground3 = Path2Background + "_hard.png";
+
+	if (Path1 == false && Path2 && Path3 == false) {
+		Path1 = true;
+		Path2 = true;
+		Path3 = true;
+		imagebackground1->Opacity = 1.0;
+		imagebackground2->Opacity = 1.0;
+		imagebackground3->Opacity = 1.0;
+	}
+	else if (Path1 && Path2 && Path3) {
+		Path1 = false;
+		Path2 = true;
+		Path3 = false;
+		imagebackground1->Opacity = 0.1;
+		imagebackground2->Opacity = 1.0;
+		imagebackground3->Opacity = 0.1;
+	}
+
+	if (maxYears == 1) {
+		PowerWinLim = 5;
+	}
+	else {
+		PowerWinLim = maxYears * 6;
+	}
 }
 //---------------------------------------------------------------------------
 

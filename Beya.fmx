@@ -2,8 +2,8 @@ object YourBeya: TYourBeya
   Left = 197
   Top = 120
   Caption = 'Your Sumo Beya'
-  ClientHeight = 420
-  ClientWidth = 772
+  ClientHeight = 664
+  ClientWidth = 1100
   Position = Designed
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -12,22 +12,22 @@ object YourBeya: TYourBeya
   Top = 120
   DesignerMasterStyle = 0
   object Background3: TRectangle
-    Position.X = 521.000000000000000000
-    Position.Y = 56.000000000000000000
+    Position.X = 817.000000000000000000
+    Position.Y = 136.000000000000000000
     Size.Width = 246.000000000000000000
     Size.Height = 356.000000000000000000
     Size.PlatformDefault = False
   end
   object Background2: TRectangle
-    Position.X = 262.000000000000000000
-    Position.Y = 56.000000000000000000
+    Position.X = 430.000000000000000000
+    Position.Y = 136.000000000000000000
     Size.Width = 251.000000000000000000
     Size.Height = 356.000000000000000000
     Size.PlatformDefault = False
   end
   object Background1: TRectangle
-    Position.X = 8.000000000000000000
-    Position.Y = 56.000000000000000000
+    Position.X = 48.000000000000000000
+    Position.Y = 136.000000000000000000
     Size.Width = 246.000000000000000000
     Size.Height = 356.000000000000000000
     Size.PlatformDefault = False
@@ -36,8 +36,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 169.000000000000000000
-    Position.Y = 174.000000000000000000
+    Position.X = 209.000000000000000000
+    Position.Y = 254.000000000000000000
     Size.Width = 85.000000000000000000
     Size.Height = 85.000000000000000000
     Size.PlatformDefault = False
@@ -46,8 +46,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 428.000000000000000000
-    Position.Y = 174.000000000000000000
+    Position.X = 596.000000000000000000
+    Position.Y = 254.000000000000000000
     Size.Width = 85.000000000000000000
     Size.Height = 85.000000000000000000
     Size.PlatformDefault = False
@@ -56,8 +56,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 682.000000000000000000
-    Position.Y = 174.000000000000000000
+    Position.X = 978.000000000000000000
+    Position.Y = 254.000000000000000000
     Size.Width = 85.000000000000000000
     Size.Height = 85.000000000000000000
     Size.PlatformDefault = False
@@ -66,8 +66,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 478.000000000000000000
-    Position.Y = 258.000000000000000000
+    Position.X = 774.000000000000000000
+    Position.Y = 338.000000000000000000
     Size.Width = 330.000000000000000000
     Size.Height = 115.000000000000000000
     Size.PlatformDefault = False
@@ -76,8 +76,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 521.000000000000000000
-    Position.Y = 123.000000000000000000
+    Position.X = 817.000000000000000000
+    Position.Y = 203.000000000000000000
     Size.Width = 246.000000000000000000
     Size.Height = 60.000000000000000000
     Size.PlatformDefault = False
@@ -86,8 +86,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 262.000000000000000000
-    Position.Y = 123.000000000000000000
+    Position.X = 430.000000000000000000
+    Position.Y = 203.000000000000000000
     Size.Width = 251.000000000000000000
     Size.Height = 60.000000000000000000
     Size.PlatformDefault = False
@@ -96,8 +96,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 222.000000000000000000
-    Position.Y = 258.000000000000000000
+    Position.X = 390.000000000000000000
+    Position.Y = 338.000000000000000000
     Size.Width = 330.000000000000000000
     Size.Height = 115.000000000000000000
     Size.PlatformDefault = False
@@ -106,8 +106,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 8.000000000000000000
-    Position.Y = 123.000000000000000000
+    Position.X = 48.000000000000000000
+    Position.Y = 203.000000000000000000
     Size.Width = 246.000000000000000000
     Size.Height = 60.000000000000000000
     Size.PlatformDefault = False
@@ -116,8 +116,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = -33.000000000000000000
-    Position.Y = 258.000000000000000000
+    Position.X = 7.000000000000000000
+    Position.Y = 338.000000000000000000
     Size.Width = 330.000000000000000000
     Size.Height = 115.000000000000000000
     Size.PlatformDefault = False
@@ -126,8 +126,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 544.000000000000000000
-    Position.Y = 152.000000000000000000
+    Position.X = 840.000000000000000000
+    Position.Y = 232.000000000000000000
     Size.Width = 185.000000000000000000
     Size.Height = 193.000000000000000000
     Size.PlatformDefault = False
@@ -136,8 +136,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 285.000000000000000000
-    Position.Y = 152.000000000000000000
+    Position.X = 453.000000000000000000
+    Position.Y = 232.000000000000000000
     Size.Width = 185.000000000000000000
     Size.Height = 193.000000000000000000
     Size.PlatformDefault = False
@@ -146,8 +146,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 30.000000000000000000
-    Position.Y = 152.000000000000000000
+    Position.X = 70.000000000000000000
+    Position.Y = 232.000000000000000000
     Size.Width = 185.000000000000000000
     Size.Height = 193.000000000000000000
     Size.PlatformDefault = False
@@ -161,8 +161,8 @@ object YourBeya: TYourBeya
           'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
           'moBrown.png.PNG'
       end>
-    Position.X = 544.000000000000000000
-    Position.Y = 152.000000000000000000
+    Position.X = 840.000000000000000000
+    Position.Y = 232.000000000000000000
     Size.Width = 185.000000000000000000
     Size.Height = 193.000000000000000000
     Size.PlatformDefault = False
@@ -182,8 +182,8 @@ object YourBeya: TYourBeya
           'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
           'moBrown.png.PNG'
       end>
-    Position.X = 285.000000000000000000
-    Position.Y = 152.000000000000000000
+    Position.X = 453.000000000000000000
+    Position.Y = 232.000000000000000000
     Size.Width = 185.000000000000000000
     Size.Height = 193.000000000000000000
     Size.PlatformDefault = False
@@ -203,8 +203,8 @@ object YourBeya: TYourBeya
           'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
           'moBrown.png.PNG'
       end>
-    Position.X = 30.000000000000000000
-    Position.Y = 152.000000000000000000
+    Position.X = 70.000000000000000000
+    Position.Y = 232.000000000000000000
     Size.Width = 185.000000000000000000
     Size.Height = 193.000000000000000000
     Size.PlatformDefault = False
@@ -216,111 +216,78 @@ object YourBeya: TYourBeya
     end
   end
   object ReturnStreet: TButton
-    Position.X = 664.000000000000000000
-    Position.Y = 8.000000000000000000
-    Size.Width = 103.000000000000000000
-    Size.Height = 40.000000000000000000
+    Position.X = 8.000000000000000000
+    Position.Y = 568.000000000000000000
+    Size.Width = 125.000000000000000000
+    Size.Height = 80.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 56
-    Text = 'ReturnStreet'
+    TabOrder = 66
+    Text = '<---- Street'
     TextSettings.Trimming = None
     OnClick = ReturnStreetClick
   end
-  object TrainRikishi1: TButton
-    Position.X = 113.000000000000000000
-    Position.Y = 8.000000000000000000
-    Size.Width = 173.000000000000000000
-    Size.Height = 40.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 65
-    Text = 'Train Rikishi 1'
-    TextSettings.Trimming = None
-    OnClick = TrainRikishi1Click
-  end
-  object TrainRikishi2: TButton
-    Position.X = 294.000000000000000000
-    Position.Y = 8.000000000000000000
-    Size.Width = 176.000000000000000000
-    Size.Height = 40.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 62
-    Text = 'Train Rikishi 2'
-    TextSettings.Trimming = None
-    OnClick = TrainRikishi2Click
-  end
-  object TrainRikishi3: TButton
-    Position.X = 478.000000000000000000
-    Position.Y = 8.000000000000000000
-    Size.Width = 178.000000000000000000
-    Size.Height = 40.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 59
-    Text = 'Train Rikishi 3'
-    TextSettings.Trimming = None
-    OnClick = TrainRikishi3Click
-  end
   object EditName1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 51
+    TabOrder = 60
     ReadOnly = True
     TextSettings.HorzAlign = Center
-    Position.X = 56.000000000000000000
-    Position.Y = 64.000000000000000000
+    Position.X = 96.000000000000000000
+    Position.Y = 144.000000000000000000
     Size.Width = 150.000000000000000000
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
   end
   object EditAge2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 53
+    TabOrder = 63
     ReadOnly = True
     TextSettings.HorzAlign = Center
-    Position.X = 441.000000000000000000
-    Position.Y = 371.000000000000000000
+    Position.X = 609.000000000000000000
+    Position.Y = 451.000000000000000000
     Size.Width = 54.000000000000000000
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
   end
   object EditName2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 48
+    TabOrder = 56
     ReadOnly = True
     TextSettings.HorzAlign = Center
-    Position.X = 312.000000000000000000
-    Position.Y = 64.000000000000000000
+    Position.X = 480.000000000000000000
+    Position.Y = 144.000000000000000000
     Size.Width = 150.000000000000000000
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
   end
   object EditRank2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 23
+    TabOrder = 29
     ReadOnly = True
     TextSettings.HorzAlign = Center
-    Position.X = 272.000000000000000000
-    Position.Y = 371.000000000000000000
+    Position.X = 440.000000000000000000
+    Position.Y = 451.000000000000000000
     Size.Width = 161.000000000000000000
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
   end
   object EditAge3: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 37
+    TabOrder = 45
     ReadOnly = True
     TextSettings.HorzAlign = Center
-    Position.X = 697.000000000000000000
-    Position.Y = 371.000000000000000000
+    Position.X = 993.000000000000000000
+    Position.Y = 451.000000000000000000
     Size.Width = 54.000000000000000000
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
   end
   object EditName3: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 24
+    TabOrder = 30
     ReadOnly = True
     TextSettings.HorzAlign = Center
-    Position.X = 576.000000000000000000
-    Position.Y = 65.000000000000000000
+    Position.X = 872.000000000000000000
+    Position.Y = 145.000000000000000000
     Size.Width = 150.000000000000000000
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
@@ -330,19 +297,19 @@ object YourBeya: TYourBeya
     TabOrder = 0
     ReadOnly = True
     TextSettings.HorzAlign = Center
-    Position.X = 532.000000000000000000
-    Position.Y = 371.000000000000000000
+    Position.X = 828.000000000000000000
+    Position.Y = 451.000000000000000000
     Size.Width = 157.000000000000000000
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
   end
   object EditRank1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 42
+    TabOrder = 43
     ReadOnly = True
     TextSettings.HorzAlign = Center
-    Position.X = 16.000000000000000000
-    Position.Y = 371.000000000000000000
+    Position.X = 56.000000000000000000
+    Position.Y = 451.000000000000000000
     Size.Width = 161.000000000000000000
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
@@ -352,17 +319,17 @@ object YourBeya: TYourBeya
     TabOrder = 39
     ReadOnly = True
     TextSettings.HorzAlign = Center
-    Position.X = 185.000000000000000000
-    Position.Y = 371.000000000000000000
+    Position.X = 225.000000000000000000
+    Position.Y = 451.000000000000000000
     Size.Width = 54.000000000000000000
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
   end
   object ButtonSkipTraining: TButton
-    Position.X = 8.000000000000000000
-    Position.Y = 8.000000000000000000
-    Size.Width = 97.000000000000000000
-    Size.Height = 40.000000000000000000
+    Position.X = 963.000000000000000000
+    Position.Y = 568.000000000000000000
+    Size.Width = 125.000000000000000000
+    Size.Height = 88.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 58
     Text = 'End Training'
@@ -373,8 +340,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 30.000000000000000000
-    Position.Y = 152.000000000000000000
+    Position.X = 70.000000000000000000
+    Position.Y = 232.000000000000000000
     Size.Width = 185.000000000000000000
     Size.Height = 193.000000000000000000
     Size.PlatformDefault = False
@@ -384,8 +351,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 285.000000000000000000
-    Position.Y = 152.000000000000000000
+    Position.X = 453.000000000000000000
+    Position.Y = 232.000000000000000000
     Size.Width = 185.000000000000000000
     Size.Height = 193.000000000000000000
     Size.PlatformDefault = False
@@ -395,9 +362,9 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 544.000000000000000000
-    Position.Y = 152.000000000000000000
-    Size.Width = 173.000000000000000000
+    Position.X = 840.000000000000000000
+    Position.Y = 232.000000000000000000
+    Size.Width = 185.000000000000000000
     Size.Height = 193.000000000000000000
     Size.PlatformDefault = False
     OnClick = ImageYokozuna3Click
@@ -406,8 +373,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 62.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 102.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -423,8 +390,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 320.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 488.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -440,8 +407,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 579.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 875.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -457,8 +424,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 150.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 190.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -474,8 +441,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 408.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 576.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -491,8 +458,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 667.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 963.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -508,8 +475,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 194.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 234.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -525,8 +492,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 452.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 620.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -542,8 +509,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 711.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 1007.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -559,8 +526,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 106.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 146.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -576,8 +543,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 364.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 532.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -593,8 +560,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 623.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 919.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -610,8 +577,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 18.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 58.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -627,8 +594,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 276.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 444.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -644,8 +611,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 535.000000000000000000
-    Position.Y = 104.000000000000000000
+    Position.X = 831.000000000000000000
+    Position.Y = 184.000000000000000000
     Size.Width = 45.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
@@ -661,7 +628,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.Y = 48.000000000000000000
+    Position.X = 40.000000000000000000
+    Position.Y = 128.000000000000000000
     Size.Width = 264.000000000000000000
     Size.Height = 372.000000000000000000
     Size.PlatformDefault = False
@@ -670,8 +638,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 247.000000000000000000
-    Position.Y = 48.000000000000000000
+    Position.X = 415.000000000000000000
+    Position.Y = 128.000000000000000000
     Size.Width = 277.000000000000000000
     Size.Height = 372.000000000000000000
     Size.PlatformDefault = False
@@ -680,8 +648,8 @@ object YourBeya: TYourBeya
     MultiResBitmap = <
       item
       end>
-    Position.X = 505.000000000000000000
-    Position.Y = 48.000000000000000000
+    Position.X = 801.000000000000000000
+    Position.Y = 128.000000000000000000
     Size.Width = 267.000000000000000000
     Size.Height = 372.000000000000000000
     Size.PlatformDefault = False

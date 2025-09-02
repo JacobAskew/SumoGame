@@ -1,0 +1,158 @@
+object RetirementForm: TRetirementForm
+  Left = 510
+  Top = 0
+  Caption = 'Ojiichan!!'
+  ClientHeight = 664
+  ClientWidth = 1100
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 510
+  DesignerMasterStyle = 0
+  object ImageBackground: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Size.Width = 1100.000000000000000000
+    Size.Height = 664.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonReturn: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 560.000000000000000000
+    Size.Width = 193.000000000000000000
+    Size.Height = 96.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 
+      '<----                                                          S' +
+      'treet'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnClick
+  end
+  object ImageBelt1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 110.000000000000000000
+    Position.Y = 240.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 349.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt3: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 576.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 110.000000000000000000
+    Position.Y = 240.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectRikishi1: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageRikishi2: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 349.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectRikishi2: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageRikishi3: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 576.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+    object GlowEffectRikishi3: TGlowEffect
+      Softness = 0.400000005960464500
+      GlowColor = claAqua
+      Opacity = 0.899999976158142100
+      Enabled = False
+    end
+  end
+  object ImageYokozuna1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 110.000000000000000000
+    Position.Y = 240.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 349.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna3: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 576.000000000000000000
+    Position.Y = 144.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+  end
+end

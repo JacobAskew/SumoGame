@@ -1,0 +1,620 @@
+object NoboruDisplayForm: TNoboruDisplayForm
+  Left = 240
+  Top = 191
+  Caption = 'Check out the competition!'
+  ClientHeight = 664
+  ClientWidth = 1100
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 240
+  Top = 191
+  DesignerMasterStyle = 0
+  object ButtonReturn: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 624.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Go Back'
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnClick
+  end
+  object ImageBelt1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt3: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi2: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi3: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna3: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image3: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image10: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image11: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image12: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image13: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image14: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image15: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image16: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image17: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image18: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image19: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image20: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image21: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image22: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image23: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image24: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image25: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image26: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image27: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image28: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image29: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image30: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image31: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image32: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image33: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image34: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image35: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image36: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image37: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image38: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image39: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image40: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image41: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image42: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image43: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image44: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image45: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image4: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 549.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 540.000000000000000000
+    Size.Height = 630.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image5: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 549.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 540.000000000000000000
+    Size.Height = 630.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Image6: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 549.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 540.000000000000000000
+    Size.Height = 630.000000000000000000
+    Size.PlatformDefault = False
+  end
+end

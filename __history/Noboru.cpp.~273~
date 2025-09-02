@@ -1,0 +1,1013 @@
+﻿//---------------------------------------------------------------------------
+#include <fmx.h>
+#include <FMX.Dialogs.hpp>
+#include <System.UITypes.hpp>  // For colors
+#include <map>  // If you still want to use maps
+#include <FMX.Graphics.hpp>   // For TBitmap
+#include <System.SysUtils.hpp>  // Required for UnicodeString conversion
+#include <regex>
+//---------------------------------------------------------------------------
+#include "Noboru.h"
+#include "Street.h" // Include after Noboru.h
+#include "Beya.h" // Include after Noboru.h to avoid issues
+#include "Banzuke.h"
+#include "NoboruDisplay.h"
+//---------------------------------------------------------------------------
+#pragma hdrstop
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+//---------------------------------------------------------------------------
+TNoboruForm *NoboruForm;
+//---------------------------------------------------------------------------
+
+bool TrainedRikishi1 = false;
+bool TrainedRikishi2 = false;
+bool TrainedRikishi3 = false;
+
+bool isBiddingComplete = false;  // Flag to track if bidding is complete
+// Check if bidding is complete
+bool IsBiddingComplete() {
+    return isBiddingComplete;
+}
+int currentRikishiIndex = 0;    // Index for the current Rikishi being bid on
+void BiddingPhaseComplete();
+int currentPlayerIndex = 0;
+int BetCounter = 0;
+
+String WhichPile = "";
+String CancelPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Cancel.png";
+String CoinPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Coin";
+String CoinsPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\CoinPile_";
+String BackgroundPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\BanzukeBackground2.png";
+String RikishiPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\Sumo";
+String BeltPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\SumoBelt";
+String YokozunaPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\SumoYokozunaBelt";
+
+// Helper function to apply a tint to a pixel
+TAlphaColor ApplyTintsToPixel(TAlphaColor originalColor, TAlphaColor tintColor) {
+    // Extract RGB components from the original color
+    uint8_t r = (originalColor >> 16) & 0xFF;
+    uint8_t g = (originalColor >> 8) & 0xFF;
+    uint8_t b = (originalColor >> 0) & 0xFF;
+
+    // Extract RGB components from the tint color
+    uint8_t tr = (tintColor >> 16) & 0xFF;
+    uint8_t tg = (tintColor >> 8) & 0xFF;
+    uint8_t tb = (tintColor >> 0) & 0xFF;
+
+	// Use uint16_t for safe addition before division
+	uint16_t rSum = r + tr;
+	uint16_t gSum = g + tg;
+	uint16_t bSum = b + tb;
+
+	// Now perform the division safely
+	r = (rSum / 2) & 0xFF;
+	g = (gSum / 2) & 0xFF;
+	b = (bSum / 2) & 0xFF;
+
+    // Recreate the tinted color and return it
+    return (originalColor & 0xFF000000) | (r << 16) | (g << 8) | b;
+}
+
+// Function to apply tint to non-transparent pixels of the bitmap
+void TintsNonTransparent(TBitmap* bitmap, TAlphaColor tintColor) {
+    if (!bitmap || bitmap->IsEmpty()) return;
+
+    // Lock the bitmap data to access pixels
+    TBitmapData bitmapData;
+    if (bitmap->Map(TMapAccess::ReadWrite, bitmapData)) {  // Correct enum value for access
+        // Iterate through each pixel
+        for (int y = 0; y < bitmap->Height; ++y) {
+            for (int x = 0; x < bitmap->Width; ++x) {
+                // Get the color of the current pixel
+                TAlphaColor pixelColor = bitmapData.GetPixel(x, y);
+				uint8_t alpha = (pixelColor >> 24) & 0xFF;  // Extract alpha component
+
+				// If the pixel is not transparent, apply the tint
+                if (alpha > 0) {
+                    TAlphaColor tintedPixel = ApplyTintsToPixel(pixelColor, tintColor);
+                    bitmapData.SetPixel(x, y, tintedPixel); // Set the tinted pixel
+                }
+            }
+        }
+        // Unlock the bitmap after modifications
+        bitmap->Unmap(bitmapData);
+    }
+}
+
+void UpdateImage(Rikishi &rikishi, TForm *form) {
+
+	NoboruForm->TextName->Text = AnsiString(rikishi.name.c_str());
+	NoboruForm->TextAge->Text = AnsiString(std::to_string(rikishi.age).c_str());
+	NoboruForm->TextRank->Text = AnsiString(Ranks[currentRikishiIndex].c_str());
+	NoboruForm->TextOyakata->Text = AnsiString(rikishi.owner.c_str());
+	NoboruForm->TextSpirit->Text = AnsiString(std::to_string(rikishi.spirit).c_str());
+	NoboruForm->TextMinBid->Text = AnsiString(std::to_string(rikishi.minBid).c_str());
+
+	for (auto& player : players) {
+		NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+	}
+
+	// Load Background image
+	TImage* imageBackground = dynamic_cast<TImage*>(form->FindComponent("ImageBackground"));
+	if (imageBackground) {
+		AnsiString fullPathBackground = BackgroundPath;
+		imageBackground->Bitmap->LoadFromFile(fullPathBackground);
+	}
+
+	for (auto& player : players) {
+		if (player.AP - BetCounter == 1) {
+			WhichPile = "1";
+		}
+		else if (player.AP - BetCounter == 2) {
+			WhichPile = "2";
+		}
+		else if (player.AP - BetCounter == 3) {
+			WhichPile = "3";
+		}
+		else if (player.AP - BetCounter >= 5 && player.AP - BetCounter < 7) {
+			WhichPile = "4";
+		}
+		else if (player.AP - BetCounter >= 7) {
+			WhichPile = "5";
+		}
+	}
+
+	// Load CoinPile image
+	TImage* imageCoins = dynamic_cast<TImage*>(form->FindComponent("ImageCoinStack"));
+	if (imageCoins) {
+		AnsiString fullPathCoins = CoinsPath + WhichPile + ".png";
+		imageCoins->Bitmap->LoadFromFile(fullPathCoins);
+	}
+
+	// Load Rikishi image
+	TImage* imageRikishi = dynamic_cast<TImage*>(form->FindComponent("ImageRikishi"));
+	if (imageRikishi) {
+		AnsiString fullPathRikishi = RikishiPath + IntToStr(rikishi.spirit) + ".png";
+		imageRikishi->Bitmap->LoadFromFile(fullPathRikishi);
+	}
+
+    // Load Belt image and apply color
+    TImage* imageBelt = dynamic_cast<TImage*>(form->FindComponent("ImageBelt"));
+    if (imageBelt) {
+		AnsiString fullPathBelt = BeltPath + ".png";
+        imageBelt->Bitmap->LoadFromFile(fullPathBelt);
+
+        // Convert UnicodeString to std::string
+        std::string colorStr = AnsiString(rikishi.colour).c_str();
+        std::smatch match;
+        std::regex numRegex(R"(\d+)");
+        if (std::regex_search(colorStr, match, numRegex)) {
+            UnicodeString extractedNumber = UnicodeString(match.str().c_str());
+            TAlphaColor color = (TAlphaColor)StrToUInt(extractedNumber);
+			TintsNonTransparent(imageBelt->Bitmap, color); // Correct function name
+		} else {
+			ShowMessage("Invalid color format: " + rikishi.colour);
+		}
+    }
+
+	// If Yokozuna, load the Yokozuna image
+	TImage* imageYokozuna = dynamic_cast<TImage*>(form->FindComponent("ImageYokozuna"));
+	if (rikishi.rank == "Yokozuna") {
+		if (imageYokozuna) {
+			AnsiString fullPathYokozuna = YokozunaPath + ".png";
+			imageYokozuna->Bitmap->LoadFromFile(fullPathYokozuna);
+		}
+	} else {
+		// If not Yokozuna, hide the Yokozuna image
+		if (imageYokozuna) {
+			imageYokozuna->Visible = false;  // Hides the image
+		}
+	}
+
+	// Load and tint skill images
+	struct Skill {
+		const char* name;
+		int value;
+		int limit;
+		TAlphaColor color;
+	};
+
+	Skill skills[] = {
+		{"Weight", rikishi.weight, rikishi.weightLimit, TAlphaColorRec::Black},
+		{"Endurance", rikishi.endurance, rikishi.enduranceLimit, (TAlphaColor)0xFF00FF00},
+		{"Technique", rikishi.technique, rikishi.techniqueLimit, TAlphaColorRec::Blue},
+		{"Speed", rikishi.speed, rikishi.speedLimit, TAlphaColorRec::Yellow},
+		{"Strength", rikishi.strength, rikishi.strengthLimit, TAlphaColorRec::Red}
+	};
+
+	for (const Skill& skill : skills) {
+		TImage* skillImage = dynamic_cast<TImage*>(NoboruForm->FindComponent("Image" + AnsiString(skill.name) + "1"));
+		if (skillImage) {
+			AnsiString fullPathSkill = SkillPath + IntToStr(skill.value) + IntToStr(skill.limit) + ".png";
+			skillImage->Bitmap->LoadFromFile(fullPathSkill);
+			TintsNonTransparent(skillImage->Bitmap, skill.color);
+		}
+	}
+}
+
+//void UpdateBanzukeGrid()
+//{
+//	NoboruForm->BanzukeGrid->Repaint();
+//
+//	// Define the Ranks array
+//	std::string Ranks[] = {
+//		"Y", "O", "S", "K",
+//		"M1", "M2", "M3", "M4",
+//		"M5", "M6", "M7", "M8",
+//		"M9", "M10", "J1", "J2"
+//	};
+//
+//	// Access the existing TStringGrid
+//	if (NoboruForm && NoboruForm->BanzukeGrid) {
+//
+//		// Populate the grid with ranks
+//		for (int row = 0; row < 16; row++) {
+//
+//			Rikishi& rikishi = rikishiVector[row];
+//
+//			NoboruForm->BanzukeGrid->Cells[0][row] = AnsiString(Ranks[row].c_str()); // Convert std::string to AnsiString
+//			NoboruForm->BanzukeGrid->Cells[1][row] = AnsiString(rikishi.name.c_str()); // Name
+//			NoboruForm->BanzukeGrid->Cells[2][row] = AnsiString(rikishi.owner.c_str()); // Owner
+//			NoboruForm->BanzukeGrid->Cells[3][row] = AnsiString(std::to_string(rikishi.age).c_str()); // Age
+//			NoboruForm->BanzukeGrid->Cells[4][row] = AnsiString(std::to_string(rikishi.spirit).c_str()); // Spirit
+//			NoboruForm->BanzukeGrid->Cells[5][row] = AnsiString((std::to_string(rikishi.weight) + "/" + std::to_string(rikishi.weightLimit)).c_str()); // Weight
+//			NoboruForm->BanzukeGrid->Cells[6][row] = AnsiString((std::to_string(rikishi.endurance) + "/" + std::to_string(rikishi.enduranceLimit)).c_str()); // Endurance
+//			NoboruForm->BanzukeGrid->Cells[7][row] = AnsiString((std::to_string(rikishi.technique) + "/" + std::to_string(rikishi.techniqueLimit)).c_str()); // Technique
+//			NoboruForm->BanzukeGrid->Cells[8][row] = AnsiString((std::to_string(rikishi.speed) + "/" + std::to_string(rikishi.speedLimit)).c_str()); // Speed
+//			NoboruForm->BanzukeGrid->Cells[9][row] = AnsiString((std::to_string(rikishi.strength) + "/" + std::to_string(rikishi.strengthLimit)).c_str()); // Strength
+//			NoboruForm->BanzukeGrid->Cells[10][row] = AnsiString(std::to_string(rikishi.minBid).c_str()); // Min Bid
+//
+//		}
+//	} else {
+//		// Handle the error if the grid or form doesn't exist
+//		ShowMessage("Error: BanzukeGrid.");
+//	}
+//}
+
+// Function to start the bidding
+void TNoboruForm::StartBidding() {
+
+	TrainedRikishi1 = false;
+	TrainedRikishi2 = false;
+	TrainedRikishi3 = false;
+	NoboruForm = new TNoboruForm(this);
+	isBiddingComplete = false;  // Reset the bidding status
+	currentRikishiIndex = 0;    // Start from the first Rikishi
+//	UpdateBanzukeGrid();
+	UpdateBidding();
+}
+
+// Check if bidding is complete
+//bool IsBiddingComplete() {
+//	return isBiddingComplete;
+//}
+
+
+void UpdateCurrentBid() {
+
+	if (isBiddingComplete) {
+//		NoboruForm->EditCurrentRikishiBid->Text = "Bidding Complete.";
+		return;
+	}
+	else {
+		Rikishi &rikishi = rikishiVector[currentRikishiIndex];
+//		NoboruForm->EditCurrentRikishiBid->Text = "Current Rikishi: " + String(rikishi.name.c_str());
+	}
+}
+
+// When the player clicks "Skip" for the current Rikishi
+void __fastcall TNoboruForm::NextBidButtonClick(TObject *Sender) {
+
+	if (isBiddingComplete) {
+//		NoboruForm->MemoLogNoboru->Lines->Add("The bidding is closed.");
+		return;  // This will exit the current function if bidding is complete
+	}
+
+	if (currentRikishiIndex < rikishiVector.size()) {
+		if (currentRikishiIndex + 1 < rikishiVector.size()) {
+			currentRikishiIndex++;  // Move to the next Rikishi
+//			UpdateBanzukeGrid();    // Update the grid
+			Rikishi &myRikishi = rikishiVector[currentRikishiIndex];
+			UpdateImage(myRikishi, NoboruForm);
+			UpdateCurrentBid();
+		}
+		else {
+			EndBidding();
+		}
+	}
+}
+
+// When the player clicks "Min Bid" to place the minimum bid
+void __fastcall TNoboruForm::ButtonMinBidClick(TObject *Sender) {
+	if (isBiddingComplete) {
+//		NoboruForm->MemoLogNoboru->Lines->Add("The bidding is closed.");
+		return;  // This will exit the current function if bidding is complete
+	}
+	else if (currentRikishiIndex + 1 < rikishiVector.size()) {
+			PlaceBid(rikishiVector[currentRikishiIndex].minBid);  // Place minimum bid
+			UpdatePoints();
+	}
+	else {
+		PlaceBid(rikishiVector[currentRikishiIndex].minBid);
+		UpdatePoints();
+		EndBidding();
+	}
+}
+
+// Function to end the bidding phase
+void EndBidding() {
+	for (auto& rikishi : rikishiVector) {
+		if (rikishi.owner.find("P1") == std::string::npos &&
+			rikishi.owner.find("P2") == std::string::npos &&
+			rikishi.owner.find("P3") == std::string::npos &&
+			rikishi.owner.find("P4") == std::string::npos &&
+			rikishi.owner.find("P5") == std::string::npos) {
+			rikishi.owner = "CPU";
+		}
+	}
+
+	// Load Bidding over image
+	TImage* imageCancel = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCancel"));
+	if (imageCancel) {
+		AnsiString fullPathCancel = CancelPath;
+		imageCancel->Bitmap->LoadFromFile(fullPathCancel);
+	}
+
+//    UpdateBanzukeGrid();
+    isBiddingComplete = true;  // Mark bidding as complete
+	BiddingPhaseComplete();    // Call the function to complete the bidding phase in MainStreet.cpp
+	UpdateCurrentBid();
+}
+
+bool AreAllPlayersOutOfAP() {
+	for (auto& player : players) {
+		if (player.AP > 0) {
+//            ShowMessage("Player with AP: " + player.name); // Debug output
+			return false;  // At least one player has AP left
+		}
+	}
+    return true;  // All players have no AP left
+}
+
+bool PlayerHasThreeRikishi() {
+
+    int P1_rikishiCount = 0;
+
+    // Find P1
+    auto it = std::find_if(players.begin(), players.end(), [](const Player& p) {
+        return p.name == "P1";
+    });
+
+
+    Player& P1 = *it;
+	P1_rikishiCount = P1.rikishiList.size();
+
+	for (auto& player : players) {
+		if (P1_rikishiCount < 3) {  // Checking for < 3
+//            ShowMessage("Player with less than 3 Rikishi: " + player.name); // Debug output
+			return false;  // At least one player has less than 3 rikishi
+		}
+	}
+	return true;  // All players have 3 or more Rikishi
+}
+
+// Example of calling DeductAP() for a player
+void DeductAPFromPlayer(int playerIndex, int bidAmount) {
+	if (playerIndex >= 0 && playerIndex < players.size()) {
+		players[playerIndex].DeductAP(bidAmount);
+	}
+}
+
+bool checkRikishiOwnership(const std::vector<Rikishi>& rikishiVector) {
+    for (const auto& rikishi : rikishiVector) {
+        if (rikishi.owner == "Free Agent") {
+            return false; // If any rikishi has owner "Nobody", return false
+        }
+    }
+    return true; // All rikishi have owner other than "Nobody", return true
+}
+
+void UpdateBidding() {
+	// Check if all players are out of AP or have already selected 3 Rikishi
+	if (AreAllPlayersOutOfAP() || PlayerHasThreeRikishi()) {
+//		NoboruForm->MemoLogNoboru->Lines->Add("All players are out of AP or have acquired 3 Rikishi! Closing Bidding.");
+		EndBidding();  // End bidding if all players have no AP left or all players have acquired 3 Rikishi
+	}
+	else if (checkRikishiOwnership(rikishiVector)) {
+//		NoboruForm->MemoLogNoboru->Lines->Add("There are no available Rikishi! Closing Bidding.");
+		EndBidding();
+	}
+	else {
+//		NoboruForm->MemoLogNoboru->Lines->Add("You have this much AP left: " + IntToStr(players[currentPlayerIndex].AP));
+	}
+}
+
+void PlaceBid(int bidAmount) {
+	if (isBiddingComplete) {
+//		NoboruForm->MemoLogNoboru->Lines->Add("The bidding is closed.");
+		return;  // Exit if bidding is complete
+	}
+
+//	// Check if the player has already acquired 3 Rikishi
+//	if (players[currentPlayerIndex].numberRikishi >= 3) {
+//
+//	}
+
+	if (PlayerHasThreeRikishi()) {
+//		NoboruForm->MemoLogNoboru->Lines->Add("You have already acquired 3 Rikishi. You cannot place more bids.");
+		return;  // Exit if the player has 3 or more Rikishi
+	}
+
+	if (currentRikishiIndex < rikishiVector.size()) {  // Fixed: Prevent out-of-bounds
+		Rikishi& rikishi = rikishiVector[currentRikishiIndex];
+
+		// Check if the input is valid
+		if (bidAmount == -1) {
+            ShowMessage("Invalid bid. Please enter a number.");
+            return;
+        }
+
+        // Check if the bid is too low
+        if (bidAmount < rikishi.minBid) {
+            ShowMessage("Bid too low! Minimum bid is: " + IntToStr(rikishi.minBid));
+            return;
+        }
+
+        // Check if the player has enough AP
+        if (bidAmount > players[currentPlayerIndex].AP) {
+            ShowMessage("Not enough AP! You have: " + IntToStr(players[currentPlayerIndex].AP) + " AP available.");
+            return;
+        }
+
+        if (bidAmount >= rikishi.minBid) {
+            // Deduct AP from the player placing the bid
+			DeductAPFromPlayer(currentPlayerIndex, bidAmount);
+
+			// Update the owner of the Rikishi
+			rikishi.owner = players[currentPlayerIndex].name;
+
+            // Log the win
+//			NoboruForm->MemoLogNoboru->Lines->Add(
+//				AnsiString(players[currentPlayerIndex].name.c_str()) + " wins " +
+//				AnsiString(rikishi.name.c_str()) + " for " + IntToStr(bidAmount)
+//			);
+
+            // Add Rikishi to Player's rikishiList
+            players[currentPlayerIndex].rikishiList.push_back(rikishi);
+
+            // Increment the number of Rikishi owned by the player
+            players[currentPlayerIndex].numberRikishi++;
+
+			// Update bidding status and UI
+			UpdateBidding();
+//			UpdateBanzukeGrid();
+			UpdatePoints();
+
+			for (int i = 1; i < BetCounter+1; ++i) {
+				// Un-Load Coin image
+				TImage* imageCoin = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoin" + IntToStr(i)));
+				imageCoin->Visible = false;  // Hides the image
+			}
+
+			BetCounter = 0;
+
+			for (auto& player : players) {
+				NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+			}
+
+			// Move to the next Rikishi if available
+			if (currentRikishiIndex + 1 < rikishiVector.size()) {
+				currentRikishiIndex++;
+				UpdateImage(rikishiVector[currentRikishiIndex], NoboruForm);
+			}
+		}
+    }
+    // Check if we've gone through all the Rikishi and not all players are out of AP or acquired 3 Rikishi
+	if (currentRikishiIndex >= rikishiVector.size() && !AreAllPlayersOutOfAP() && !PlayerHasThreeRikishi()) {
+		EndBidding();  // End bidding when all Rikishi are done and conditions met
+	}
+}
+
+void __fastcall TNoboruForm::ButtonSkipAllBidsClick(TObject *Sender)
+{
+	if (isBiddingComplete) {
+//		NoboruForm->MemoLogNoboru->Lines->Add("The bidding is closed.");
+		return;  // Exit if bidding is complete
+	}
+
+	// Display the confirmation dialog
+	int result = MessageDlg("Are you sure you want to end the bidding?",
+                            TMsgDlgType::mtConfirmation,
+							TMsgDlgButtons() << TMsgDlgBtn::mbYes << TMsgDlgBtn::mbNo,
+							0);
+
+	// Compare the result with the integer value for the Yes button
+	if (result == mrYes) {
+		EndBidding();  // Proceed with ending the bidding if "Yes" is selected
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::ButtonSubmitClick(TObject *Sender)
+{
+	if (isBiddingComplete) {
+//		NoboruForm->MemoLogNoboru->Lines->Add("The bidding is closed.");
+		return;  // This will exit the current function if bidding is complete
+	}
+
+	PlaceBid(BetCounter);
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::TextAPClick(TObject *Sender)
+{
+
+	if (isBiddingComplete == true) {
+		ShowMessage("Bidding is complete. Please proceed to your Sumo Beya.");
+	}
+	else {
+		for (auto& player : players) {
+			if (BetCounter == player.AP) {
+				ShowMessage("You cannot bet anymore! You are currently betting all your AP.");
+			}
+			else {
+				if (BetCounter != 7) {
+					BetCounter++;
+
+					// Load Coin image
+					TImage* imageCoin = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoin" + IntToStr(BetCounter)));
+					if (imageCoin) {
+						AnsiString fullPathCoin = CoinPath + IntToStr(BetCounter) + ".png";
+						imageCoin->Bitmap->LoadFromFile(fullPathCoin);
+					imageCoin->Visible = true;
+					}
+
+				}
+				else {
+					ShowMessage("Maximum bet of 7 is already placed!");
+				}
+			}
+			NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+		}
+	}
+
+	for (auto& player : players) {
+		if (player.AP - BetCounter == 1) {
+			WhichPile = "1";
+		}
+		else if (player.AP - BetCounter == 2) {
+			WhichPile = "2";
+		}
+		else if (player.AP - BetCounter == 3 || player.AP - BetCounter == 4) {
+			WhichPile = "3";
+		}
+		else if (player.AP - BetCounter == 5 || player.AP - BetCounter == 6) {
+			WhichPile = "4";
+		}
+		else if (player.AP - BetCounter >= 7) {
+			WhichPile = "5";
+		}
+	}
+
+	// Load CoinPile image
+	TImage* imageCoins = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoinStack"));
+	if (imageCoins) {
+		AnsiString fullPathCoins = CoinsPath + WhichPile + ".png";
+		imageCoins->Bitmap->LoadFromFile(fullPathCoins);
+		for (auto& player : players) {
+			if (player.AP - BetCounter < 1) {
+				imageCoins->Visible = false;
+			}
+			else {
+				imageCoins->Visible = true;
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::ImageCoin1Click(TObject *Sender)
+{
+	if (BetCounter == 1 && isBiddingComplete != true) {
+		// Un-Load Coin image
+		TImage* imageCoin = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoin" + IntToStr(BetCounter)));
+		imageCoin->Visible = false;  // Hides the image
+		BetCounter--;
+		for (auto& player : players) {
+			NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+		}
+		for (auto& player : players) {
+			if (player.AP - BetCounter == 1) {
+				WhichPile = "1";
+			}
+			else if (player.AP - BetCounter == 2) {
+				WhichPile = "2";
+			}
+			else if (player.AP - BetCounter == 3 || player.AP - BetCounter == 4) {
+				WhichPile = "3";
+			}
+			else if (player.AP - BetCounter == 5 || player.AP - BetCounter == 6) {
+				WhichPile = "4";
+			}
+			else if (player.AP - BetCounter >= 7) {
+				WhichPile = "5";
+			}
+		}
+
+		// Load CoinPile image
+		TImage* imageCoins = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoinStack"));
+		if (imageCoins) {
+			AnsiString fullPathCoins = CoinsPath + WhichPile + ".png";
+			imageCoins->Bitmap->LoadFromFile(fullPathCoins);
+			for (auto& player : players) {
+				if (player.AP - BetCounter < 1) {
+					imageCoins->Visible = false;
+				}
+				else {
+					imageCoins->Visible = true;
+				}
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::ImageCoin2Click(TObject *Sender)
+{
+	if (BetCounter == 2 && isBiddingComplete != true) {
+		// Un-Load Coin image
+		TImage* imageCoin = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoin" + IntToStr(BetCounter)));
+		imageCoin->Visible = false;  // Hides the image
+		BetCounter--;
+		for (auto& player : players) {
+			NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+		}
+		for (auto& player : players) {
+			if (player.AP - BetCounter == 1) {
+				WhichPile = "1";
+			}
+			else if (player.AP - BetCounter == 2) {
+				WhichPile = "2";
+			}
+			else if (player.AP - BetCounter == 3 || player.AP - BetCounter == 4) {
+				WhichPile = "3";
+			}
+			else if (player.AP - BetCounter == 5 || player.AP - BetCounter == 6) {
+				WhichPile = "4";
+			}
+			else if (player.AP - BetCounter >= 7) {
+				WhichPile = "5";
+			}
+		}
+
+		// Load CoinPile image
+		TImage* imageCoins = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoinStack"));
+		if (imageCoins) {
+			AnsiString fullPathCoins = CoinsPath + WhichPile + ".png";
+			imageCoins->Bitmap->LoadFromFile(fullPathCoins);
+			for (auto& player : players) {
+				if (player.AP - BetCounter < 1) {
+					imageCoins->Visible = false;
+				}
+				else {
+					imageCoins->Visible = true;
+				}
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::ImageCoin3Click(TObject *Sender)
+{
+	if (BetCounter == 3 && isBiddingComplete != true) {
+		// Un-Load Coin image
+		TImage* imageCoin = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoin" + IntToStr(BetCounter)));
+		imageCoin->Visible = false;  // Hides the image
+		BetCounter--;
+		for (auto& player : players) {
+			NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+		}
+		for (auto& player : players) {
+			if (player.AP - BetCounter == 1) {
+				WhichPile = "1";
+			}
+			else if (player.AP - BetCounter == 2) {
+				WhichPile = "2";
+			}
+			else if (player.AP - BetCounter == 3 || player.AP - BetCounter == 4) {
+				WhichPile = "3";
+			}
+			else if (player.AP - BetCounter == 5 || player.AP - BetCounter == 6) {
+				WhichPile = "4";
+			}
+			else if (player.AP - BetCounter >= 7) {
+				WhichPile = "5";
+			}
+		}
+
+		// Load CoinPile image
+		TImage* imageCoins = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoinStack"));
+		if (imageCoins) {
+			AnsiString fullPathCoins = CoinsPath + WhichPile + ".png";
+			imageCoins->Bitmap->LoadFromFile(fullPathCoins);
+			for (auto& player : players) {
+				if (player.AP - BetCounter < 1) {
+					imageCoins->Visible = false;
+				}
+				else {
+					imageCoins->Visible = true;
+				}
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::ImageCoin4Click(TObject *Sender)
+{
+	if (BetCounter == 4 && isBiddingComplete != true) {
+		// Un-Load Coin image
+		TImage* imageCoin = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoin" + IntToStr(BetCounter)));
+		imageCoin->Visible = false;  // Hides the image
+		BetCounter--;
+		for (auto& player : players) {
+			NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+		}
+		for (auto& player : players) {
+			if (player.AP - BetCounter == 1) {
+				WhichPile = "1";
+			}
+			else if (player.AP - BetCounter == 2) {
+				WhichPile = "2";
+			}
+			else if (player.AP - BetCounter == 3 || player.AP - BetCounter == 4) {
+				WhichPile = "3";
+			}
+			else if (player.AP - BetCounter == 5 || player.AP - BetCounter == 6) {
+				WhichPile = "4";
+			}
+			else if (player.AP - BetCounter >= 7) {
+				WhichPile = "5";
+			}
+		}
+
+		// Load CoinPile image
+		TImage* imageCoins = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoinStack"));
+		if (imageCoins) {
+			AnsiString fullPathCoins = CoinsPath + WhichPile + ".png";
+			imageCoins->Bitmap->LoadFromFile(fullPathCoins);
+			for (auto& player : players) {
+				if (player.AP - BetCounter < 1) {
+					imageCoins->Visible = false;
+				}
+				else {
+					imageCoins->Visible = true;
+				}
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::ImageCoin5Click(TObject *Sender)
+{
+	if (BetCounter == 5 && isBiddingComplete != true) {
+		// Un-Load Coin image
+		TImage* imageCoin = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoin" + IntToStr(BetCounter)));
+		imageCoin->Visible = false;  // Hides the image
+		BetCounter--;
+		for (auto& player : players) {
+			NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+		}
+		for (auto& player : players) {
+			if (player.AP - BetCounter == 1) {
+				WhichPile = "1";
+			}
+			else if (player.AP - BetCounter == 2) {
+				WhichPile = "2";
+			}
+			else if (player.AP - BetCounter == 3 || player.AP - BetCounter == 4) {
+				WhichPile = "3";
+			}
+			else if (player.AP - BetCounter == 5 || player.AP - BetCounter == 6) {
+				WhichPile = "4";
+			}
+			else if (player.AP - BetCounter >= 7) {
+				WhichPile = "5";
+			}
+		}
+
+		// Load CoinPile image
+		TImage* imageCoins = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoinStack"));
+		if (imageCoins) {
+			AnsiString fullPathCoins = CoinsPath + WhichPile + ".png";
+			imageCoins->Bitmap->LoadFromFile(fullPathCoins);
+			for (auto& player : players) {
+				if (player.AP - BetCounter < 1) {
+					imageCoins->Visible = false;
+				}
+				else {
+					imageCoins->Visible = true;
+				}
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::ImageCoin6Click(TObject *Sender)
+{
+	if (BetCounter == 6 && isBiddingComplete != true) {
+		// Un-Load Coin image
+		TImage* imageCoin = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoin" + IntToStr(BetCounter)));
+		imageCoin->Visible = false;  // Hides the image
+		BetCounter--;
+		for (auto& player : players) {
+			NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+		}
+		for (auto& player : players) {
+			if (player.AP - BetCounter == 1) {
+				WhichPile = "1";
+			}
+			else if (player.AP - BetCounter == 2) {
+				WhichPile = "2";
+			}
+			else if (player.AP - BetCounter == 3 || player.AP - BetCounter == 4) {
+				WhichPile = "3";
+			}
+			else if (player.AP - BetCounter == 5 || player.AP - BetCounter == 6) {
+				WhichPile = "4";
+			}
+			else if (player.AP - BetCounter >= 7) {
+				WhichPile = "5";
+			}
+		}
+
+		// Load CoinPile image
+		TImage* imageCoins = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoinStack"));
+		if (imageCoins) {
+			AnsiString fullPathCoins = CoinsPath + WhichPile + ".png";
+			imageCoins->Bitmap->LoadFromFile(fullPathCoins);
+			for (auto& player : players) {
+				if (player.AP - BetCounter < 1) {
+					imageCoins->Visible = false;
+				}
+				else {
+					imageCoins->Visible = true;
+				}
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::ImageCoin7Click(TObject *Sender)
+{
+	if (BetCounter == 7 && isBiddingComplete != true) {
+		// Un-Load Coin image
+		TImage* imageCoin = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoin" + IntToStr(BetCounter)));
+		imageCoin->Visible = false;  // Hides the image
+		BetCounter--;
+		for (auto& player : players) {
+			NoboruForm->TextAP->Text = IntToStr(player.AP - BetCounter);
+		}
+		for (auto& player : players) {
+			if (player.AP - BetCounter == 1) {
+				WhichPile = "1";
+			}
+			else if (player.AP - BetCounter == 2) {
+				WhichPile = "2";
+			}
+			else if (player.AP - BetCounter == 3 || player.AP - BetCounter == 4) {
+				WhichPile = "3";
+			}
+			else if (player.AP - BetCounter == 5 || player.AP - BetCounter == 6) {
+				WhichPile = "4";
+			}
+			else if (player.AP - BetCounter >= 7) {
+				WhichPile = "5";
+			}
+		}
+
+		// Load CoinPile image
+		TImage* imageCoins = dynamic_cast<TImage*>(NoboruForm->FindComponent("ImageCoinStack"));
+		if (imageCoins) {
+			AnsiString fullPathCoins = CoinsPath + WhichPile + ".png";
+			imageCoins->Bitmap->LoadFromFile(fullPathCoins);
+			for (auto& player : players) {
+				if (player.AP - BetCounter < 1) {
+					imageCoins->Visible = false;
+				}
+				else {
+					imageCoins->Visible = true;
+				}
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TNoboruForm::ReturnStreetClick(TObject *Sender)
+{
+	UpdateCurrentBid();
+	MainStreet->Show(); // Show the main form
+	this->Hide();     // Hide the second form
+}
+
+__fastcall TNoboruForm::TNoboruForm(TComponent* Owner)
+	: TForm(Owner)
+{
+	NoboruForm = this; // Assign this instance to the global NoboruForm pointer
+	std::srand(std::time(0)); // Seed random number generator
+	UpdateCurrentBid();
+//	UpdateBanzukeGrid();
+	Rikishi &myRikishi = rikishiVector[currentRikishiIndex];
+	UpdateImage(myRikishi, NoboruForm);
+}
+//---------------------------------------------------------------------------
+//
+//void __fastcall TNoboruForm::BanzukeGridDrawColumnCell(TObject *Sender, TCanvas * const Canvas,
+//		  TColumn * const Column, const TRectF &Bounds, const int Row,
+//		  const TValue &Value, const TGridDrawStates State)
+//{
+//	// Define colors
+//	TAlphaColor SemiTransparentCyan = TAlphaColorF::Create(0, 1, 1, 0.75).ToAlphaColor();
+//	TAlphaColor Blue = TAlphaColorF::Create(0, 0, 1).ToAlphaColor();   // Preferred skill color
+//	TAlphaColor Red = TAlphaColorF::Create(1, 0, 0).ToAlphaColor();            // Injury color
+//	TAlphaColor Purple = TAlphaColorF::Create(0.5, 0, 0.5).ToAlphaColor();     // Preferred + Injured color
+//
+//	// Ensure row index is within bounds
+//	if (Row >= rikishiVector.size()) return;
+//	Rikishi& rikishi = rikishiVector[Row];
+//
+//	// Default text color
+//	TAlphaColor textColor = TAlphaColorRec::Black;
+//
+//	// Determine if the current column is a skill column
+//	bool isPreferred = false, isInjured = false;
+//
+//	if (Column->Index == 5) { // Weight
+//		isPreferred = (rikishi.preferredSkill == "Weight");
+////		isInjured = rikishi.isInjuredSpeed;  // Example: Injury related to weight (modify if needed)
+//	}
+//	else if (Column->Index == 6) { // Endurance
+//		isPreferred = (rikishi.preferredSkill == "Endurance");
+//		isInjured = rikishi.isInjuredEndurance;
+//	}
+//	else if (Column->Index == 7) { // Technique
+//		isPreferred = (rikishi.preferredSkill == "Technique");
+//	}
+//	else if (Column->Index == 8) { // Speed
+//		isPreferred = (rikishi.preferredSkill == "Speed");
+//		isInjured = rikishi.isInjuredSpeed;
+//	}
+//	else if (Column->Index == 9) { // Strength
+//		isPreferred = (rikishi.preferredSkill == "Strength");
+//		isInjured = rikishi.isInjuredStrength;
+//	}
+//
+//	// Set the appropriate text color
+//	if (isPreferred && isInjured) {
+//		textColor = Purple;  // Both preferred and injured
+//	}
+//	else if (isPreferred) {
+//		textColor = Blue; // Preferred skill
+//	}
+//	else if (isInjured) {
+//		textColor = Red; // Injured skill
+//	}
+//
+//	// Highlight row if bidding is active
+//	if (!isBiddingComplete && Row == currentRikishiIndex) {
+//		Canvas->Fill->Color = SemiTransparentCyan;
+//		Canvas->FillRect(Bounds, 0, 0, AllCorners, 1);
+//	}
+//
+//	// Set text color
+//	Canvas->Fill->Color = textColor;
+//
+//	// Draw the text centered in the cell
+//	Canvas->FillText(Bounds,
+//					 BanzukeGrid->Cells[Column->Index][Row],
+//					 false, 1.0,
+//					 TFillTextFlags(),
+//					 TTextAlign::Center,
+//					 TTextAlign::Center);
+//}
+
+
+
+//---------------------------------------------------------------------------
+
+

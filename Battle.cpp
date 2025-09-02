@@ -259,7 +259,7 @@ void __fastcall TBattleForm::Timer1Timer(TObject *Sender)
 		break;
 	case 0:
 		Timer1->Enabled = false;
-		PopulateLeaderboardGrid();
+//		PopulateLeaderboardGrid();
 		AssignFightersFromGrid();
 		BattleStep++;
 		Timer1->Enabled = true;
@@ -361,7 +361,7 @@ void __fastcall TBattleForm::Timer1Timer(TObject *Sender)
 		// Finalize bout
 		SetBoutResult(currentBoutIndex, winnerIdx, loserIdx);
 		SetupImages(globalFighter1, globalFighter2, BattleForm);
-		UpdateTournamentGrid();
+//		UpdateTournamentGrid();
 		UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
 		ResetBattlePhase();
 		if (currentBoutIndex == 49) {
@@ -477,7 +477,7 @@ void TBattleForm::ResetBattlePhase()
 {
 	currentBoutIndex++;
 	AssignFightersFromGrid();
-	UpdateTournamentGrid();
+//	UpdateTournamentGrid();
 	UpdateDohyoGUI(globalFighter1, globalFighter2, DohyoForm);
 	SetupImages(globalFighter1, globalFighter2, BattleForm);
 	Application->ProcessMessages();

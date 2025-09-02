@@ -1,0 +1,25 @@
+object HotelForm: THotelForm
+  Left = 0
+  Top = 0
+  Caption = 'Welcome home!'
+  ClientHeight = 664
+  ClientWidth = 1100
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ButtonReturn: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 504.000000000000000000
+    Size.Width = 233.000000000000000000
+    Size.Height = 144.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 
+      '<----                                                          S' +
+      'treet'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnClick
+  end
+end

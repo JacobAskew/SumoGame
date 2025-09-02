@@ -1,0 +1,94 @@
+//---------------------------------------------------------------------------
+#include <fmx.h>
+#include <FMX.Dialogs.hpp>
+#include <System.UITypes.hpp>  // For colors
+#include <map>  // If you still want to use maps
+#include <FMX.Graphics.hpp>   // For TBitmap
+#include <System.SysUtils.hpp>  // Required for UnicodeString conversion
+#include <regex>
+//---------------------------------------------------------------------------
+#include "NoboruDisplay.h"
+#include "Banzuke.h"
+#include "Noboru.h"
+#include "Dohyo.h"
+#include "Street.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+#pragma hdrstop
+//---------------------------------------------------------------------------
+TNoboruDisplayForm *NoboruDisplayForm;
+String WoodPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\book.png";
+String DisplayPath = "C:\\Users\\zx123\\OneDrive\\Documents\\Embarcadero\\Studio\\Projects\\Images\\BackgroundDisplay0.png";
+//---------------------------------------------------------------------------
+void SetupNoboruDisplay() {
+	for (int i = 0; i < rikishiVector.size() && i < 16; i++) {
+		Rikishi& rikishi = rikishiVector[i];
+
+		// Rikishi Image
+		TImage* imageRikishi = dynamic_cast<TImage*>(NoboruDisplayForm->FindComponent("ImageRikishi" + IntToStr(i + 1)));
+		if (imageRikishi) {
+			AnsiString fullPathRikishi = RikishiPath + IntToStr(rikishi.spirit) + ".png";
+			try {
+				imageRikishi->Bitmap->LoadFromFile(fullPathRikishi);
+				imageRikishi->Repaint();
+			} catch (...) {
+				ShowMessage("Failed to load rikishi image: " + fullPathRikishi);
+			}
+		}
+
+		// Belt Image
+		TImage* imageBelt = dynamic_cast<TImage*>(NoboruDisplayForm->FindComponent("ImageBelt" + IntToStr(i + 1)));
+		if (imageBelt) {
+			AnsiString fullPathBelt = BeltPath + ".png";
+			try {
+				imageBelt->Bitmap->LoadFromFile(fullPathBelt);
+				imageBelt->Repaint();
+			} catch (...) {
+				ShowMessage("Failed to load belt image: " + fullPathBelt);
+			}
+
+			std::string colorStr = AnsiString(rikishi.colour).c_str();
+			std::smatch match;
+			std::regex numRegex(R"(\d+)");
+			if (std::regex_search(colorStr, match, numRegex)) {
+				UnicodeString extractedNumber = UnicodeString(match.str().c_str());
+				TAlphaColor color = (TAlphaColor)StrToUInt(extractedNumber);
+				TintNoTransparent(imageBelt->Bitmap, color);
+				imageBelt->Repaint();
+			} else {
+				ShowMessage("Invalid color format: " + rikishi.colour);
+			}
+		}
+
+		// Yokozuna Badge
+		TImage* imageYokozuna = dynamic_cast<TImage*>(NoboruDisplayForm->FindComponent("ImageYokozuna" + IntToStr(i + 1)));
+		if (imageYokozuna) {
+			if (rikishi.rank == "Yokozuna") {
+				AnsiString fullPathYokozuna = YokozunaPath + ".png";
+				try {
+					imageYokozuna->Bitmap->LoadFromFile(fullPathYokozuna);
+					imageYokozuna->Opacity = 1.0;
+					imageYokozuna->Repaint();
+				} catch (...) {
+					ShowMessage("Failed to load Yokozuna image: " + fullPathYokozuna);
+				}
+			} else {
+				imageYokozuna->Opacity = 0.0;
+			}
+		}
+	}
+}
+
+//---------------------------------------------------------------------------
+__fastcall TNoboruDisplayForm::TNoboruDisplayForm(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TNoboruDisplayForm::ButtonReturnClick(TObject *Sender)
+{
+	BanzukeForm->Show();
+	this->Hide();
+}
+//---------------------------------------------------------------------------

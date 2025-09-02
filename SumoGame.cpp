@@ -7,20 +7,21 @@
 #pragma hdrstop
 #include <System.StartUpCopy.hpp>
 //---------------------------------------------------------------------------
-USEFORM("Ryogoku.cpp", RyogokuForm);
+USEFORM("Retirement.cpp", RetirementForm);
+USEFORM("NoboruDisplay.cpp", NoboruDisplayForm);
 USEFORM("Noboru2.cpp", Storage_2);
-USEFORM("Storage.cpp", StorageForm);
-USEFORM("Training.cpp", TrainingPopup);
 USEFORM("Street.cpp", MainStreet);
+USEFORM("Storage.cpp", StorageForm);
+USEFORM("Ryogoku.cpp", RyogokuForm);
+USEFORM("Dohyo2.cpp", Form2);
 USEFORM("Dohyo.cpp", DohyoForm);
 USEFORM("Beya.cpp", YourBeya);
 USEFORM("Battle.cpp", BattleForm);
 USEFORM("Banzuke.cpp", BanzukeForm);
-USEFORM("Dohyo2.cpp", Form2);
 USEFORM("Noboru.cpp", NoboruForm);
+USEFORM("Hotel.cpp", HotelForm);
 USEFORM("EndGame.cpp", GameOver);
-USEFORM("Retirement.cpp", RetirementForm);
-USEFORM("NoboruDisplay.cpp", NoboruDisplayForm);
+USEFORM("Newspaper.cpp", NewspaperForm);
 //---------------------------------------------------------------------------
 extern "C" int FMXmain()
 {
@@ -29,7 +30,6 @@ extern "C" int FMXmain()
 		Application->Initialize();
 		Application->CreateForm(__classid(TMainStreet), &MainStreet);
 		Application->CreateForm(__classid(TYourBeya), &YourBeya);
-		Application->CreateForm(__classid(TTrainingPopup), &TrainingPopup);
 		Application->CreateForm(__classid(TBanzukeForm), &BanzukeForm);
 		Application->CreateForm(__classid(TDohyoForm), &DohyoForm);
 		Application->CreateForm(__classid(TStorageForm), &StorageForm);
@@ -40,6 +40,8 @@ extern "C" int FMXmain()
 		Application->CreateForm(__classid(TBattleForm), &BattleForm);
 		Application->CreateForm(__classid(TRetirementForm), &RetirementForm);
 		Application->CreateForm(__classid(TNoboruDisplayForm), &NoboruDisplayForm);
+		Application->CreateForm(__classid(THotelForm), &HotelForm);
+		Application->CreateForm(__classid(TNewspaperForm), &NewspaperForm);
 		Application->Run();
 	}
 	catch (Exception &exception)

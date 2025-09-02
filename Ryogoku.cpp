@@ -16,6 +16,25 @@ TRyogokuForm *RyogokuForm;
 //---------------------------------------------------------------------------
 
 
+std::string AbbreviateRank(const std::string& fullRank) {
+    if (fullRank == "Yokozuna") return "Y";
+    if (fullRank == "Ozeki") return "O";
+    if (fullRank == "Sekiwake") return "S";
+    if (fullRank == "Komusubi") return "K";
+
+    // Handle Maegashira ranks
+    if (fullRank.rfind("Maegashira ", 0) == 0) {
+        return "M" + fullRank.substr(11); // Extract the number
+    }
+
+    // Handle Juryo ranks
+    if (fullRank.rfind("Juryo ", 0) == 0) {
+        return "J" + fullRank.substr(6);
+    }
+
+    return fullRank; // Fallback to original if no match
+}
+
 // Function to get the integer score for a given rank
 int GetRankScore(const std::string& rank) {
     static std::unordered_map<std::string, int> rankScores = {
@@ -64,7 +83,7 @@ void PopulateRetiredRikishiGrid(std::vector<Rikishi>& retiredRikishi) {
 		RyogokuForm->RetirementGrid->Cells[posCol][i] = position;
 		RyogokuForm->RetirementGrid->Cells[oyakataCol][i] = rikishi.owner.c_str();
 		RyogokuForm->RetirementGrid->Cells[numWinsCol][i] = IntToStr(rikishi.tournamentWins);
-		RyogokuForm->RetirementGrid->Cells[finalRankCol][i] = rikishi.rank.c_str();
+		RyogokuForm->RetirementGrid->Cells[finalRankCol][i] = AbbreviateRank(rikishi.rank).c_str();
 		RyogokuForm->RetirementGrid->Cells[scoreCol][i] = IntToStr(rikishi.retirementScore);
 
         // Show weight limits as "current/max"

@@ -1,0 +1,35 @@
+object RetirementForm: TRetirementForm
+  Left = 510
+  Top = 0
+  Caption = 'Ojiichan!!'
+  ClientHeight = 664
+  ClientWidth = 1100
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 510
+  DesignerMasterStyle = 0
+  object ImageBackground: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Size.Width = 1100.000000000000000000
+    Size.Height = 664.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonReturn: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 560.000000000000000000
+    Size.Width = 193.000000000000000000
+    Size.Height = 96.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 
+      '<----                                                          S' +
+      'treet'
+    TextSettings.WordWrap = True
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnClick
+  end
+end

@@ -1,0 +1,79 @@
+//---------------------------------------------------------------------------
+
+#ifndef NoboruDisplayH
+#define NoboruDisplayH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.Objects.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+#include <FMX.Effects.hpp>
+//---------------------------------------------------------------------------
+class TNoboruDisplayForm : public TForm
+{
+__published:	// IDE-managed Components
+	TButton *ButtonReturn;
+	TImage *ImageBelt1;
+	TImage *ImageBelt2;
+	TImage *ImageBelt3;
+	TImage *ImageRikishi1;
+	TImage *ImageRikishi2;
+	TImage *ImageRikishi3;
+	TImage *ImageYokozuna1;
+	TImage *ImageYokozuna2;
+	TImage *ImageYokozuna3;
+	TImage *Image1;
+	TImage *Image2;
+	TImage *Image3;
+	TImage *Image10;
+	TImage *Image11;
+	TImage *Image12;
+	TImage *Image13;
+	TImage *Image14;
+	TImage *Image15;
+	TImage *Image16;
+	TImage *Image17;
+	TImage *Image18;
+	TImage *Image19;
+	TImage *Image20;
+	TImage *Image21;
+	TImage *Image22;
+	TImage *Image23;
+	TImage *Image24;
+	TImage *Image25;
+	TImage *Image26;
+	TImage *Image27;
+	TImage *Image28;
+	TImage *Image29;
+	TImage *Image30;
+	TImage *Image31;
+	TImage *Image32;
+	TImage *Image33;
+	TImage *Image34;
+	TImage *Image35;
+	TImage *Image36;
+	TImage *Image37;
+	TImage *Image38;
+	TImage *Image39;
+	TImage *Image40;
+	TImage *Image41;
+	TImage *Image42;
+	TImage *Image43;
+	TImage *Image44;
+	TImage *Image45;
+	TImage *Image4;
+	TImage *Image5;
+	TImage *Image6;
+	void __fastcall ButtonReturnClick(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TNoboruDisplayForm(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TNoboruDisplayForm *NoboruDisplayForm;
+extern void SetupNoboruDisplay();
+//---------------------------------------------------------------------------
+#endif

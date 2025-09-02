@@ -1,0 +1,749 @@
+object NoboruDisplayForm: TNoboruDisplayForm
+  Left = 240
+  Top = 191
+  Caption = 'Check out the competition!'
+  ClientHeight = 664
+  ClientWidth = 1100
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 240
+  Top = 191
+  DesignerMasterStyle = 0
+  object Rectangle9: TRectangle
+    Position.X = 8.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle8: TRectangle
+    Position.X = 401.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle7: TRectangle
+    Position.X = 270.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle6: TRectangle
+    Position.X = 139.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle5: TRectangle
+    Position.X = 8.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle4: TRectangle
+    Position.X = 401.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle3: TRectangle
+    Position.X = 270.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle2: TRectangle
+    Position.X = 139.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle16: TRectangle
+    Position.X = 401.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle15: TRectangle
+    Position.X = 270.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle14: TRectangle
+    Position.X = 139.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle13: TRectangle
+    Position.X = 8.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle12: TRectangle
+    Position.X = 401.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle11: TRectangle
+    Position.X = 270.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle10: TRectangle
+    Position.X = 139.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Rectangle1: TRectangle
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt9: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt8: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt7: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt6: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt5: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt4: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt3: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt16: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt15: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt14: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt13: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt12: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt11: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt10: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageBelt: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 549.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 540.000000000000000000
+    Size.Height = 630.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi9: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi1: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi2: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi3: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi4: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi6: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi7: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi8: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi5: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = ImageRikishi5Click
+  end
+  object ImageRikishi10: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi11: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi12: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi13: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi14: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi15: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi16: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageRikishi: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 549.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 540.000000000000000000
+    Size.Height = 630.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ButtonReturn: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 624.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Go Back'
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnClick
+  end
+  object ImageYokozuna: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 549.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 540.000000000000000000
+    Size.Height = 630.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ImageYokozuna1: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna10: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna11: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna12: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna13: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna14: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna15: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna16: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 467.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna2: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna3: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna4: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna5: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna6: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 139.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna7: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 270.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna8: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 401.000000000000000000
+    Position.Y = 161.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+  object ImageYokozuna9: TImage
+    MultiResBitmap.Height = 2500
+    MultiResBitmap.Width = 2500
+    MultiResBitmap = <
+      item
+        FileName = 
+          'C:\Users\zx123\OneDrive\Documents\Embarcadero\Studio\Projects\Su' +
+          'moBrown.png.PNG'
+      end>
+    Position.X = 8.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 154.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SharedYokozunaClick
+  end
+end

@@ -1,0 +1,25 @@
+object RetirementForm: TRetirementForm
+  Left = 287
+  Top = 192
+  Caption = 'Ojiichan!!'
+  ClientHeight = 420
+  ClientWidth = 772
+  Position = Designed
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Left = 287
+  Top = 192
+  DesignerMasterStyle = 0
+  object ButtonReturn: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 80.000000000000000000
+    Size.Width = 80.000000000000000000
+    Size.Height = 225.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Go Back'
+    TextSettings.Trimming = None
+    OnClick = ButtonReturnClick
+  end
+end

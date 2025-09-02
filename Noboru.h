@@ -65,7 +65,6 @@ __published:    // IDE-managed Components
 	TImage *ImageWeight1;
 	TGlowEffect *GlowEffectWeight1;
 	TImage *ImageCancel;
-	TButton *ButtonBanzuke;
 
     void __fastcall ReturnStreetClick(TObject *Sender);
 	void __fastcall ButtonMinBidClick(TObject *Sender);
@@ -81,7 +80,7 @@ __published:    // IDE-managed Components
 	void __fastcall ImageCoin6Click(TObject *Sender);
 	void __fastcall ImageCoin7Click(TObject *Sender);
 	void __fastcall TextAPClick(TObject *Sender);
-	void __fastcall ButtonBanzukeClick(TObject *Sender);
+//	void __fastcall ButtonBanzukeClick(TObject *Sender);
 //	void __fastcall BanzukeGridDrawColumnCell(TObject *Sender, TCanvas * const Canvas,
 //          TColumn * const Column, const TRectF &Bounds, const int Row,
 //          const TValue &Value, const TGridDrawStates State);
@@ -96,6 +95,7 @@ public:     // User declarations
 extern PACKAGE TNoboruForm *NoboruForm;
 //extern void UpdateBanzukeGrid();
 extern String RikishiPath;
+//extern String RikishiPath2;
 extern String BeltPath;
 extern String YokozunaPath;
 extern bool isBiddingComplete;

@@ -2,8 +2,8 @@ object StorageForm: TStorageForm
   Left = 528
   Top = 240
   Caption = 'Form2'
-  ClientHeight = 420
-  ClientWidth = 772
+  ClientHeight = 565
+  ClientWidth = 968
   Position = Designed
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -758,8 +758,8 @@ object StorageForm: TStorageForm
     Top = 152
   end
   object MediaPlayerControl1: TMediaPlayerControl
-    Size.Width = 772.000000000000000000
-    Size.Height = 420.000000000000000000
+    Size.Width = 968.000000000000000000
+    Size.Height = 565.000000000000000000
     Size.PlatformDefault = False
     Align = Client
     object ButtonAutomateAll: TButton
@@ -799,7 +799,7 @@ object StorageForm: TStorageForm
       Size.Width = 498.000000000000000000
       Size.Height = 153.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 9
+      TabOrder = 8
       Text = 'Go to Dohyo'
       TextSettings.Trimming = None
     end

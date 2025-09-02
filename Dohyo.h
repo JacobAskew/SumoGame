@@ -15,9 +15,15 @@
 #include <FMX.Memo.Types.hpp>
 #include <FMX.ScrollBox.hpp>
 #include <FMX.Effects.hpp>
+#include <FMX.Grid.hpp>
+#include <FMX.Grid.Style.hpp>
+#include <System.Rtti.hpp>
 //---------------------------------------------------------------------------
 
 struct Rikishi;
+
+void EndBanzuke();
+class Player;
 
 //---------------------------------------------------------------------------
 
@@ -60,7 +66,15 @@ __published:	// IDE-managed Components
 	TText *TextOwner2;
 	TText *TextDateTime;
 	TButton *ButtonDohyo;
-	void __fastcall ButtonReturnBanzukeClick(TObject *Sender);
+	TStringGrid *StringGridTournament;
+	TStringColumn *StringColumnMonday;
+	TStringColumn *StringColumnTuesday;
+	TStringColumn *StringColumnWednesday;
+	TStringColumn *StringColumnThursday;
+	TStringColumn *StringColumnFriday;
+	TStringColumn *StringColumnSaturday;
+	TStringColumn *StringColumnSunday;
+//	void __fastcall ButtonReturnBanzukeClick(TObject *Sender);
 	void __fastcall ButtonReturnStreetClick(TObject *Sender);
 	void __fastcall ButtonWeight1Click(TObject *Sender);
 	void __fastcall ButtonEndurance1Click(TObject *Sender);
@@ -81,9 +95,36 @@ private:	// User declarations
 public:		// User declarations
 	__fastcall TDohyoForm(TComponent* Owner);
 	void DohyoSetup();
+    void StartBanzuke();
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TDohyoForm *DohyoForm;
 extern void UpdateDohyoGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form);
+extern void GetBoutTactic();
+extern bool isBanzukeComplete;
+extern void TintNoTransparent(TBitmap* bitmap, TAlphaColor tintColor);
+extern struct Rikishi* globalFighter1;
+extern struct Rikishi* globalFighter2;
+extern std::string boutTactic;
+extern int winner;
+extern std::string fighter1Tactic;
+extern int fighter1SkillValue;
+extern std::string fighter2Tactic;
+extern int fighter2SkillValue;
+extern void RandomSkillForFighter(Rikishi& fighter, std::string& fighterTactic);
+//extern void PopulateLeaderboardGrid();
+extern void AssignFightersFromGrid();
+extern void FighterSkillValue(Rikishi& fighter, int& fighterSkillValue);
+extern void HandleInjury(Rikishi& fighter, int& fighterTotal);
+extern int fighter1Total;
+extern int fighter2Total;
+extern int currentBoutIndex;
+extern int winnerIdx;
+extern int loserIdx;
+extern void Victory(int winner, std::vector<Player>& players);
+extern void SetBoutResult(int boutIndex, int winnerIdx, int loserIdx);
+//extern void UpdateTournamentGrid();
+extern void UpdateBoutGUI(Rikishi* fighter1, Rikishi* fighter2, TForm *form);
+extern void EndBanzuke();
 //---------------------------------------------------------------------------
 #endif
